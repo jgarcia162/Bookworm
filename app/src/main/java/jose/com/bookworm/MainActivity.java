@@ -3,7 +3,6 @@ package jose.com.bookworm;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.add_book_layout);
         setTitle("BookWorm");
 
-        Log.d("TAG", "onCreate: ");
 
         BoxStore boxStore =((App) getApplication()).getBoxStore();
         bookBox = boxStore.boxFor(Book.class);
@@ -50,17 +48,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        getBookButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                QueryBuilder<Book> queryBuilder = bookBox.query();
-//                queryBuilder.equal(Book_.title,titleEditText.getText().toString());
-//                Query<Book> query = queryBuilder.build();
-//                String title = query.findFirst() == null ? "No Books": query.findFirst().getTitle();
-//                textView.setText(title);
-//            }
-//        });
-
     }
 
     void addBook(Book book) {
@@ -69,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void showAllBooks(View view) {
         Intent intent = new Intent(getApplicationContext(),Library.class);
+        intent.putExtra("flag","show_all_books");
+        startActivity(intent);
     }
 
     public void clickedPlane(View view) {
