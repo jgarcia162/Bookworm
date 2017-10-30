@@ -3,7 +3,6 @@ package jose.com.bookworm;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -19,16 +18,22 @@ import jose.com.bookworm.model.Book;
  * Created by Joe on 10/29/17.
  */
 
-public class Library extends AppCompatActivity{
-    Box<Book> bookBox;
+public class Library extends AppCompatActivity {
+    private Box<Book> bookBox;
     private List<Book> allBooksList;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_library);
+
+
         BoxStore boxStore = ((App) getApplication()).getBoxStore();
         bookBox = boxStore.boxFor(Book.class);
+
         String flag = getIntent().getStringExtra("flag");
-        if(flag.equals("show_all_books")){
+
+        if (flag.equals("show_all_books")) {
             allBooksList = bookBox.getAll();
         }
 
@@ -40,7 +45,7 @@ public class Library extends AppCompatActivity{
 
             @Override
             public void onNext(Book book) {
-                Toast.makeText(getApplicationContext(), book.getTitle(), Toast.LENGTH_SHORT).show();
+
             }
 
             @Override
