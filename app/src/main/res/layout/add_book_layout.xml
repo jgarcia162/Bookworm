@@ -14,7 +14,8 @@
         app:direction="left"
         app:duration="4000"
         app:imageSrc="@drawable/plane_going_left"
-        app:scaleType="centerInside" />
+        app:scaleType="centerInside"
+        android:onClick="clickedPlane"/>
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
