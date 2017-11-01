@@ -31,21 +31,21 @@ public class MainActivity extends AppCompatActivity {
         BoxStore boxStore =((App) getApplication()).getBoxStore();
         bookBox = boxStore.boxFor(Book.class);
 
-        textView = (TextView) findViewById(R.id.textView);
-        titleEditText = (EditText) findViewById(R.id.title_edit_text);
-        authorEditText = (EditText) findViewById(R.id.author_edit_text);
-        addBookButton = (Button) findViewById(R.id.add_book_button);
-        getBookButton = (Button) findViewById(R.id.view_books_button);
-
-        addBookButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Book book = new Book();
-                book.setTitle(titleEditText.getText().toString());
-                book.setAuthor(authorEditText.getText().toString());
-                addBook(book);
-            }
-        });
+//        textView = (TextView) findViewById(R.id.textView);
+//        titleEditText = (EditText) findViewById(R.id.title_edit_text);
+//        authorEditText = (EditText) findViewById(R.id.author_edit_text);
+//        addBookButton = (Button) findViewById(R.id.add_book_button);
+//        getBookButton = (Button) findViewById(R.id.view_books_button);
+//
+//        addBookButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Book book = new Book();
+//                book.setTitle(titleEditText.getText().toString());
+//                book.setAuthor(authorEditText.getText().toString());
+//                addBook(book);
+//            }
+//        });
 
     }
 

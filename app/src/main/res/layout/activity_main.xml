@@ -1,114 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="jose.com.bookworm.MainActivity"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_width="match_parent">
+    tools:context="jose.com.bookworm.MainActivity">
 
-   <include
-       layout="@layout/moving_clouds_layout"
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"/>
-
-    <android.support.constraint.ConstraintLayout
+    <include
+        layout="@layout/moving_clouds_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent" />
 
-        <EditText
-            android:id="@+id/title_edit_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="161dp"
-            android:ems="10"
-            android:hint="Title"
-            android:inputType="textPersonName"
-            android:textAlignment="center"
-            app:layout_constraintHorizontal_bias="0.503"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
-        <EditText
-            android:id="@+id/author_edit_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="34dp"
-            android:ems="10"
-            android:hint="Author"
-            android:inputType="textPersonName"
-            android:textAlignment="center"
-            app:layout_constraintHorizontal_bias="0.503"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title_edit_text" />
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/add_book_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:src="@android:drawable/ic_input_add"
+        app:layout_anchor="@id/recycler_view"
+        app:layout_anchorGravity="bottom|end"
+        app:fabSize="normal"/>
 
-        <EditText
-            android:id="@+id/year_edit_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="34dp"
-            android:ems="10"
-            android:hint="Year"
-            android:inputType="textPersonName"
-            android:textAlignment="center"
-            app:layout_constraintHorizontal_bias="0.503"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/author_edit_text" />
-
-        <Button
-            android:id="@+id/add_book_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="8dp"
-            android:text="Add Book"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintLeft_toLeftOf="@+id/year_edit_text"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/year_edit_text" />
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="63dp"
-            android:text="TextView"
-            app:layout_constraintBottom_toTopOf="@+id/title_edit_text"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/view_books_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="8dp"
-            android:onClick="showAllBooks"
-            android:text="View Books"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintLeft_toRightOf="@+id/add_book_button"
-            app:layout_constraintRight_toRightOf="@+id/year_edit_text"
-            app:layout_constraintTop_toBottomOf="@+id/year_edit_text" />
-    </android.support.constraint.ConstraintLayout>
-
-
-</RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>
