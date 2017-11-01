@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import io.objectbox.Box;
 import io.objectbox.BoxStore;
@@ -60,8 +59,5 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void clickedPlane(View view) {
-        Toast.makeText(this, "WOW!", Toast.LENGTH_SHORT).show();
-    }
 }
 

@@ -7,15 +7,10 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent">
 
-    <com.cunoraz.continuouscrollable.ContinuousScrollableImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        app:direction="left"
-        app:duration="4000"
-        app:imageSrc="@drawable/plane_going_left"
-        app:scaleType="centerInside"
-        android:onClick="clickedPlane"/>
+   <include
+       layout="@layout/moving_clouds_layout"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"/>
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
