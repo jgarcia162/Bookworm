@@ -54,8 +54,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showAllBooks(View view) {
-        Intent intent = new Intent(getApplicationContext(),Library.class);
-        intent.putExtra("flag","show_all_books");
+        Intent intent = new Intent(getApplicationContext(),LibraryActivity.class);
         startActivity(intent);
     }
 
