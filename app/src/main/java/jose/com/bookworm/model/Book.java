@@ -20,9 +20,13 @@ public class Book {
     String author;
 
     String nameOfBorrower;
-    int year;
+
     boolean finishedReading;
     boolean returned;
+
+    public Book() {
+
+    }
 
     public long getId() {
         return id;
@@ -54,14 +58,6 @@ public class Book {
 
     public void setNameOfBorrower(String nameOfBorrower) {
         this.nameOfBorrower = nameOfBorrower;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
     }
 
     public boolean isFinishedReading() {

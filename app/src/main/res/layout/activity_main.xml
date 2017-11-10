@@ -23,8 +23,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:src="@android:drawable/ic_input_add"
-        app:layout_anchor="@id/recycler_view"
-        app:layout_anchorGravity="bottom|end"
-        app:fabSize="normal"/>
+        app:fabSize="normal"
+        app:layout_anchor="@+id/recycler_view"
+        app:layout_anchorGravity="end|bottom" />
 
 </android.support.design.widget.CoordinatorLayout>

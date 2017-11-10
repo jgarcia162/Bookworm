@@ -29,6 +29,7 @@ public class LibraryActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_library);
+
         BoxStore boxStore = ((App) getApplication()).getBoxStore();
         bookBox = boxStore.boxFor(Book.class);
         recyclerView = findViewById(R.id.library_recycler_view);
