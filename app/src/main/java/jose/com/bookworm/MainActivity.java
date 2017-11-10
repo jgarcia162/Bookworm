@@ -3,10 +3,14 @@ package jose.com.bookworm;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import java.util.List;
 
 import io.objectbox.Box;
 import io.objectbox.BoxStore;
@@ -27,9 +31,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setTitle("BookWorm");
 
-
         BoxStore boxStore =((App) getApplication()).getBoxStore();
         bookBox = boxStore.boxFor(Book.class);
+        RecyclerView recyclerView = findViewById(R.id.recycler_view);
+        recyclerView.hasFixedSize();
+        List<Book> allBooksList = bookBox.getAll();
+        BookAdapter adapter = new BookAdapter(allBooksList);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
 
 //        textView = (TextView) findViewById(R.id.textView);
 //        titleEditText = (EditText) findViewById(R.id.title_edit_text);

@@ -27,6 +27,10 @@
           "name": "nameOfBorrower"
         },
         {
+          "id": "5:7806362489878954257",
+          "name": "year"
+        },
+        {
           "id": "6:3889113390334817029",
           "name": "finishedReading"
         },
@@ -46,9 +50,7 @@
   "modelVersionParserMinimum": 4,
   "retiredEntityUids": [],
   "retiredIndexUids": [],
-  "retiredPropertyUids": [
-    7806362489878954257
-  ],
+  "retiredPropertyUids": [],
   "retiredRelationUids": [],
   "version": 1
 }

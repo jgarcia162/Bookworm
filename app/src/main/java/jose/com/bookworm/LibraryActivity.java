@@ -10,9 +10,6 @@ import java.util.List;
 
 import io.objectbox.Box;
 import io.objectbox.BoxStore;
-import io.reactivex.Observable;
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
 import jose.com.bookworm.model.Book;
 
 
@@ -32,7 +29,7 @@ public class LibraryActivity extends AppCompatActivity {
 
         BoxStore boxStore = ((App) getApplication()).getBoxStore();
         bookBox = boxStore.boxFor(Book.class);
-        recyclerView = findViewById(R.id.library_recycler_view);
+        recyclerView = findViewById(R.id.recycler_view);
         recyclerView.hasFixedSize();
         allBooksList = bookBox.getAll();
         BookAdapter adapter = new BookAdapter(allBooksList);
@@ -40,8 +37,6 @@ public class LibraryActivity extends AppCompatActivity {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
-
-
 
 //
 //        String flag = getIntent().getStringExtra("flag");
@@ -53,30 +48,30 @@ public class LibraryActivity extends AppCompatActivity {
 //        createObserver();
     }
 
-    private void createObserver() {
-        Observer<Book> observer = new Observer<Book>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-
-            }
-
-            @Override
-            public void onNext(Book book) {
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onComplete() {
-
-            }
-        };
-
-        Observable<Book> observable = Observable.fromIterable(allBooksList);
-        observable.subscribe(observer);
-    }
+//    private void createObserver() {
+//        Observer<Book> observer = new Observer<Book>() {
+//            @Override
+//            public void onSubscribe(Disposable d) {
+//
+//            }
+//
+//            @Override
+//            public void onNext(Book book) {
+//
+//            }
+//
+//            @Override
+//            public void onError(Throwable e) {
+//
+//            }
+//
+//            @Override
+//            public void onComplete() {
+//
+//            }
+//        };
+//
+//        Observable<Book> observable = Observable.fromIterable(allBooksList);
+//        observable.subscribe(observer);
+//    }
 }

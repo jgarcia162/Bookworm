@@ -23,5 +23,9 @@ public class BookViewHolder extends RecyclerView.ViewHolder {
     public void bind(Book book) {
         textView.setText(book.getTitle());
     }
+
+    public void bind(String string){
+        textView.setText(string);
+    }
 }
 

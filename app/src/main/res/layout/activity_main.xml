@@ -25,6 +25,7 @@
         android:src="@android:drawable/ic_input_add"
         app:fabSize="normal"
         app:layout_anchor="@+id/recycler_view"
-        app:layout_anchorGravity="end|bottom" />
+        app:layout_anchorGravity="end|right|bottom"
+        app:layout_behavior="jose.com.bookworm.controllers.CustomFABBehavior"/>
 
 </android.support.design.widget.CoordinatorLayout>

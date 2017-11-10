@@ -29,12 +29,13 @@ public class BookAdapter extends RecyclerView.Adapter<BookViewHolder> {
 
     @Override
     public void onBindViewHolder(BookViewHolder holder, int position) {
-        holder.bind(data.get(position));
+//        holder.bind(data.get(position));
+        holder.bind(position +"");
     }
 
     @Override
     public int getItemCount() {
-        return data.size();
+        return 20;
     }
 
     public void setData(List<Book> data){
