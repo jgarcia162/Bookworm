@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setTitle("BookWorm");
-
         BoxStore boxStore =((App) getApplication()).getBoxStore();
         bookBox = boxStore.boxFor(Book.class);
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
@@ -42,21 +41,33 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
-//        textView = (TextView) findViewById(R.id.textView);
-//        titleEditText = (EditText) findViewById(R.id.title_edit_text);
-//        authorEditText = (EditText) findViewById(R.id.author_edit_text);
-//        addBookButton = (Button) findViewById(R.id.add_book_button);
-//        getBookButton = (Button) findViewById(R.id.view_books_button);
-//
-//        addBookButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Book book = new Book();
-//                book.setTitle(titleEditText.getText().toString());
-//                book.setAuthor(authorEditText.getText().toString());
-//                addBook(book);
-//            }
-//        });
+        titleEditText = (EditText) findViewById(R.id.title_edit_text);
+
+
+        authorEditText = (EditText) findViewById(R.id.author_edit_text);
+
+
+        addBookButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        };
+
+        addBookButton.setOnClickListener(listener);
+
+
+
+
+
+
 
     }
 
@@ -67,8 +78,18 @@ public class MainActivity extends AppCompatActivity {
     public void showAllBooks(View view) {
         Intent intent = new Intent(getApplicationContext(),LibraryActivity.class);
         startActivity(intent);
+
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt("key",3);
+        outState.putBoolean("true",true);
+        super.onSaveInstanceState(outState);
 
+
+
+
+    }
 }
 

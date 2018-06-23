@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     package="jose.com.bookworm">
 
-
+<uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:name="jose.com.bookworm.App"
         android:allowBackup="true"

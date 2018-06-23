@@ -2,7 +2,6 @@ package jose.com.bookworm;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.List;
@@ -23,8 +22,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookViewHolder> {
     }
     @Override
     public BookViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.book_card_layout,parent,false);
-        return new BookViewHolder(view);
+        return new BookViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.book_card_layout,parent,false));
     }
 
     @Override
