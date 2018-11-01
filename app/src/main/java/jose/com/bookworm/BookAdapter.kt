@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 
 import jose.com.bookworm.model.Book
-import jose.com.bookworm.view.BookViewHolder
+import jose.com.bookworm.viewmodel.BookViewHolder
 
 /**
  * Created by Joe on 10/31/17.

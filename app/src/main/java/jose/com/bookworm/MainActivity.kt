@@ -1,5 +1,8 @@
 package jose.com.bookworm
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProvider
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -10,20 +13,20 @@ import android.widget.EditText
 import android.widget.TextView
 
 import jose.com.bookworm.model.Book
+import jose.com.bookworm.viewmodel.BookViewModel
 
 class MainActivity : AppCompatActivity() {
-
   private val textView: TextView? = null
   private var titleEditText: EditText? = null
   private var authorEditText: EditText? = null
   private val addBookButton: Button? = null
   private val getBookButton: Button? = null
-
   private val allBooksList: List<Book>? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
+
 
     title = "BookWorm"
 
