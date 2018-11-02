@@ -1,4 +1,4 @@
-package jose.com.bookworm.viewmodel
+package jose.com.bookworm.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -13,18 +13,12 @@ import jose.com.bookworm.model.Book
 
 class BookViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-  private val textView: TextView
-
-  init {
-    textView = itemView.findViewById(R.id.title_text_view)
-  }
+  private val textView: TextView = itemView.findViewById(R.id.title_text_view)
 
   fun bind(book: Book) {
     textView.text = book.title
   }
 
-  fun bind(string: String) {
-    textView.text = string
-  }
+
 }
 

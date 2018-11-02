@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import jose.com.bookworm.model.Book
+import jose.com.bookworm.adapter.BookAdapter
 
 /**
  * Created by Joe on 10/29/17.
