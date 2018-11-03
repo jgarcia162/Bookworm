@@ -1,14 +1,23 @@
 package jose.com.bookworm.model
 
-/**
- * Created by Jose G. on 10/10/17.
- */
+import android.arch.persistence.room.Embedded
+import android.arch.persistence.room.Entity
+import android.arch.persistence.room.PrimaryKey
+import android.arch.persistence.room.TypeConverters
+import jose.com.bookworm.room.Converters
+import jose.com.bookworm.room.User
 
+@Entity(tableName = "books")
 data class Book(
-  val bookId: Long,
-  val title: String,
-  val author: String?,
-  val yearPublished: Int?,
-  val pages: Int?,
-  val isFinished: Boolean
+    @PrimaryKey(autoGenerate = true) val bookId: Long,
+    val title: String,
+    val author: String?,
+    val yearPublished: Int?,
+    val pages: Int?,
+    @TypeConverters(Converters::class)
+    val categories: List<String>,
+    val isFinished: Boolean,
+    val isInLibrary: Boolean,
+    @Embedded(prefix = "usr_")
+    val borrowedBy: User?
 )

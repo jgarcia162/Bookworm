@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import jose.com.bookworm.model.BookViewModel
 
 class MainFragment: Fragment(){
 
@@ -19,16 +20,9 @@ class MainFragment: Fragment(){
 
   override fun onActivityCreated(savedInstanceState: Bundle?) {
     super.onActivityCreated(savedInstanceState)
-    viewModel.getBook().observe(this, Observer{ book ->
-      run {
-        titleTextView.text = book?.title
-        authorTextView.text = book?.author
-      }
-    })
 
     val bookId = arguments?.getLong(BID_KEY, -1)
     viewModel = ViewModelProviders.of(this).get(BookViewModel::class.java)
-    viewModel?.init(bookId!!)
   }
 
   override fun onCreateView(

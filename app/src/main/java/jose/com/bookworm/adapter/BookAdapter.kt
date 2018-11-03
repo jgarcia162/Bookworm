@@ -7,8 +7,7 @@ import jose.com.bookworm.R
 
 import jose.com.bookworm.model.Book
 
-class BookAdapter(private var data: List<Book>?) :
-    RecyclerView.Adapter<BookViewHolder>() {
+class BookAdapter(private var data: List<Book>?) : RecyclerView.Adapter<BookViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
