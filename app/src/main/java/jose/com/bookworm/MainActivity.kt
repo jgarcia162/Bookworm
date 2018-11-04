@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -53,6 +55,27 @@ class MainActivity : AppCompatActivity() {
     val listener = View.OnClickListener { }
 
     addBookButton.setOnClickListener(listener)
+  }
+
+  override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    menuInflater.inflate(R.menu.main_menu, menu)
+    return true
+  }
+
+  override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+    when(item?.itemId){
+      R.id.search_menu_option -> showSearchBar()
+      R.id.add_menu_option -> showAddBookFragment()
+    }
+    return true
+  }
+
+  private fun showSearchBar() {
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+  }
+
+  private fun showAddBookFragment() {
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
   }
 
   fun showAllBooks(view: View) { startActivity(intent) }
