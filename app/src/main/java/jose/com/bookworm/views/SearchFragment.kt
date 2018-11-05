@@ -6,11 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import jose.com.bookworm.model.Book
-import jose.com.bookworm.presentations.BookDetailsPresentation
-import jose.com.bookworm.presenters.BookDetailsPresenter
+import jose.com.bookworm.presentations.SearchPresentation
+import jose.com.bookworm.presenters.SearchPresenter
 
-class BookDetailsFragment : Fragment(), BookDetailsPresentation {
-    lateinit var presenter: BookDetailsPresenter
+class SearchFragment : Fragment(), SearchPresentation{
+    lateinit var presenter: SearchPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,36 +40,27 @@ class BookDetailsFragment : Fragment(), BookDetailsPresentation {
         presenter.detach()
     }
 
-    override fun showBookDeleted() {
+    override fun showNoResults() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun showBookCheckedOut() {
+    override fun updateRV(results: List<Book>) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun showBookCheckedIn() {
+    override fun showLoading() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun showEditBookLayout() {
+    override fun hideLoading() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun hideEditBookLayout() {
+    override fun showSearchForBookText() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun showBookDetails() {
+    override fun hideSearchForBookText() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
-
-    override fun updateBookData(book: Book) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun updateProgressSeekBar(){
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
 }

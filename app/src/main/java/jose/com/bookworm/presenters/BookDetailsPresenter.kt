@@ -29,4 +29,7 @@ class BookDetailsPresenter {
         //TODO delete book from db
     }
 
+    fun updateProgress(){
+        //TODO updates book progress
+    }
 }

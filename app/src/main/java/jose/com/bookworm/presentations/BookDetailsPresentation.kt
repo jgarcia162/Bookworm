@@ -10,4 +10,5 @@ interface BookDetailsPresentation {
     fun hideEditBookLayout()
     fun showBookDetails()
     fun updateBookData(book: Book)
+    fun updateProgressSeekBar()
 }

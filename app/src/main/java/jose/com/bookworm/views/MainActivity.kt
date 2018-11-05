@@ -1,4 +1,4 @@
-package jose.com.bookworm
+package jose.com.bookworm.views
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
@@ -12,6 +12,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import jose.com.bookworm.R
 
 import jose.com.bookworm.model.Book
 import jose.com.bookworm.adapter.BookAdapter
@@ -64,14 +65,9 @@ class MainActivity : AppCompatActivity() {
 
   override fun onOptionsItemSelected(item: MenuItem?): Boolean {
     when(item?.itemId){
-      R.id.search_menu_option -> showSearchBar()
       R.id.add_menu_option -> showAddBookFragment()
     }
     return true
-  }
-
-  private fun showSearchBar() {
-    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
   }
 
   private fun showAddBookFragment() {

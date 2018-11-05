@@ -17,7 +17,9 @@ data class Book(
     @TypeConverters(Converters::class)
     val categories: List<String>,
     val isFinished: Boolean,
+    val isCurrentlyReading: Boolean,
     val isInLibrary: Boolean,
     @Embedded(prefix = "usr_")
-    val borrowedBy: User?
+    val borrowedBy: User?,
+    val progressPercentage: Double
 )
