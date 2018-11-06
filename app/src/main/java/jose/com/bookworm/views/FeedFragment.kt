@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import jose.com.bookworm.R
 import jose.com.bookworm.presentations.FeedPresentation
 import jose.com.bookworm.presenters.FeedPresenter
 
@@ -19,7 +20,7 @@ class FeedFragment : Fragment(), FeedPresentation {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return super.onCreateView(inflater, container, savedInstanceState)
+        return inflater.inflate(R.layout.fragment_feed, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
