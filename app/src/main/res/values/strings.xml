@@ -7,4 +7,8 @@
     <string name="hint_pages">Pages</string>
     <string name="hint_categories">Categories separated by spaces</string>
     <string name="description_book_cover_iv">Book cover</string>
+    <string name="settings">settings</string>
+    <string name="library">Library</string>
+    <string name="search">Search</string>
+    <string name="home">Home</string>
 </resources>
