@@ -25,27 +25,12 @@ class MainActivity : AppCompatActivity() {
   private val addBookButton: Button? = null
   private val getBookButton: Button? = null
   private val allBooksList: List<Book>? = null
-  private lateinit var adapter: BookAdapter
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
 
     title = "BookWorm"
-
-    val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
-    recyclerView.hasFixedSize()
-
-    val model = ViewModelProviders.of(this).get(BookViewModel::class.java)
-    model.getBooks().observe(this, Observer<List<Book>> { books ->
-        adapter = BookAdapter(books)
-    })
-
-    val layoutManager = LinearLayoutManager(this)
-
-    layoutManager.orientation = LinearLayoutManager.VERTICAL
-    recyclerView.layoutManager = layoutManager
-    recyclerView.adapter = adapter
 
     titleEditText = findViewById<View>(R.id.title_edit_text) as EditText
 

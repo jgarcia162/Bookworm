@@ -29,4 +29,8 @@ class LibraryPresenter {
     fun sortBooks(sortBy: String){
         //TODO sort books
     }
+
+    fun searchBook(searchTerms: String){
+        //TODO search by text
+    }
 }
