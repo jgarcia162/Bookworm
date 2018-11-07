@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:layout_editor_absoluteY="81dp">
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/title_tv"
@@ -15,7 +13,7 @@
         android:textColor="@color/colorPrimaryFont"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/author_tv"
-        app:layout_constraintStart_toEndOf="@+id/divider"
+        app:layout_constraintStart_toEndOf="@+id/book_cover_iv"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Title" />
 
@@ -26,7 +24,7 @@
         android:layout_marginStart="8dp"
         android:textColor="@color/colorPrimaryFont"
         app:layout_constraintBottom_toTopOf="@+id/published_tv"
-        app:layout_constraintStart_toEndOf="@+id/divider"
+        app:layout_constraintStart_toEndOf="@+id/book_cover_iv"
         app:layout_constraintTop_toBottomOf="@+id/title_tv"
         tools:text="@tools:sample/full_names" />
 
@@ -36,21 +34,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:textColor="@color/colorSecondaryFont"
-        app:layout_constraintBottom_toTopOf="@+id/pages_tv"
-        app:layout_constraintStart_toEndOf="@+id/divider"
+        app:layout_constraintBottom_toTopOf="@+id/category_tv"
+        app:layout_constraintStart_toEndOf="@+id/book_cover_iv"
         app:layout_constraintTop_toBottomOf="@+id/author_tv"
-        tools:text="Published: 2002" />
-
-    <TextView
-        android:id="@+id/pages_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:textColor="@color/colorSecondaryFont"
-        app:layout_constraintBottom_toTopOf="@+id/progress_bar"
-        app:layout_constraintStart_toEndOf="@+id/divider"
-        app:layout_constraintTop_toBottomOf="@+id/published_tv"
-        tools:text="Pages: 675" />
+        tools:text="1984" />
 
     <ImageView
         android:id="@+id/book_cover_iv"
@@ -58,52 +45,33 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:contentDescription="@string/description_book_cover_iv"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars[2]" />
-
-    <View
-        android:id="@+id/divider"
-        android:layout_width="1dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="?android:attr/listDivider"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/book_cover_iv"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="368dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:background="@android:color/transparent"
-        android:progressTint="@color/colorAccent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/book_cover_iv"
-        tools:max="100"
-        tools:progress="76" />
+        tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/checked_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:textColor="@color/colorCheckedOut"
         android:textStyle="bold"
+        app:layout_constraintBaseline_toBaselineOf="@+id/title_tv"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="OUT"/>
+        tools:text="OUT" />
+
+    <TextView
+        android:id="@+id/category_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/book_cover_iv"
+        app:layout_constraintStart_toEndOf="@+id/book_cover_iv"
+        app:layout_constraintTop_toBottomOf="@+id/published_tv"
+        tools:text="Non-Fiction" />
 
 </android.support.constraint.ConstraintLayout>
