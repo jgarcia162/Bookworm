@@ -12,7 +12,7 @@
         android:layout_height="0dp"
         android:orientation="horizontal"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toTopOf="@+id/recommended_rv"
+        app:layout_constraintBottom_toTopOf="@+id/suggestions_tv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,10 +20,21 @@
         app:layout_constraintVertical_weight="2"
         tools:listitem="@layout/current_reading_list_item" />
 
+    <TextView
+        android:id="@+id/suggestions_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/recommended_rv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/reading_rv"
+        tools:text="Recommendations"/>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recommended_rv"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
