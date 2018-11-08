@@ -89,27 +89,28 @@
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/published_input_et"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="107dp"
+        android:layout_height="20dp"
         android:layout_marginStart="8dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" >
+        app:layout_constraintStart_toStartOf="parent">
+
         <android.support.design.widget.TextInputEditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/year_published"
             android:inputType="number"
-            android:textColorHint="@color/colorSecondaryFont"/>
+            android:textColorHint="@color/colorSecondaryFont" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/pages_input_et"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_width="96dp"
+        android:layout_height="20dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
@@ -119,9 +120,27 @@
             android:ems="10"
             android:hint="@string/num_pages"
             android:inputType="number"
-            android:textColorHint="@color/colorSecondaryFont"/>
+            android:textColorHint="@color/colorSecondaryFont" />
     </android.support.design.widget.TextInputLayout>
 
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/isbn_input_et"
+        android:layout_width="149dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/pages_input_et"
+        app:layout_constraintStart_toEndOf="@+id/published_input_et">
+
+        <android.support.design.widget.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="@color/colorSecondaryFont"
+            android:inputType="number"
+            android:hint="@string/hint_isbn" />
+    </android.support.design.widget.TextInputLayout>
 
 
 </android.support.constraint.ConstraintLayout>
