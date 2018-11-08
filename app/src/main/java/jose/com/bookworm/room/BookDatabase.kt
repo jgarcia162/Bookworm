@@ -19,7 +19,7 @@ abstract class BookDatabase : RoomDatabase() {
     companion object {
         @JvmStatic
         var database: BookDatabase? = null
-        const val DATABASE_NAME: String = "bookworm_database"
+        private const val DATABASE_NAME: String = "bookworm_database"
 
         fun getAppDatabase(context: Context): BookDatabase? {
             if (database == null) {

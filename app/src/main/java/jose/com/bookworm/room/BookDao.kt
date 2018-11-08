@@ -15,6 +15,9 @@ interface BookDao {
     @Delete
     fun deleteBook(book: Book)
 
+    @Query("SELECT * FROM books WHERE isbn IS :isbn")
+    fun findBookByISBN(isbn: Int)
+
     @Query("DELETE FROM books")
     fun deleteAllBooks()
 
