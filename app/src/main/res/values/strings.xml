@@ -14,4 +14,6 @@
     <string name="sort">Sort</string>
     <string name="sort_icon_description">sort by icon</string>
     <string name="currently_reading_iv_description">Currently reading book cover</string>
+    <string name="num_pages"># of Pages</string>
+    <string name="year_published">Year Published</string>
 </resources>
