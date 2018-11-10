@@ -2,9 +2,8 @@ package jose.com.bookworm.views
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import jose.com.bookworm.R
 import jose.com.bookworm.model.Book
 import jose.com.bookworm.presentations.BookDetailsPresentation
 import jose.com.bookworm.presenters.BookDetailsPresenter
@@ -72,4 +71,14 @@ class BookDetailsFragment : Fragment(), BookDetailsPresentation {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater?.inflate(R.menu.details_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when(item?.itemId){
+            R.id.details_edit_book_menu_option -> showEditBookLayout()
+        }
+        return true
+    }
 }
