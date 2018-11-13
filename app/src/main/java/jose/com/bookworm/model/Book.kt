@@ -12,6 +12,7 @@ data class Book(
     @PrimaryKey(autoGenerate = true) val bookId: Long,
     val title: String,
     val author: String?,
+    val description: String,
     val yearPublished: Int?,
     val pages: Int?,
     @TypeConverters(Converters::class)

@@ -1,11 +1,7 @@
 package jose.com.bookworm.views
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -13,10 +9,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import jose.com.bookworm.R
-
 import jose.com.bookworm.model.Book
-import jose.com.bookworm.adapter.BookAdapter
-import jose.com.bookworm.model.BookViewModel
 
 class MainActivity : AppCompatActivity() {
   private val textView: TextView? = null
@@ -31,10 +24,6 @@ class MainActivity : AppCompatActivity() {
     setContentView(R.layout.activity_main)
 
     title = "BookWorm"
-
-    titleEditText = findViewById<View>(R.id.title_edit_text) as EditText
-
-    authorEditText = findViewById<View>(R.id.author_edit_text) as EditText
 
     addBookButton!!.setOnClickListener { }
 
