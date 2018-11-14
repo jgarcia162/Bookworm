@@ -13,6 +13,6 @@ data class VolumeInfo(
     val pageCount: Int,
     val categories: List<String>,
     @SerializedName("imageLinks")
-    val images: List<VolumeImageLinks>,
+    val images: VolumeImageLinks,
     val language: String
 )

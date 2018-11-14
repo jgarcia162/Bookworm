@@ -1,13 +1,15 @@
 package jose.com.bookworm.network
 
+import io.reactivex.Single
 import jose.com.bookworm.model.Volume
+import jose.com.bookworm.model.VolumesResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface BooksApi {
     /** Gets Volumes by title */
-    @GET("volumes/{title}")
-    fun searchByTitle(@Query("intitle:") title: String ): List<Volume>
+    @GET("volumes/")
+    fun searchByTitle(@Query("intitle:") title: String ): Single<VolumesResponse>
 
     /** Gets Volumes by author */
     @GET("volumes/{author}")

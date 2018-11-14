@@ -24,14 +24,14 @@ class ApiClient(
 
     private lateinit var booksApi: BooksApi
 
-    private fun initBooksApi(){
+    private fun initBooksApi() {
         booksApi = createApi(booksBaseUrl)
     }
 
-    private inline fun <reified T: Any> createApi(baseUrl: String): T{
+    private inline fun <reified T : Any> createApi(baseUrl: String): T {
         val builder = OkHttpClient.Builder()
 
-        if(loggingInterceptor != null){
+        if (loggingInterceptor != null) {
             builder.addInterceptor(this.loggingInterceptor!!)
         }
 
@@ -47,14 +47,19 @@ class ApiClient(
         return retrofit.create(T::class.java)
     }
 
-    init{
+    init {
         initBooksApi()
     }
 
     //Temporarily placed here while testing/building
     companion object {
-        val BOOKS_API_KEY: String = BuildConfig.ApiKey
-        val BOOKS_BASE_URL: String = "https://www.googleapis.com/books/v1/"
+
+        init {
+            val BOOKS_API_KEY: String = BuildConfig.ApiKey
+            val BOOKS_BASE_URL: String = "https://www.googleapis.com/books/v1/"
+        }
     }
 
+    /** See [BooksApi.searchByTitle]*/
+    fun searchByTitle(title: String) = booksApi.searchByTitle(title)
 }
