@@ -1,6 +1,6 @@
 package jose.com.bookworm.presenters
 
-import jose.com.bookworm.model.Book
+import jose.com.bookworm.model.roommodel.Book
 import jose.com.bookworm.presentations.LibraryPresentation
 
 class LibraryPresenter {

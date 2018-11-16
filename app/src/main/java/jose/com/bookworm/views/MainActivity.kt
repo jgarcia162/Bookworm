@@ -6,18 +6,11 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
 import jose.com.bookworm.R
-import jose.com.bookworm.model.Book
+import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
-  private val textView: TextView? = null
-  private var titleEditText: EditText? = null
-  private var authorEditText: EditText? = null
   private val addBookButton: Button? = null
-  private val getBookButton: Button? = null
-  private val allBooksList: List<Book>? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -25,11 +18,7 @@ class MainActivity : AppCompatActivity() {
 
     title = "BookWorm"
 
-    addBookButton!!.setOnClickListener { }
-
-    val listener = View.OnClickListener { }
-
-    addBookButton.setOnClickListener(listener)
+    supportFragmentManager.beginTransaction().replace(R.id.main_fragment_container, FeedFragment()).commit()
   }
 
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -45,9 +34,8 @@ class MainActivity : AppCompatActivity() {
   }
 
   private fun showAddBookFragment() {
-    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    Timber.d("ADDED BOOK")
   }
 
   fun showAllBooks(view: View) { startActivity(intent) }
 }
-

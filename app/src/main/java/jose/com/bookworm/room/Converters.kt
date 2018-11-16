@@ -3,7 +3,7 @@ package jose.com.bookworm.room
 import android.arch.persistence.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import jose.com.bookworm.model.Book
+import jose.com.bookworm.model.roommodel.Book
 
 class Converters {
     private val gson: Gson = Gson()

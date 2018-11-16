@@ -1,8 +1,7 @@
 package jose.com.bookworm.presenters
 
-import jose.com.bookworm.model.Book
+import jose.com.bookworm.model.roommodel.Book
 import jose.com.bookworm.presentations.SearchPresentation
-import jose.com.bookworm.views.SearchFragment
 
 class SearchPresenter {
     private var presentation: SearchPresentation? = null

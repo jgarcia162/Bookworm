@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import jose.com.bookworm.R
 
-import jose.com.bookworm.model.Book
+import jose.com.bookworm.model.roommodel.Book
 
 class BookAdapter(private var data: List<Book>?) : RecyclerView.Adapter<BookViewHolder>() {
     override fun onCreateViewHolder(

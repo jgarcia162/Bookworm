@@ -1,4 +1,4 @@
-package jose.com.bookworm.model
+package jose.com.bookworm.model.googlebooks
 
 data class Volume(
     val id: String,

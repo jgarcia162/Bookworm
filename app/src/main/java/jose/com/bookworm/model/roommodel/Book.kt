@@ -1,4 +1,4 @@
-package jose.com.bookworm.model
+package jose.com.bookworm.model.roommodel
 
 import android.arch.persistence.room.Embedded
 import android.arch.persistence.room.Entity

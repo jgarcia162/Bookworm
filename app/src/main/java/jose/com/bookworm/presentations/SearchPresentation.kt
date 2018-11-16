@@ -1,6 +1,6 @@
 package jose.com.bookworm.presentations
 
-import jose.com.bookworm.model.Book
+import jose.com.bookworm.model.roommodel.Book
 
 interface SearchPresentation {
     fun showNoResults()

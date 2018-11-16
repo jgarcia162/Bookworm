@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.*
 import jose.com.bookworm.R
-import jose.com.bookworm.model.Book
+import jose.com.bookworm.model.roommodel.Book
 import jose.com.bookworm.presentations.BookDetailsPresentation
 import jose.com.bookworm.presenters.BookDetailsPresenter
 
