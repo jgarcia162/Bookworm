@@ -5,7 +5,7 @@ import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
 import android.arch.persistence.room.TypeConverters
 import android.content.Context
-import jose.com.bookworm.model.Book
+import jose.com.bookworm.model.roommodel.Book
 
 @Database(entities = [Book::class], exportSchema = false, version = 1)
 @TypeConverters(*[Converters::class])

@@ -2,7 +2,7 @@ package jose.com.bookworm.room
 
 import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.*
-import jose.com.bookworm.model.Book
+import jose.com.bookworm.model.roommodel.Book
 
 @Dao
 interface BookDao {

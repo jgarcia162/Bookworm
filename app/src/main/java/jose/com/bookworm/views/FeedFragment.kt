@@ -30,6 +30,7 @@ class FeedFragment : Fragment(), FeedPresentation {
     override fun onStart() {
         super.onStart()
 
+        presenter = FeedPresenter()
         presenter.attach(this)
     }
 
