@@ -14,7 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory
  * [NYTimesApi]
  *
  * Use ApiClient for easier abstraction and implementation should new APIs be introduced and for
- * cleaner integration with Dagger 2 framework.*/
+ * cleaner integration with a Dependency Injection framework.*/
 
 class ApiClient(
     var loggingInterceptor: HttpLoggingInterceptor?
