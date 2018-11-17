@@ -11,6 +11,7 @@ import jose.com.bookworm.presenters.FeedPresenter
 
 class FeedFragment : Fragment(), FeedPresentation {
     lateinit var presenter: FeedPresenter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -32,6 +33,8 @@ class FeedFragment : Fragment(), FeedPresentation {
 
         presenter = FeedPresenter()
         presenter.attach(this)
+
+
     }
 
     override fun onStop() {

@@ -21,8 +21,6 @@ open class BaseApiTest {
             .toString()
 
         client = ApiClient(
-            mockBaseUrl,
-            mockBaseUrl,
             HttpLoggingInterceptor{
                 println(it)
             }.apply { level = HttpLoggingInterceptor.Level.BODY }

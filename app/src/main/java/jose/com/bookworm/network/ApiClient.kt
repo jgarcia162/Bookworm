@@ -10,33 +10,31 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 /** This is a wrapper around the following APIs:
  *
- * [BooksApi]
+ * [GoogleBooksApi]
  * [NYTimesApi]
  *
  * Use ApiClient for easier abstraction and implementation should new APIs be introduced and for
  * cleaner integration with Dagger 2 framework.*/
 
 class ApiClient(
-    booksBaseUrl: String,
-    nyTimesBaseUrl: String,
     var loggingInterceptor: HttpLoggingInterceptor?
 ) {
-    var booksBaseUrl: String = booksBaseUrl
+    var booksBaseUrl: String = BOOKS_BASE_URL
         set(value) {
             field = value
             initBooksApi()
         }
-    var nyTimesBaseUrl: String = nyTimesBaseUrl
+    var nyTimesBaseUrl: String = NYTIMES_BASE_URL
         set(value) {
             field = value
             initNYTimesApi()
         }
 
-    private lateinit var booksApi: BooksApi
+    private lateinit var googleBooksApi: GoogleBooksApi
     private lateinit var nyTimesApi: NYTimesApi
 
     private fun initBooksApi() {
-        booksApi = createApi(booksBaseUrl)
+        googleBooksApi = createApi(booksBaseUrl)
     }
 
     private fun initNYTimesApi() {
@@ -67,7 +65,6 @@ class ApiClient(
         initNYTimesApi()
     }
 
-    //Temporarily placed here while testing/building
     companion object {
         val BOOKS_API_KEY: String = BuildConfig.ApiKey
         val BOOKS_BASE_URL: String = "https://www.googleapis.com/books/v1/"
@@ -78,23 +75,23 @@ class ApiClient(
     /**
      * Gets [Volume]s by title
      *
-     * See [BooksApi.searchByTitle]
+     * See [GoogleBooksApi.searchByTitle]
      */
-    fun searchByTitle(title: String) = booksApi.searchByTitle(title)
+    fun searchByTitle(title: String) = googleBooksApi.searchByTitle(title)
 
     /**
      * Gets [Volume]s by author
      *
-     * See [BooksApi.searchByAuthor]
+     * See [GoogleBooksApi.searchByAuthor]
      */
-    fun searchByAuthor(author: String) = booksApi.searchByAuthor(author)
+    fun searchByAuthor(author: String) = googleBooksApi.searchByAuthor(author)
 
     /**
      * Gets [Volume]s by ISBN
      *
-     * See [BooksApi.searchByISBN]
+     * See [GoogleBooksApi.searchByISBN]
      */
-    fun searchByISBN(isbn: String) = booksApi.searchByISBN(isbn)
+    fun searchByISBN(isbn: String) = googleBooksApi.searchByISBN(isbn)
 
     /**
      * Gets a [BestSellersList] by name

@@ -5,7 +5,7 @@ import jose.com.bookworm.model.VolumesResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface BooksApi {
+interface GoogleBooksApi {
     /** Gets Volumes by title */
     @GET("volumes/")
     fun searchByTitle(@Query("intitle:") title: String ): Single<VolumesResponse>
