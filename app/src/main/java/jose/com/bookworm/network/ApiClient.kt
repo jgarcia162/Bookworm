@@ -39,11 +39,11 @@ class ApiClient(
         booksApi = createApi(booksBaseUrl)
     }
 
-    private fun initNYTimesApi(){
+    private fun initNYTimesApi() {
         nyTimesApi = createApi(nyTimesBaseUrl)
     }
 
-    private inline fun <reified T: Any> createApi(baseUrl: String): T{
+    private inline fun <reified T : Any> createApi(baseUrl: String): T {
         val builder = OkHttpClient.Builder()
 
         if (loggingInterceptor != null) {
@@ -72,7 +72,7 @@ class ApiClient(
         val BOOKS_API_KEY: String = BuildConfig.ApiKey
         val BOOKS_BASE_URL: String = "https://www.googleapis.com/books/v1/"
         val NYTIMES_API_KEY: String = BuildConfig.TimesApiKey
-        val NYTIMES_BASE_URL: String = "https://www.googleapis.com/books/v1/"
+        val NYTIMES_BASE_URL: String = "http://api.nytimes.com/svc/books/v3/overviewLists"
     }
 
     /**
@@ -81,7 +81,6 @@ class ApiClient(
      * See [BooksApi.searchByTitle]
      */
     fun searchByTitle(title: String) = booksApi.searchByTitle(title)
-
 
     /**
      * Gets [Volume]s by author
@@ -97,11 +96,24 @@ class ApiClient(
      */
     fun searchByISBN(isbn: String) = booksApi.searchByISBN(isbn)
 
+    /**
+     * Gets a [BestSellersList] by name
+     *
+     * See [NYTimesApi.getBestSellersList]
+     */
+    fun getBestSellersList(listName: String) = nyTimesApi.getBestSellersList(listName)
 
     /**
-     * Gets list of best sellers
+     * Gets a list of the top 5 [BestSellersBook] from each [TimesList]
      *
-     * See [NYTimesApi.getBestSellers]
+     * See [NYTimesApi.getTopFiveBestSellers]
      */
-    fun getBestSellers() = nyTimesApi.getBestSellers()
+    fun getTopFiveBestSellers() = nyTimesApi.getTopFiveBestSellers()
+
+    /**
+     * Gets a list of all [TimesListName]s
+     *
+     * See [NYTimesApi.getBestSellersListNames]
+     */
+    fun getBestSellersListNames() = nyTimesApi.getBestSellersListNames()
 }

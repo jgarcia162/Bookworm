@@ -3,7 +3,7 @@ package jose.com.bookworm.books
 import okhttp3.mockwebserver.MockResponse
 import org.intellij.lang.annotations.Language
 
-/** Mocked responses from [Volume]s endpoint*/
+/** Mocked responses from [BooksApi] endpoint*/
 
 @Language("JSON")
 const val successfulFindVolumeJson =
