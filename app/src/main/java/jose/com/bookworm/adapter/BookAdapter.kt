@@ -4,10 +4,18 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import jose.com.bookworm.R
-
 import jose.com.bookworm.model.roommodel.Book
+import jose.com.bookworm.presenters.FeedPresenter
 
-class BookAdapter(private var data: List<Book>?) : RecyclerView.Adapter<BookViewHolder>() {
+class BookAdapter(
+    val presenter: FeedPresenter
+) : RecyclerView.Adapter<BookViewHolder>() {
+    var data: MutableList<Book> = mutableListOf()
+        set(value){
+            field = value
+            notifyDataSetChanged()
+        }
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -21,12 +29,8 @@ class BookAdapter(private var data: List<Book>?) : RecyclerView.Adapter<BookView
         holder: BookViewHolder,
         position: Int
     ) {
-        data?.get(position)?.let { holder.bind(it) }
+        data[position].let { holder.bind(it) }
     }
 
-    override fun getItemCount(): Int = data?.size ?: 0
-
-    fun setData(data: List<Book>) {
-        this.data = data
-    }
+    override fun getItemCount(): Int = data.size
 }

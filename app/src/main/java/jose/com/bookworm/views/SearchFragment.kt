@@ -8,8 +8,10 @@ import android.view.ViewGroup
 import jose.com.bookworm.model.roommodel.Book
 import jose.com.bookworm.presentations.SearchPresentation
 import jose.com.bookworm.presenters.SearchPresenter
+import javax.inject.Inject
 
-class SearchFragment : Fragment(), SearchPresentation{
+class SearchFragment() : Fragment(), SearchPresentation{
+    @Inject
     lateinit var presenter: SearchPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {

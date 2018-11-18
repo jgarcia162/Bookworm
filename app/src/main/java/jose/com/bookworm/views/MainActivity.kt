@@ -4,13 +4,10 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.widget.Button
 import jose.com.bookworm.R
 import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
-  private val addBookButton: Button? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -36,6 +33,4 @@ class MainActivity : AppCompatActivity() {
   private fun showAddBookFragment() {
     Timber.d("ADDED BOOK")
   }
-
-  fun showAllBooks(view: View) { startActivity(intent) }
 }

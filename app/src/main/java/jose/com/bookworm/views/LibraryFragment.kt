@@ -8,12 +8,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import jose.com.bookworm.adapter.BookAdapter
-import jose.com.bookworm.model.roommodel.Book
 import jose.com.bookworm.model.BookViewModel
+import jose.com.bookworm.model.roommodel.Book
 import jose.com.bookworm.presentations.LibraryPresentation
 import jose.com.bookworm.presenters.LibraryPresenter
+import javax.inject.Inject
 
 class LibraryFragment : Fragment(), LibraryPresentation {
+  @Inject
   lateinit var presenter: LibraryPresenter
   private lateinit var adapter: BookAdapter
 
