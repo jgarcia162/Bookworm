@@ -7,7 +7,7 @@ import jose.com.bookworm.presentations.LibraryPresentation
 
 class LibraryPresenter(
     private val apiClient: ApiClient
-) {
+): BasePresenter() {
     private var presentation: LibraryPresentation? = null
 
     fun attach(presentation: LibraryPresentation){
@@ -38,5 +38,9 @@ class LibraryPresenter(
 
     fun searchBook(searchTerms: String){
         //TODO search by text
+    }
+
+    override fun onitemClicked(item: Any) {
+
     }
 }

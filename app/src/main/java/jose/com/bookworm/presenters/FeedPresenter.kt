@@ -12,7 +12,7 @@ import jose.com.bookworm.presentations.FeedPresentation
 
 class FeedPresenter(
     private val apiClient: ApiClient
-) {
+): BasePresenter() {
     private var presentation: FeedPresentation? = null
     private lateinit var compositeDisposable: CompositeDisposable
 
@@ -51,5 +51,9 @@ class FeedPresenter(
 
     private fun onGetBestSellersOverviewSuccess(it: BestSellersOverviewResponse?) {
         presentation?.showBestSellersList(it?.results?.overviewLists?.get(0)?.books)
+    }
+
+    override fun onitemClicked(item: Any) {
+
     }
 }

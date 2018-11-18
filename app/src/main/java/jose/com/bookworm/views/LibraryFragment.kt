@@ -7,7 +7,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import jose.com.bookworm.adapter.BookAdapter
+import jose.com.bookworm.adapter.GenericAdapter
 import jose.com.bookworm.model.BookViewModel
 import jose.com.bookworm.model.roommodel.Book
 import jose.com.bookworm.presentations.LibraryPresentation
@@ -17,7 +17,7 @@ import javax.inject.Inject
 class LibraryFragment : Fragment(), LibraryPresentation {
   @Inject
   lateinit var presenter: LibraryPresenter
-  private lateinit var adapter: BookAdapter
+  private lateinit var adapter: GenericAdapter
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -36,7 +36,7 @@ class LibraryFragment : Fragment(), LibraryPresentation {
 
     val model = ViewModelProviders.of(this).get(BookViewModel::class.java)
     model.getBooks().observe(this, Observer<List<Book>> { books ->
-      adapter = BookAdapter(books)
+      adapter = GenericAdapter(books)
     })
   }
 
