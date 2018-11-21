@@ -29,7 +29,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/reading_rv"
-        tools:text="Recommendations"/>
+        tools:text="NY Times Best Sellers"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recommended_rv"

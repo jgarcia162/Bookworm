@@ -28,8 +28,8 @@ class LibraryPresenter(
         //TODO deletes all books from db
     }
 
-    fun showBookDetails(){
-        //TODO shows book details fragment
+    fun showBookDetails(book: Book){
+        presentation?.showBookDetails(book)
     }
 
     fun sortBooks(sortBy: String){

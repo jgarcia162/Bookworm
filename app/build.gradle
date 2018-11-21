@@ -35,20 +35,18 @@ dependencies {
     implementation deps.android.support.design
     implementation deps.android.support.constraintLayout
     implementation deps.android.support.recyclerView
-
     implementation deps.android.arch.lifecycle
     implementation deps.android.arch.room.runtime
     implementation deps.android.arch.room.rxJava
     kapt deps.android.arch.room.compiler
-
     implementation deps.coroutines.kotlin
     implementation deps.coroutines.android
-
     implementation deps.dagger2.runtime
     kapt deps.dagger2.compiler
     implementation deps.square.retrofit2.core
     implementation deps.square.retrofit2.gsonConverter
     implementation deps.square.retrofit2.rxAdapter
+    implementation deps.square.picasso
     implementation deps.square.okhttp3.mockwebserver
     implementation deps.square.okhttp3.loggingInterceptor
     implementation deps.rx.rxJava
@@ -62,7 +60,6 @@ dependencies {
     testImplementation deps.testing.awaitility
     androidTestImplementation deps.testing.runner
     androidTestImplementation deps.testing.espresso
-
 }
 
 repositories {

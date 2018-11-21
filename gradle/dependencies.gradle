@@ -49,7 +49,8 @@ ext.deps = [
                 'okhttp3'  : [
                         'loggingInterceptor': "com.squareup.okhttp3:logging-interceptor:${versions.okhttp3}",
                         'mockwebserver'     : "com.squareup.okhttp3:mockwebserver:${versions.okhttp3}"
-                ]
+                ],
+                'picasso' : "com.squareup.picasso:picasso:2.71828"
         ],
         'rx'        : [
                 'rxJava'   : "io.reactivex.rxjava2:rxjava:${versions.rxJava}",

@@ -4,28 +4,35 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import jose.com.bookworm.presenters.BasePresenter
+import jose.com.bookworm.R
 
 @Suppress("UNCHECKED_CAST")
-abstract class GenericAdapter<T>(
-    val presenter: BasePresenter,
+class GenericAdapter<T>(
     val layout: Int
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var data: List<T> = emptyList()
-        set(value){
+        set(value) {
             field = value
             notifyDataSetChanged()
         }
-
-    abstract fun getViewHolder(view: View, viewType: Int): RecyclerView.ViewHolder
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): RecyclerView.ViewHolder {
-        return getViewHolder(LayoutInflater.from(parent.context)
-            .inflate(layout, parent, false)
-            , viewType)
+        return getViewHolder(
+            LayoutInflater.from(parent.context)
+                .inflate(layout, parent, false)
+            , viewType
+        )
+    }
+
+    private fun getViewHolder(view: View, viewType: Int): RecyclerView.ViewHolder{
+        return when(viewType){
+            R.layout.book_list_item -> LibraryBookViewHolder(view)
+            R.layout.best_seller_list_item -> BestSellersViewHolder(view)
+            else -> CurrentReadingViewHolder(view)
+        }
     }
 
     override fun onBindViewHolder(
@@ -37,7 +44,7 @@ abstract class GenericAdapter<T>(
 
     override fun getItemCount(): Int = data.size
 
-    interface Binder<T>{
+    interface Binder<T> {
         fun bind(data: T)
     }
 }

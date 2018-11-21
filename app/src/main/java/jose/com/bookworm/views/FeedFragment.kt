@@ -6,9 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import jose.com.bookworm.R
+import jose.com.bookworm.adapter.GenericAdapter
 import jose.com.bookworm.di.Injector
 import jose.com.bookworm.extensions.toast
 import jose.com.bookworm.model.nytimes.BestSellersOverviewBook
+import jose.com.bookworm.model.roommodel.Book
 import jose.com.bookworm.presentations.FeedPresentation
 import jose.com.bookworm.presenters.FeedPresenter
 import javax.inject.Inject
@@ -16,6 +18,8 @@ import javax.inject.Inject
 class FeedFragment : Fragment(), FeedPresentation {
     @Inject
     lateinit var presenter: FeedPresenter
+    private lateinit var bestSellersAdapter: GenericAdapter<BestSellersOverviewBook>
+    private lateinit var currentReadingAdapter: GenericAdapter<Book>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +37,7 @@ class FeedFragment : Fragment(), FeedPresentation {
         super.onViewCreated(view, savedInstanceState)
 
         Injector.applicationComponent.inject(this)
+
 
     }
 
