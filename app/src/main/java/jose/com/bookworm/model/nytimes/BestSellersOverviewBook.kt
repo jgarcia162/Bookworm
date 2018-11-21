@@ -1,12 +1,11 @@
 package jose.com.bookworm.model.nytimes
 
 import com.google.gson.annotations.SerializedName
-import jose.com.bookworm.model.nytimes.BuyLink
 
 /** Represents a book from a best-seller overviewLists overview */
 data class BestSellersOverviewBook(
     @SerializedName("amazon_product_url")
-    val amazonUrl: String,
+    val amazonUrl: String = "",
     val author: String,
     @SerializedName("book_image")
     val bookImage: String,

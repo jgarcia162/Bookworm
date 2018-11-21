@@ -69,7 +69,7 @@ class ApiClient(
         val BOOKS_API_KEY: String = BuildConfig.ApiKey
         val BOOKS_BASE_URL: String = "https://www.googleapis.com/books/v1/"
         val NYTIMES_API_KEY: String = BuildConfig.TimesApiKey
-        val NYTIMES_BASE_URL: String = "http://api.nytimes.com/svc/books/v3/overviewLists"
+        val NYTIMES_BASE_URL: String = "http://api.nytimes.com/svc/books/v3/overviewLists/"
     }
 
     /**

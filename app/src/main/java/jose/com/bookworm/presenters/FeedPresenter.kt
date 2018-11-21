@@ -22,6 +22,8 @@ class FeedPresenter(
         compositeDisposable = CompositeDisposable()
 
         Injector.applicationComponent.inject(this)
+
+        getBestSellersOverview()
     }
 
     fun detach() {

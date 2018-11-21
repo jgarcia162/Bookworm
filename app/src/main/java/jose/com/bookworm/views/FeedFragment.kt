@@ -38,7 +38,7 @@ class FeedFragment : Fragment(), FeedPresentation {
 
         Injector.applicationComponent.inject(this)
 
-
+        bestSellersAdapter = GenericAdapter(R.layout.best_seller_list_item)
     }
 
     override fun onStart() {

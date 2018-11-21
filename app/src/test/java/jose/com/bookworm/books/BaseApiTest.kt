@@ -6,7 +6,7 @@ import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
 import org.junit.Before
 
-open class BaseApiTest {
+public open class BaseApiTest {
     lateinit var mockWebServer: MockWebServer
     lateinit var client: ApiClient
     lateinit var mockBaseUrl: String
