@@ -1,14 +1,19 @@
 package jose.com.bookworm.views
 
 import android.os.Bundle
+import android.support.design.chip.Chip
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import jose.com.bookworm.R
 import jose.com.bookworm.adapter.GenericAdapter
 import jose.com.bookworm.di.Injector
+import jose.com.bookworm.extensions.addChips
 import jose.com.bookworm.extensions.toast
+import jose.com.bookworm.model.nytimes.BestSellersBook
 import jose.com.bookworm.model.nytimes.BestSellersOverviewBook
 import jose.com.bookworm.model.roommodel.Book
 import jose.com.bookworm.presentations.FeedPresentation
@@ -80,13 +85,34 @@ class FeedFragment : Fragment(), FeedPresentation {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun showBestSellersList(books: List<BestSellersOverviewBook>?) {
+    override fun showBestSellersListOverview(books: List<BestSellersOverviewBook>?) {
         bestSellersAdapter.data = books!!
     }
 
-    override fun loadListNamesChips(names: MutableList<String>) {
+    override fun loadListNamesChips(names: MutableList<Chip>) {
+        list_names_chips.addChips(names)
+    }
+
+    override fun showGetBestSellersSuccess(title: String) {
+        best_sellers_chips_scroll_view.visibility = VISIBLE
+        suggestions_tv.text = getString(R.string.best_sellers, title)
+    }
+
+    override fun showGetBestSellersFailed() {
+        activity?.toast(getString(R.string.best_sellers_failed))
+        best_sellers_chips_scroll_view.visibility = GONE
+        suggestions_tv.text = getString(R.string.best_sellers_failed)
+    }
+
+    override fun showBestSellersList(books: List<BestSellersBook>) {
 
     }
 
-    override fun showGetBestSellersFailed() { activity?.toast("Failed to get best-sellers") }
+    override fun showBestSellersListSuccess(listName: String) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun showBestSellersListFailed() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 }

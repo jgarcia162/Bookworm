@@ -1,16 +1,19 @@
 package jose.com.bookworm.presenters
 
+import android.content.Context
+import android.support.design.chip.Chip
 import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
 import jose.com.bookworm.model.nytimes.BestSellersListName
-import jose.com.bookworm.model.nytimes.BestSellersListNamesResponse
+import jose.com.bookworm.model.nytimes.BestSellersListResponse
 import jose.com.bookworm.model.nytimes.BestSellersOverviewResponse
 import jose.com.bookworm.network.ApiClient
 import jose.com.bookworm.presentations.FeedPresentation
 
 class FeedPresenter(
+    private val context: Context,
     private val apiClient: ApiClient,
     private val mainThreadScheduler: Scheduler,
     private val ioScheduler: Scheduler
@@ -46,14 +49,14 @@ class FeedPresenter(
     }
 
     private fun onGetBestSellersOverviewSuccess(it: BestSellersOverviewResponse?) {
-        presentation?.showBestSellersList(it?.results?.lists?.get(0)?.books)
+        presentation?.showBestSellersListOverview(it?.results?.lists?.get(0)?.books)
     }
 
     private fun onGetBestSellersOverviewFailed() {
         presentation?.showGetBestSellersFailed()
     }
 
-    private fun getBestSellersListNames(onLoadComplete: () -> Unit){
+    private fun getBestSellersListNames(onLoadComplete: () -> Unit) {
         compositeDisposable += apiClient.getBestSellersListNames()
             .map {
                 it.results
@@ -67,21 +70,58 @@ class FeedPresenter(
                 presentation?.hideLoading()
                 onLoadComplete()
             }
-            .subscribeBy (
-                 onSuccess= { onGetBestSellersListNamesSuccess(it) },
+            .subscribeBy(
+                onSuccess = { onGetBestSellersListNamesSuccess(it) },
                 onError = { onGetBestSellersListNamesFailed() }
-        )
+            )
     }
 
     private fun onGetBestSellersListNamesSuccess(listNames: List<BestSellersListName>) {
-        var names = mutableListOf<String>()
-        for(name in listNames){
+        val names = mutableListOf<String>()
+        for (name in listNames) {
             names.add(name.displayName)
         }
-        presentation?.loadListNamesChips(names)
+        val chips = createChips(names)
+        presentation?.loadListNamesChips(chips)
+        presentation?.showGetBestSellersSuccess("")
+    }
+
+    private fun createChips(names: MutableList<String>): MutableList<Chip> {
+        val chips = mutableListOf<Chip>()
+        for (name in names) {
+            val newChip = Chip(context)
+            newChip.text = name
+            chips.add(newChip)
+        }
+        return chips
     }
 
     private fun onGetBestSellersListNamesFailed() {
+        presentation?.showGetBestSellersFailed()
+    }
+
+    fun getBestSellersList(listName: String, onLoadComplete: () -> Unit){
+        compositeDisposable += apiClient.getBestSellersList(listName)
+            .subscribeOn(ioScheduler)
+            .observeOn(mainThreadScheduler)
+            .doOnSubscribe {
+                presentation?.showLoading()
+            }
+            .doAfterTerminate {
+                presentation?.hideLoading()
+                onLoadComplete()
+            }
+            .subscribeBy(
+                onSuccess = { onGetBestSellersListSuccess(it) },
+                onError = { onGetBestSellersListFailed() }
+            )
+    }
+
+    private fun onGetBestSellersListSuccess(it: BestSellersListResponse?) {
+
+    }
+
+    private fun onGetBestSellersListFailed() {
 
     }
 

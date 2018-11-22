@@ -18,4 +18,6 @@
     <string name="year_published">Year Published</string>
     <string name="hint_isbn">ISBN</string>
     <string name="string_edit">Edit</string>
+    <string name="best_sellers">NY Times Best Sellers $1%s</string>
+    <string name="best_sellers_failed">Couldn\'t load best-sellers</string>
 </resources>

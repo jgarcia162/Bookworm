@@ -60,7 +60,7 @@ class FeedPresenterTest: BaseApiTest() {
             .until{ booksLoaded }
 
         verify(presentation).hideLoading()
-        verify(presentation).showBestSellersList(listOf(bestSellerBook))
+        verify(presentation).showBestSellersListOverview(listOf(bestSellerBook))
         verifyNoMoreInteractions(presentation)
     }
 
