@@ -38,4 +38,3 @@ class LibraryBookViewHolder(
     itemView.setOnClickListener(this)
   }
 }
-

@@ -19,8 +19,8 @@ interface NYTimesApi {
      */
     @GET("/svc/books/v3/lists/current/current/{list-name}.json")
     fun getBestSellersList(
-        @Query("api-key") apiKey: String,
-        @Path("list-name") listName: String
+        @Path("list-name") listName: String,
+        @Query("api-key") apiKey: String
     ): Single<BestSellersListResponse>
 
     /**

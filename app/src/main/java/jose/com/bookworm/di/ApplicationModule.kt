@@ -37,6 +37,7 @@ class ApplicationModule(val app: Application) {
     fun provideFeedPresenter(): FeedPresenter{
         httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         return FeedPresenter(
+            context = app,
             apiClient = ApiClient(httpLoggingInterceptor),
             mainThreadScheduler = AndroidSchedulers.mainThread(),
             ioScheduler = Schedulers.io()

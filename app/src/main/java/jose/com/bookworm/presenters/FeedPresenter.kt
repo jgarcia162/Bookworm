@@ -8,7 +8,7 @@ import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
 import jose.com.bookworm.model.nytimes.BestSellersListName
 import jose.com.bookworm.model.nytimes.BestSellersListResponse
-import jose.com.bookworm.model.nytimes.BestSellersOverviewResponse
+import jose.com.bookworm.model.nytimes.NYTimesBook
 import jose.com.bookworm.network.ApiClient
 import jose.com.bookworm.presentations.FeedPresentation
 
@@ -20,6 +20,7 @@ class FeedPresenter(
 ) : BasePresenter() {
     private var presentation: FeedPresentation? = null
     private lateinit var compositeDisposable: CompositeDisposable
+    private val topBooks = mutableListOf<NYTimesBook>()
 
     fun attach(presentation: FeedPresentation) {
         this.presentation = presentation
@@ -33,6 +34,12 @@ class FeedPresenter(
 
     fun getBestSellersOverview(onLoadComplete: () -> Unit = {}) {
         compositeDisposable += apiClient.getTopFiveBestSellers()
+            .map { it.results.lists }
+            .map {
+                for (list in it) {
+                    topBooks.addAll(list.books)
+                }
+            }
             .subscribeOn(ioScheduler)
             .observeOn(mainThreadScheduler)
             .doOnSubscribe {
@@ -43,13 +50,13 @@ class FeedPresenter(
                 onLoadComplete()
             }
             .subscribeBy(
-                onSuccess = { onGetBestSellersOverviewSuccess(it) },
+                onSuccess = { onGetBestSellersOverviewSuccess() },
                 onError = { onGetBestSellersOverviewFailed() }
             )
     }
 
-    private fun onGetBestSellersOverviewSuccess(it: BestSellersOverviewResponse?) {
-        presentation?.showBestSellersListOverview(it?.results?.lists?.get(0)?.books)
+    private fun onGetBestSellersOverviewSuccess() {
+        presentation?.showBestSellersList(topBooks)
     }
 
     private fun onGetBestSellersOverviewFailed() {
@@ -100,7 +107,7 @@ class FeedPresenter(
         presentation?.showGetBestSellersFailed()
     }
 
-    fun getBestSellersList(listName: String, onLoadComplete: () -> Unit){
+    fun getBestSellersList(listName: String, onLoadComplete: () -> Unit) {
         compositeDisposable += apiClient.getBestSellersList(listName)
             .subscribeOn(ioScheduler)
             .observeOn(mainThreadScheduler)

@@ -23,9 +23,10 @@ class FeedPresenterTest: BaseApiTest() {
         super.setup()
 
         presenter = FeedPresenter(
-            apiClient = client,
-            mainThreadScheduler = Schedulers.io(),
-            ioScheduler = Schedulers.io()
+            context,
+            client,
+            Schedulers.io(),
+            Schedulers.io()
         )
     }
 
@@ -60,7 +61,7 @@ class FeedPresenterTest: BaseApiTest() {
             .until{ booksLoaded }
 
         verify(presentation).hideLoading()
-        verify(presentation).showBestSellersListOverview(listOf(bestSellerBook))
+        verify(presentation).showBestSellersList(listOf(bestSellerBook))
         verifyNoMoreInteractions(presentation)
     }
 

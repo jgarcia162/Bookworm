@@ -12,4 +12,4 @@ data class BestSellersBook(
     val isbn10: String,
     @SerializedName("primary_isbn13")
     val isbn13: String
-)
+): NYTimesBook(title, author)

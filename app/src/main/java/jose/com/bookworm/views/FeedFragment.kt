@@ -13,8 +13,7 @@ import jose.com.bookworm.adapter.GenericAdapter
 import jose.com.bookworm.di.Injector
 import jose.com.bookworm.extensions.addChips
 import jose.com.bookworm.extensions.toast
-import jose.com.bookworm.model.nytimes.BestSellersBook
-import jose.com.bookworm.model.nytimes.BestSellersOverviewBook
+import jose.com.bookworm.model.nytimes.NYTimesBook
 import jose.com.bookworm.model.roommodel.Book
 import jose.com.bookworm.presentations.FeedPresentation
 import jose.com.bookworm.presenters.FeedPresenter
@@ -24,7 +23,7 @@ import javax.inject.Inject
 class FeedFragment : Fragment(), FeedPresentation {
     @Inject
     lateinit var presenter: FeedPresenter
-    private lateinit var bestSellersAdapter: GenericAdapter<BestSellersOverviewBook>
+    private lateinit var bestSellersAdapter: GenericAdapter<NYTimesBook>
     private lateinit var currentReadingAdapter: GenericAdapter<Book>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -85,10 +84,6 @@ class FeedFragment : Fragment(), FeedPresentation {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun showBestSellersListOverview(books: List<BestSellersOverviewBook>?) {
-        bestSellersAdapter.data = books!!
-    }
-
     override fun loadListNamesChips(names: MutableList<Chip>) {
         list_names_chips.addChips(names)
     }
@@ -104,8 +99,8 @@ class FeedFragment : Fragment(), FeedPresentation {
         suggestions_tv.text = getString(R.string.best_sellers_failed)
     }
 
-    override fun showBestSellersList(books: List<BestSellersBook>) {
-
+    override fun showBestSellersList(books: List<NYTimesBook>) {
+        bestSellersAdapter.data = books
     }
 
     override fun showBestSellersListSuccess(listName: String) {

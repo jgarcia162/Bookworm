@@ -19,4 +19,4 @@ data class BestSellersOverviewBook(
     val title: String,
     @SerializedName("buy_links")
     val buyLinks: List<BuyLink>
-)
+): NYTimesBook(title, author)

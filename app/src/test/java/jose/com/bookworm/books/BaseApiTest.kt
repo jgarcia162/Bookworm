@@ -1,18 +1,22 @@
 package jose.com.bookworm.books
 
+import android.content.Context
 import jose.com.bookworm.network.ApiClient
 import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
 import org.junit.Before
+import org.mockito.Mockito
 
 open class BaseApiTest {
+    lateinit var context: Context
     lateinit var mockWebServer: MockWebServer
     lateinit var client: ApiClient
     lateinit var mockBaseUrl: String
 
     @Before
     open fun setup(){
+        context = Mockito.mock(Context::class.java)
         mockWebServer = MockWebServer()
         mockWebServer.start()
 
