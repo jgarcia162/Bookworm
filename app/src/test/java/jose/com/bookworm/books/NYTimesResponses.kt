@@ -3,7 +3,9 @@ package jose.com.bookworm.books
 import okhttp3.mockwebserver.MockResponse
 import org.intellij.lang.annotations.Language
 
-/** Mocked responses from [NYTimesApi] endpoints*/
+/**
+ * Mocked responses from [NYTimesApi] endpoints
+ */
 
 @Language("JSON")
 const val successfulGetBestSellersListJson =

@@ -6,8 +6,9 @@ import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
+import jose.com.bookworm.model.nytimes.BestSellersBook
 import jose.com.bookworm.model.nytimes.BestSellersListName
-import jose.com.bookworm.model.nytimes.BestSellersListResponse
+import jose.com.bookworm.model.nytimes.BestSellersOverviewList
 import jose.com.bookworm.model.nytimes.NYTimesBook
 import jose.com.bookworm.network.ApiClient
 import jose.com.bookworm.presentations.FeedPresentation
@@ -30,16 +31,12 @@ class FeedPresenter(
 
     fun detach() {
         presentation = null
+
+        compositeDisposable.dispose()
     }
 
     fun getBestSellersOverview(onLoadComplete: () -> Unit = {}) {
         compositeDisposable += apiClient.getTopFiveBestSellers()
-            .map { it.results.lists }
-            .map {
-                for (list in it) {
-                    topBooks.addAll(list.books)
-                }
-            }
             .subscribeOn(ioScheduler)
             .observeOn(mainThreadScheduler)
             .doOnSubscribe {
@@ -50,20 +47,24 @@ class FeedPresenter(
                 onLoadComplete()
             }
             .subscribeBy(
-                onSuccess = { onGetBestSellersOverviewSuccess() },
+                onSuccess = { onGetBestSellersOverviewSuccess(it) },
                 onError = { onGetBestSellersOverviewFailed() }
             )
     }
 
-    private fun onGetBestSellersOverviewSuccess() {
+    private fun onGetBestSellersOverviewSuccess(lists: List<BestSellersOverviewList>) {
+        for (list in lists) {
+            topBooks.addAll(list.books)
+        }
         presentation?.showBestSellersList(topBooks)
+        presentation?.showGetBestSellersSuccess("")
     }
 
     private fun onGetBestSellersOverviewFailed() {
         presentation?.showGetBestSellersFailed()
     }
 
-    private fun getBestSellersListNames(onLoadComplete: () -> Unit) {
+    fun getBestSellersListNames(onLoadComplete: () -> Unit = {}) {
         compositeDisposable += apiClient.getBestSellersListNames()
             .map {
                 it.results
@@ -90,15 +91,15 @@ class FeedPresenter(
         }
         val chips = createChips(names)
         presentation?.loadListNamesChips(chips)
-        presentation?.showGetBestSellersSuccess("")
     }
 
-    private fun createChips(names: MutableList<String>): MutableList<Chip> {
+    fun createChips(names: MutableList<String>): MutableList<Chip> {
         val chips = mutableListOf<Chip>()
         for (name in names) {
-            val newChip = Chip(context)
-            newChip.text = name
-            chips.add(newChip)
+            val chip = Chip(context).apply {
+                text = name
+            }
+            chips.add(chip)
         }
         return chips
     }
@@ -107,8 +108,14 @@ class FeedPresenter(
         presentation?.showGetBestSellersFailed()
     }
 
-    fun getBestSellersList(listName: String, onLoadComplete: () -> Unit) {
+    fun getBestSellersList(listName: String = "", onLoadComplete: () -> Unit = {}) {
+        val books = mutableListOf<BestSellersBook>()
         compositeDisposable += apiClient.getBestSellersList(listName)
+            .map {
+                for (item in it.results) {
+                    books.add(item.bookDetails[0])
+                }
+            }
             .subscribeOn(ioScheduler)
             .observeOn(mainThreadScheduler)
             .doOnSubscribe {
@@ -119,13 +126,14 @@ class FeedPresenter(
                 onLoadComplete()
             }
             .subscribeBy(
-                onSuccess = { onGetBestSellersListSuccess(it) },
+                onSuccess = { onGetBestSellersListSuccess(listName, books) },
                 onError = { onGetBestSellersListFailed() }
             )
     }
 
-    private fun onGetBestSellersListSuccess(it: BestSellersListResponse?) {
-
+    private fun onGetBestSellersListSuccess(listName: String, books: MutableList<BestSellersBook>) {
+        presentation?.showBestSellersList(books)
+        presentation?.showGetBestSellersSuccess(listName)
     }
 
     private fun onGetBestSellersListFailed() {

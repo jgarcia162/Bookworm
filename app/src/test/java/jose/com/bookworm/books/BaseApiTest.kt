@@ -6,7 +6,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
 import org.junit.Before
-import org.mockito.Mockito
+import org.mockito.Mockito.mock
 
 open class BaseApiTest {
     lateinit var context: Context
@@ -15,8 +15,8 @@ open class BaseApiTest {
     lateinit var mockBaseUrl: String
 
     @Before
-    open fun setup(){
-        context = Mockito.mock(Context::class.java)
+    open fun setup() {
+        context = mock(Context::class.java)
         mockWebServer = MockWebServer()
         mockWebServer.start()
 
@@ -25,7 +25,7 @@ open class BaseApiTest {
             .toString()
 
         client = ApiClient(
-            HttpLoggingInterceptor{
+            HttpLoggingInterceptor {
                 println(it)
             }.apply {
                 level = HttpLoggingInterceptor.Level.BODY
@@ -37,7 +37,7 @@ open class BaseApiTest {
     }
 
     @After
-    fun teardown(){
+    fun teardown() {
         mockWebServer.shutdown()
     }
 }

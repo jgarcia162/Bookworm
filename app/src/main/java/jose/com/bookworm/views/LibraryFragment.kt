@@ -37,8 +37,8 @@ class LibraryFragment : Fragment(), LibraryPresentation {
 
     val model = ViewModelProviders.of(this).get(BookViewModel::class.java)
     model.getBooks().observe(this, Observer<List<Book>> { books ->
-      adapter = GenericAdapter(R.layout.book_list_item)
-      adapter.data = books!!
+//      adapter = GenericAdapter(R.layout.book_list_item)
+//      adapter.data = books!!
     })
   }
 

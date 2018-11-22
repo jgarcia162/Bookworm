@@ -18,15 +18,16 @@ import javax.inject.Singleton
 @Module(includes = [DaoModule::class])
 class ApplicationModule(val app: Application) {
 
-    private val httpLoggingInterceptor = HttpLoggingInterceptor{ it ->
+    private val httpLoggingInterceptor = HttpLoggingInterceptor { it ->
         Timber.d("LOGGER: $it")
-    }
+    }.apply { level = HttpLoggingInterceptor.Level.BODY }
+
     @Provides
     fun provideContext(): Context = app
 
     @Provides
     @Singleton
-    fun provideApiClient(): ApiClient{
+    fun provideApiClient(): ApiClient {
         httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         return ApiClient(
             loggingInterceptor = httpLoggingInterceptor
@@ -34,8 +35,7 @@ class ApplicationModule(val app: Application) {
     }
 
     @Provides
-    fun provideFeedPresenter(): FeedPresenter{
-        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+    fun provideFeedPresenter(): FeedPresenter {
         return FeedPresenter(
             context = app,
             apiClient = ApiClient(httpLoggingInterceptor),
@@ -45,20 +45,17 @@ class ApplicationModule(val app: Application) {
     }
 
     @Provides
-    fun provideBookDetailsPresenter(): BookDetailsPresenter{
-        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+    fun provideBookDetailsPresenter(): BookDetailsPresenter {
         return BookDetailsPresenter(apiClient = ApiClient(httpLoggingInterceptor))
     }
 
     @Provides
-    fun provideLibraryPresenter(): LibraryPresenter{
-        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+    fun provideLibraryPresenter(): LibraryPresenter {
         return LibraryPresenter(apiClient = ApiClient(httpLoggingInterceptor))
     }
 
     @Provides
-    fun provideSearchPresenter(): SearchPresenter{
-        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+    fun provideSearchPresenter(): SearchPresenter {
         return SearchPresenter(apiClient = ApiClient(httpLoggingInterceptor))
     }
 }

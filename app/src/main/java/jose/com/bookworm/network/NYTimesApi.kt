@@ -16,25 +16,27 @@ import retrofit2.http.Query
 interface NYTimesApi {
     /**
      * Gets a best sellers list by name
+     *
+     * "https://api.nytimes.com/svc/books/v3/lists/overview.json?api-key=3f015948418c4a2383be12847ff477f1
      */
-    @GET("/svc/books/v3/lists/current/current/{list-name}.json")
+    @GET("lists.json{list}")
     fun getBestSellersList(
-        @Path("list-name") listName: String,
+        @Path("list") listName: String,
         @Query("api-key") apiKey: String
     ): Single<BestSellersListResponse>
 
     /**
      * Gets top 5 books from each best sellers list
      */
-    @GET("/svc/books/v3/lists/overview.json")
+    @GET("lists/overview.json")
     fun getTopFiveBestSellers(
         @Query("api-key") apiKey: String
     ): Single<BestSellersOverviewResponse>
 
     /**
-     * Gets list of all best seller overviewLists' names
+     * Gets list of all best seller list names
      */
-    @GET("/svc/books/v3/overviewLists/names.json")
+    @GET("lists/names.json")
     fun getBestSellersListNames(
         @Query("api-key") apiKey: String
     ): Single<BestSellersListNamesResponse>

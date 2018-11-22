@@ -11,9 +11,8 @@ interface FeedPresentation {
     fun showLoading()
     fun hideLoading()
     fun showBestSellersList(books: List<NYTimesBook>)
-    fun showBestSellersListSuccess(listName: String)
     fun showBestSellersListFailed()
     fun showGetBestSellersFailed()
-    fun showGetBestSellersSuccess(title: String)
+    fun showGetBestSellersSuccess(listName: String)
     fun loadListNamesChips(names: MutableList<Chip>)
 }

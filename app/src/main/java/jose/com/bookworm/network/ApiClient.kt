@@ -1,7 +1,9 @@
 package jose.com.bookworm.network
 
+import io.reactivex.Single
 import jose.com.bookworm.BuildConfig
 import jose.com.bookworm.model.googlebooks.Volume
+import jose.com.bookworm.model.nytimes.BestSellersOverviewList
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -45,7 +47,7 @@ class ApiClient(
         val builder = OkHttpClient.Builder()
 
         if (loggingInterceptor != null) {
-            builder.addInterceptor(this.loggingInterceptor!!)
+            builder.addInterceptor(loggingInterceptor!!)
         }
 
         val client = builder.build()
@@ -69,7 +71,7 @@ class ApiClient(
         const val BOOKS_API_KEY: String = BuildConfig.ApiKey
         const val BOOKS_BASE_URL: String = "https://www.googleapis.com/books/v1/"
         const val NYTIMES_API_KEY: String = BuildConfig.TimesApiKey
-        const val NYTIMES_BASE_URL: String = "http://api.nytimes.com/svc/books/v3/overviewLists/"
+        const val NYTIMES_BASE_URL: String = "https://api.nytimes.com/svc/books/v3/"
     }
 
     /**
@@ -98,14 +100,17 @@ class ApiClient(
      *
      * See [NYTimesApi.getBestSellersList]
      */
-    fun getBestSellersList(listName: String) = nyTimesApi.getBestSellersList(NYTIMES_API_KEY, listName)
+    fun getBestSellersList(listName: String) =
+        nyTimesApi.getBestSellersList(NYTIMES_API_KEY, listName)
 
     /**
      * Gets a list of the top 5 [BestSellersBook] from each [TimesList]
      *
      * See [NYTimesApi.getTopFiveBestSellers]
      */
-    fun getTopFiveBestSellers() = nyTimesApi.getTopFiveBestSellers(NYTIMES_API_KEY)
+    fun getTopFiveBestSellers(): Single<List<BestSellersOverviewList>> {
+        return nyTimesApi.getTopFiveBestSellers(NYTIMES_API_KEY).map { it.results.lists }
+    }
 
     /**
      * Gets a list of all [TimesListName]s

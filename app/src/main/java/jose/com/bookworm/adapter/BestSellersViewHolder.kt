@@ -9,8 +9,8 @@ import jose.com.bookworm.model.nytimes.NYTimesBook
 class BestSellersViewHolder(
     itemView: View
 ) : RecyclerView.ViewHolder(itemView), GenericAdapter.Binder<NYTimesBook>, View.OnClickListener  {
-    private val titleTV: TextView = itemView.findViewById(R.id.title_tv)
-    private val authorTV: TextView = itemView.findViewById(R.id.author_tv)
+    private val titleTV: TextView = itemView.findViewById(R.id.seller_title_tv)
+    private val authorTV: TextView = itemView.findViewById(R.id.seller_author_tv)
 
     override fun bind(data: NYTimesBook) {
         titleTV.text = data.bookTitle

@@ -4,12 +4,9 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import jose.com.bookworm.R
 
 @Suppress("UNCHECKED_CAST")
-class GenericAdapter<T>(
-    val layout: Int
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+abstract class GenericAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var data: List<T> = emptyList()
         set(value) {
             field = value
@@ -22,18 +19,23 @@ class GenericAdapter<T>(
     ): RecyclerView.ViewHolder {
         return getViewHolder(
             LayoutInflater.from(parent.context)
-                .inflate(layout, parent, false)
+                .inflate(viewType, parent, false)
             , viewType
         )
     }
 
-    private fun getViewHolder(view: View, viewType: Int): RecyclerView.ViewHolder{
-        return when(viewType){
-            R.layout.book_list_item -> LibraryBookViewHolder(view)
-            R.layout.best_seller_list_item -> BestSellersViewHolder(view)
-            else -> CurrentReadingViewHolder(view)
-        }
-    }
+    abstract fun getViewHolder(view: View, viewType: Int): RecyclerView.ViewHolder
+//        return when (viewType) {
+//            R.layout.book_list_item -> LibraryBookViewHolder(view)
+//            R.layout.best_seller_list_item -> BestSellersViewHolder(view)
+//            else -> CurrentReadingViewHolder(view)
+//        }
+
+
+    override fun getItemViewType(position: Int): Int =
+        getLayoutId(position, data[position])
+
+    abstract fun getLayoutId(position: Int, obj: T): Int
 
     override fun onBindViewHolder(
         holder: RecyclerView.ViewHolder,
@@ -42,7 +44,7 @@ class GenericAdapter<T>(
         (holder as Binder<T>).bind(data[position])
     }
 
-    override fun getItemCount(): Int = data.size
+    override fun getItemCount() = data.size
 
     interface Binder<T> {
         fun bind(data: T)
