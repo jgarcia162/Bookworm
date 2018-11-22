@@ -41,6 +41,7 @@ class FeedFragment : Fragment(), FeedPresentation {
 
         bestSellersAdapter = GenericAdapter(R.layout.best_seller_list_item)
         recommended_rv.adapter = bestSellersAdapter
+        presenter.getBestSellersOverview()
     }
 
     override fun onStart() {
@@ -81,6 +82,10 @@ class FeedFragment : Fragment(), FeedPresentation {
 
     override fun showBestSellersList(books: List<BestSellersOverviewBook>?) {
         bestSellersAdapter.data = books!!
+    }
+
+    override fun loadListNamesChips(names: MutableList<String>) {
+
     }
 
     override fun showGetBestSellersFailed() { activity?.toast("Failed to get best-sellers") }

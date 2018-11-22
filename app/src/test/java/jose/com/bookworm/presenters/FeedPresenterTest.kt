@@ -3,9 +3,12 @@ package jose.com.bookworm.presenters
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
+import io.reactivex.observers.TestObserver
 import io.reactivex.schedulers.Schedulers
 import jose.com.bookworm.books.BaseApiTest
+import jose.com.bookworm.books.successfulGetBestSellersListNamesResponse
 import jose.com.bookworm.books.successfulGetTopFiveBestSellersResponse
+import jose.com.bookworm.model.nytimes.BestSellersListNamesResponse
 import jose.com.bookworm.model.nytimes.BestSellersOverviewBook
 import jose.com.bookworm.presentations.FeedPresentation
 import org.awaitility.Awaitility.await
@@ -59,5 +62,17 @@ class FeedPresenterTest: BaseApiTest() {
         verify(presentation).hideLoading()
         verify(presentation).showBestSellersList(listOf(bestSellerBook))
         verifyNoMoreInteractions(presentation)
+    }
+
+    @Test
+    fun `Get names of all best-sellers lists`(){
+        mockWebServer.enqueue(successfulGetBestSellersListNamesResponse)
+
+        val testObserver = TestObserver<BestSellersListNamesResponse>()
+        val response = client.getBestSellersListNames()
+
+        response.subscribe(testObserver)
+        testObserver.awaitTerminalEvent(2, TimeUnit.SECONDS)
+        testObserver.assertNoErrors()
     }
 }

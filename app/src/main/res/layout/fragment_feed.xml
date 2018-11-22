@@ -45,4 +45,28 @@
         app:layout_constraintVertical_weight="1"
         tools:listitem="@layout/best_seller_list_item" />
 
+    <HorizontalScrollView
+        android:id="@+id/best_sellers_scroll_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recommended_rv"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <android.support.design.chip.ChipGroup
+            android:id="@+id/list_names_chips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <android.support.design.chip.Chip
+                style="@style/Widget.MaterialComponents.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Fiction" />
+
+        </android.support.design.chip.ChipGroup>
+
+    </HorizontalScrollView>
+
 </android.support.constraint.ConstraintLayout>
