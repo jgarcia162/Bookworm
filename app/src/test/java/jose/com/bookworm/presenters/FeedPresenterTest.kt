@@ -3,6 +3,7 @@ package jose.com.bookworm.presenters
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
+import io.reactivex.schedulers.Schedulers
 import jose.com.bookworm.books.BaseApiTest
 import jose.com.bookworm.books.successfulGetTopFiveBestSellersResponse
 import jose.com.bookworm.model.nytimes.BestSellersOverviewBook
@@ -19,7 +20,9 @@ class FeedPresenterTest: BaseApiTest() {
         super.setup()
 
         presenter = FeedPresenter(
-            apiClient = client
+            apiClient = client,
+            mainThreadScheduler = Schedulers.io(),
+            ioScheduler = Schedulers.io()
         )
     }
 
@@ -34,7 +37,6 @@ class FeedPresenterTest: BaseApiTest() {
             author = "Lee Child",
             bookImage = "https://s1.nyt.com/du/books/images/9780399593512.jpg",
             description = "Jack Reacher explores the New England town where his father was born and a Canadian couple now find themselves stranded.",
-            isbn10 = "",
             isbn13 = "9781473542303",
             publisher = "Delacorte",
             rank = 1,
@@ -45,7 +47,9 @@ class FeedPresenterTest: BaseApiTest() {
         presenter.attach(presentation)
 
         var booksLoaded = false
+
         presenter.getBestSellersOverview { booksLoaded = true }
+
         verify(presentation).showLoading()
 
         await()
@@ -55,6 +59,5 @@ class FeedPresenterTest: BaseApiTest() {
         verify(presentation).hideLoading()
         verify(presentation).showBestSellersList(listOf(bestSellerBook))
         verifyNoMoreInteractions(presentation)
-
     }
 }

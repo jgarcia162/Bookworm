@@ -4,6 +4,8 @@ import android.app.Application
 import android.content.Context
 import dagger.Module
 import dagger.Provides
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import jose.com.bookworm.network.ApiClient
 import jose.com.bookworm.presenters.BookDetailsPresenter
 import jose.com.bookworm.presenters.FeedPresenter
@@ -34,7 +36,11 @@ class ApplicationModule(val app: Application) {
     @Provides
     fun provideFeedPresenter(): FeedPresenter{
         httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-        return FeedPresenter(apiClient = ApiClient(httpLoggingInterceptor))
+        return FeedPresenter(
+            apiClient = ApiClient(httpLoggingInterceptor),
+            mainThreadScheduler = AndroidSchedulers.mainThread(),
+            ioScheduler = Schedulers.io()
+        )
     }
 
     @Provides

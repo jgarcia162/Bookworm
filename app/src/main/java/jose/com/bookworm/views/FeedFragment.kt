@@ -13,6 +13,7 @@ import jose.com.bookworm.model.nytimes.BestSellersOverviewBook
 import jose.com.bookworm.model.roommodel.Book
 import jose.com.bookworm.presentations.FeedPresentation
 import jose.com.bookworm.presenters.FeedPresenter
+import kotlinx.android.synthetic.main.fragment_feed.*
 import javax.inject.Inject
 
 class FeedFragment : Fragment(), FeedPresentation {
@@ -39,6 +40,7 @@ class FeedFragment : Fragment(), FeedPresentation {
         Injector.applicationComponent.inject(this)
 
         bestSellersAdapter = GenericAdapter(R.layout.best_seller_list_item)
+        recommended_rv.adapter = bestSellersAdapter
     }
 
     override fun onStart() {
@@ -78,7 +80,7 @@ class FeedFragment : Fragment(), FeedPresentation {
     }
 
     override fun showBestSellersList(books: List<BestSellersOverviewBook>?) {
-
+        bestSellersAdapter.data = books!!
     }
 
     override fun showGetBestSellersFailed() { activity?.toast("Failed to get best-sellers") }

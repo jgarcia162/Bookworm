@@ -66,10 +66,10 @@ class ApiClient(
     }
 
     companion object {
-        val BOOKS_API_KEY: String = BuildConfig.ApiKey
-        val BOOKS_BASE_URL: String = "https://www.googleapis.com/books/v1/"
-        val NYTIMES_API_KEY: String = BuildConfig.TimesApiKey
-        val NYTIMES_BASE_URL: String = "http://api.nytimes.com/svc/books/v3/overviewLists/"
+        const val BOOKS_API_KEY: String = BuildConfig.ApiKey
+        const val BOOKS_BASE_URL: String = "https://www.googleapis.com/books/v1/"
+        const val NYTIMES_API_KEY: String = BuildConfig.TimesApiKey
+        const val NYTIMES_BASE_URL: String = "http://api.nytimes.com/svc/books/v3/overviewLists/"
     }
 
     /**
@@ -98,19 +98,19 @@ class ApiClient(
      *
      * See [NYTimesApi.getBestSellersList]
      */
-    fun getBestSellersList(listName: String) = nyTimesApi.getBestSellersList(listName)
+    fun getBestSellersList(listName: String) = nyTimesApi.getBestSellersList(NYTIMES_API_KEY, listName)
 
     /**
      * Gets a list of the top 5 [BestSellersBook] from each [TimesList]
      *
      * See [NYTimesApi.getTopFiveBestSellers]
      */
-    fun getTopFiveBestSellers() = nyTimesApi.getTopFiveBestSellers()
+    fun getTopFiveBestSellers() = nyTimesApi.getTopFiveBestSellers(NYTIMES_API_KEY)
 
     /**
      * Gets a list of all [TimesListName]s
      *
      * See [NYTimesApi.getBestSellersListNames]
      */
-    fun getBestSellersListNames() = nyTimesApi.getBestSellersListNames()
+    fun getBestSellersListNames() = nyTimesApi.getBestSellersListNames(NYTIMES_API_KEY)
 }

@@ -6,7 +6,7 @@ import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
 import org.junit.Before
 
-public open class BaseApiTest {
+open class BaseApiTest {
     lateinit var mockWebServer: MockWebServer
     lateinit var client: ApiClient
     lateinit var mockBaseUrl: String
@@ -23,8 +23,13 @@ public open class BaseApiTest {
         client = ApiClient(
             HttpLoggingInterceptor{
                 println(it)
-            }.apply { level = HttpLoggingInterceptor.Level.BODY }
-        )
+            }.apply {
+                level = HttpLoggingInterceptor.Level.BODY
+            }
+        ).apply {
+            booksBaseUrl = mockBaseUrl
+            nyTimesBaseUrl = mockBaseUrl
+        }
     }
 
     @After

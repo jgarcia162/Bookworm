@@ -11,9 +11,9 @@ data class BestSellersOverviewBook(
     val bookImage: String,
     val description: String,
     @SerializedName("primary_isbn10")
-    val isbn10: String,
+    val isbn10: String = "",
     @SerializedName("primary_isbn13")
-    val isbn13: String,
+    val isbn13: String = "",
     val publisher: String,
     val rank: Int,
     val title: String,

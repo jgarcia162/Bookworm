@@ -35,6 +35,7 @@ dependencies {
     implementation deps.android.support.design
     implementation deps.android.support.constraintLayout
     implementation deps.android.support.recyclerView
+    implementation deps.android.support.exifinterface
     implementation deps.android.arch.lifecycle
     implementation deps.android.arch.room.runtime
     implementation deps.android.arch.room.rxJava
