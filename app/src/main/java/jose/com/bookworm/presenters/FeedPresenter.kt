@@ -26,9 +26,6 @@ class FeedPresenter(
         this.presentation = presentation
 
         compositeDisposable = CompositeDisposable()
-
-        getBestSellersOverview()
-        getBestSellersListNames()
     }
 
     fun detach() {
@@ -73,11 +70,7 @@ class FeedPresenter(
             }
             .subscribeOn(ioScheduler)
             .observeOn(mainThreadScheduler)
-            .doOnSubscribe {
-                presentation?.showLoading()
-            }
             .doAfterTerminate {
-                presentation?.hideLoading()
                 onLoadComplete()
             }
             .subscribeBy(

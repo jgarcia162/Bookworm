@@ -69,6 +69,9 @@ class FeedFragment : Fragment(), FeedPresentation {
         super.onStart()
 
         presenter.attach(this)
+
+        presenter.getBestSellersOverview()
+        presenter.getBestSellersListNames()
     }
 
     override fun onStop() {

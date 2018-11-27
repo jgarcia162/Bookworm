@@ -52,19 +52,19 @@ class FeedPresenterTest : BaseApiTest() {
 
         presenter.attach(presentation)
 
-        var booksLoaded = false
+        var bestSellersLoaded = false
 
-        presenter.getBestSellersOverview { booksLoaded = true }
+        presenter.getBestSellersOverview { bestSellersLoaded = true }
 
         verify(presentation).showLoading()
 
         await()
             .atMost(2, SECONDS)
-            .until { booksLoaded }
+            .until { bestSellersLoaded }
 
         verify(presentation).hideLoading()
         verify(presentation).showBestSellersList(listOf(bestSellerBook))
-        verify(presentation).showGetBestSellersSuccess("")
+        verify(presentation).showGetBestSellersSuccess()
         verifyNoMoreInteractions(presentation)
     }
 
@@ -78,14 +78,12 @@ class FeedPresenterTest : BaseApiTest() {
 
         presenter.getBestSellersListNames { listLoaded = true }
 
-        verify(presentation).showLoading()
-
         await()
             .atMost(2, SECONDS)
             .until { listLoaded }
 
-        verify(presentation).hideLoading()
         verify(presentation).loadListNamesChips(mutableListOf("Combined Print & E-Book Fiction"))
+        verifyNoMoreInteractions(presentation)
     }
 
     @Test
