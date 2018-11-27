@@ -13,8 +13,8 @@ class BestSellersViewHolder(
     private val authorTV: TextView = itemView.findViewById(R.id.seller_author_tv)
 
     override fun bind(data: NYTimesBook) {
-        titleTV.text = data.bookTitle
-        authorTV.text = data.bookAuthor
+        titleTV.text = data.title
+        authorTV.text = data.author
     }
 
     override fun onClick(p0: View?) {

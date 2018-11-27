@@ -53,7 +53,6 @@ class FeedFragment : Fragment(), FeedPresentation {
             override fun getLayoutId(position: Int, obj: NYTimesBook): Int {
                 return R.layout.best_seller_list_item
             }
-
         }
         recommended_rv.setHasFixedSize(true)
         recommended_rv.adapter = bestSellersAdapter
@@ -71,6 +70,7 @@ class FeedFragment : Fragment(), FeedPresentation {
 
         presenter.attach(this)
         presenter.getBestSellersOverview()
+//        presenter.getBestSellersListNames()
     }
 
     override fun onStop() {
@@ -123,6 +123,6 @@ class FeedFragment : Fragment(), FeedPresentation {
     }
 
     override fun showBestSellersListFailed() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 }

@@ -12,6 +12,7 @@ import jose.com.bookworm.model.nytimes.BestSellersOverviewList
 import jose.com.bookworm.model.nytimes.NYTimesBook
 import jose.com.bookworm.network.ApiClient
 import jose.com.bookworm.presentations.FeedPresentation
+import timber.log.Timber
 
 class FeedPresenter(
     private val context: Context,
@@ -55,12 +56,14 @@ class FeedPresenter(
     private fun onGetBestSellersOverviewSuccess(lists: List<BestSellersOverviewList>) {
         for (list in lists) {
             topBooks.addAll(list.books)
+            Timber.d("FIRST BOOK ${topBooks[0].title}")
         }
         presentation?.showBestSellersList(topBooks)
         presentation?.showGetBestSellersSuccess("")
     }
 
     private fun onGetBestSellersOverviewFailed() {
+        Timber.d("onGetBestSellersOverviewFailed")
         presentation?.showGetBestSellersFailed()
     }
 

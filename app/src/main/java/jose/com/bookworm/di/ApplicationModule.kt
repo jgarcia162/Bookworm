@@ -28,7 +28,7 @@ class ApplicationModule(val app: Application) {
     @Provides
     @Singleton
     fun provideApiClient(): ApiClient {
-        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+//        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         return ApiClient(
             loggingInterceptor = httpLoggingInterceptor
         )

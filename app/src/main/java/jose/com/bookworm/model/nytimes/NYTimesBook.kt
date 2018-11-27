@@ -1,7 +1,7 @@
 package jose.com.bookworm.model.nytimes
 
-open class NYTimesBook(
-    val bookTitle: String,
-    val bookAuthor: String
+abstract class NYTimesBook{
+    abstract val title: String
+    abstract val author: String
+}
 
-)

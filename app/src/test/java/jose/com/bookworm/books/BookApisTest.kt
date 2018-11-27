@@ -4,7 +4,7 @@ import io.reactivex.observers.TestObserver
 import jose.com.bookworm.model.VolumesResponse
 import jose.com.bookworm.model.nytimes.BestSellersListNamesResponse
 import jose.com.bookworm.model.nytimes.BestSellersListResponse
-import jose.com.bookworm.model.nytimes.BestSellersOverviewResponse
+import jose.com.bookworm.model.nytimes.BestSellersOverviewList
 import org.junit.Test
 import java.util.concurrent.TimeUnit.SECONDS
 
@@ -75,7 +75,7 @@ class BookApisTest: BaseApiTest(){
     fun `Verify client search for best sellers overview`(){
         mockWebServer.enqueue(successfulGetTopFiveBestSellersResponse)
 
-        val testObserver = TestObserver<BestSellersOverviewResponse>()
+        val testObserver = TestObserver<List<BestSellersOverviewList>>()
         val response = client.getTopFiveBestSellers()
 
         response.subscribe(testObserver)
