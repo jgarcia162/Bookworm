@@ -69,8 +69,6 @@ class FeedFragment : Fragment(), FeedPresentation {
         super.onStart()
 
         presenter.attach(this)
-        presenter.getBestSellersOverview()
-//        presenter.getBestSellersListNames()
     }
 
     override fun onStop() {
@@ -103,8 +101,8 @@ class FeedFragment : Fragment(), FeedPresentation {
 
     }
 
-    override fun loadListNamesChips(names: MutableList<Chip>) {
-        list_names_chips.addChips(names)
+    override fun loadListNamesChips(listTitles: MutableList<String>) {
+        list_names_chips.addChips(listTitles)
     }
 
     override fun showGetBestSellersSuccess(listName: String) {

@@ -1,6 +1,5 @@
 package jose.com.bookworm.presentations
 
-import android.support.design.chip.Chip
 import jose.com.bookworm.model.nytimes.NYTimesBook
 
 interface FeedPresentation {
@@ -13,6 +12,6 @@ interface FeedPresentation {
     fun showBestSellersList(books: List<NYTimesBook>)
     fun showBestSellersListFailed()
     fun showGetBestSellersFailed()
-    fun showGetBestSellersSuccess(listName: String)
-    fun loadListNamesChips(names: MutableList<Chip>)
+    fun showGetBestSellersSuccess(listName: String = "")
+    fun loadListNamesChips(listTitles: MutableList<String>)
 }

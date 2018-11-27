@@ -1,10 +1,8 @@
 package jose.com.bookworm.presenters
 
-import android.support.design.chip.Chip
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
-import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.schedulers.Schedulers
 import jose.com.bookworm.books.BaseApiTest
 import jose.com.bookworm.books.successfulGetBestSellersListNamesResponse
@@ -16,7 +14,6 @@ import jose.com.bookworm.presentations.FeedPresentation
 import org.awaitility.Awaitility.await
 import org.junit.Before
 import org.junit.Test
-import org.mockito.Mockito
 import java.util.concurrent.TimeUnit.SECONDS
 
 class FeedPresenterTest : BaseApiTest() {
@@ -82,18 +79,13 @@ class FeedPresenterTest : BaseApiTest() {
         presenter.getBestSellersListNames { listLoaded = true }
 
         verify(presentation).showLoading()
-        val chip = Mockito.mock(Chip::class.java)
-        chip.text = "Combined Print & E-Book Fiction"
-
-        whenever(presenter.createChips(mutableListOf("Combined Print & E-Book Fiction")))
-            .thenReturn(mutableListOf(chip))
 
         await()
             .atMost(2, SECONDS)
             .until { listLoaded }
 
         verify(presentation).hideLoading()
-        verify(presentation).loadListNamesChips(mutableListOf(chip))
+        verify(presentation).loadListNamesChips(mutableListOf("Combined Print & E-Book Fiction"))
     }
 
     @Test

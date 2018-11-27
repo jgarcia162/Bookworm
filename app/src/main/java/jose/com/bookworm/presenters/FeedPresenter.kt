@@ -1,7 +1,6 @@
 package jose.com.bookworm.presenters
 
 import android.content.Context
-import android.support.design.chip.Chip
 import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
@@ -12,7 +11,6 @@ import jose.com.bookworm.model.nytimes.BestSellersOverviewList
 import jose.com.bookworm.model.nytimes.NYTimesBook
 import jose.com.bookworm.network.ApiClient
 import jose.com.bookworm.presentations.FeedPresentation
-import timber.log.Timber
 
 class FeedPresenter(
     private val context: Context,
@@ -28,6 +26,9 @@ class FeedPresenter(
         this.presentation = presentation
 
         compositeDisposable = CompositeDisposable()
+
+        getBestSellersOverview()
+        getBestSellersListNames()
     }
 
     fun detach() {
@@ -56,14 +57,12 @@ class FeedPresenter(
     private fun onGetBestSellersOverviewSuccess(lists: List<BestSellersOverviewList>) {
         for (list in lists) {
             topBooks.addAll(list.books)
-            Timber.d("FIRST BOOK ${topBooks[0].title}")
         }
         presentation?.showBestSellersList(topBooks)
-        presentation?.showGetBestSellersSuccess("")
+        presentation?.showGetBestSellersSuccess()
     }
 
     private fun onGetBestSellersOverviewFailed() {
-        Timber.d("onGetBestSellersOverviewFailed")
         presentation?.showGetBestSellersFailed()
     }
 
@@ -88,23 +87,11 @@ class FeedPresenter(
     }
 
     private fun onGetBestSellersListNamesSuccess(listNames: List<BestSellersListName>) {
-        val names = mutableListOf<String>()
+        val listTitles = mutableListOf<String>()
         for (name in listNames) {
-            names.add(name.displayName)
+            listTitles.add(name.displayName)
         }
-        val chips = createChips(names)
-        presentation?.loadListNamesChips(chips)
-    }
-
-    fun createChips(names: MutableList<String>): MutableList<Chip> {
-        val chips = mutableListOf<Chip>()
-        for (name in names) {
-            val chip = Chip(context).apply {
-                text = name
-            }
-            chips.add(chip)
-        }
-        return chips
+        presentation?.loadListNamesChips(listTitles)
     }
 
     private fun onGetBestSellersListNamesFailed() {
