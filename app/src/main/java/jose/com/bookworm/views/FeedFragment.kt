@@ -3,7 +3,7 @@ package jose.com.bookworm.views
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
+import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import com.google.android.material.chip.Chip
@@ -11,20 +11,22 @@ import jose.com.bookworm.R
 import jose.com.bookworm.adapter.BestSellersViewHolder
 import jose.com.bookworm.adapter.GenericAdapter
 import jose.com.bookworm.di.Injector
-import jose.com.bookworm.extensions.addChips
+import jose.com.bookworm.extensions.onClick
 import jose.com.bookworm.extensions.toast
 import jose.com.bookworm.model.nytimes.NYTimesBook
 import jose.com.bookworm.model.roommodel.Book
 import jose.com.bookworm.presentations.FeedPresentation
 import jose.com.bookworm.presenters.FeedPresenter
 import kotlinx.android.synthetic.main.fragment_feed.*
+import timber.log.Timber
 import javax.inject.Inject
 
-class FeedFragment : androidx.fragment.app.Fragment(), FeedPresentation {
+class FeedFragment : androidx.fragment.app.Fragment(), FeedPresentation, View.OnClickListener {
     @Inject
     lateinit var presenter: FeedPresenter
     private lateinit var bestSellersAdapter: GenericAdapter<NYTimesBook>
     private lateinit var currentReadingAdapter: GenericAdapter<Book>
+    private lateinit var categoryTitles: List<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +46,10 @@ class FeedFragment : androidx.fragment.app.Fragment(), FeedPresentation {
         Injector.applicationComponent.inject(this)
 
         bestSellersAdapter = object : GenericAdapter<NYTimesBook>() {
-            override fun getViewHolder(view: View, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder {
+            override fun getViewHolder(
+                view: View,
+                viewType: Int
+            ): androidx.recyclerview.widget.RecyclerView.ViewHolder {
                 return BestSellersViewHolder(view)
             }
 
@@ -55,11 +60,11 @@ class FeedFragment : androidx.fragment.app.Fragment(), FeedPresentation {
         recommended_rv.setHasFixedSize(true)
         recommended_rv.adapter = bestSellersAdapter
 
-        list_names_chips.setOnCheckedChangeListener { chipGroup, i ->
-            val chip = chipGroup.findViewById<Chip>(i)
-            if (chip != null){
-                presenter.getBestSellersList(chip.chipText!!.toString())
-            }
+        filter_icon.onClick {
+            //TODO re-inflate fragment if created
+            ChipsDialogFragment()
+                .apply { chipTitles = categoryTitles }
+                .show(childFragmentManager.beginTransaction(), "categories_fragment")
         }
     }
 
@@ -103,22 +108,32 @@ class FeedFragment : androidx.fragment.app.Fragment(), FeedPresentation {
     }
 
     override fun loadListNamesChips(listTitles: MutableList<String>) {
-        list_names_chips.addChips(listTitles)
+        categoryTitles = listTitles
+    }
+
+    override fun onClick(v: View?) {
+        val chip = v as Chip
+        Timber.d("CHIP TEXT ${chip.text}")
+        presenter.getBestSellersList(chip.text!!.toString())
     }
 
     override fun showGetBestSellersSuccess(listName: String) {
-        best_sellers_chips_scroll_view.visibility = VISIBLE
         suggestions_tv.text = getString(R.string.best_sellers, listName)
+        filter_icon.visibility = VISIBLE
     }
 
     override fun showGetBestSellersFailed() {
         activity?.toast(getString(R.string.best_sellers_failed))
-        best_sellers_chips_scroll_view.visibility = GONE
         suggestions_tv.text = getString(R.string.best_sellers_failed)
+        filter_icon.visibility = INVISIBLE
     }
 
     override fun showBestSellersList(books: List<NYTimesBook>) {
         bestSellersAdapter.data = books
+    }
+
+    override fun showNoResults() {
+        activity?.toast(getString(R.string.no_results))
     }
 
     override fun showBestSellersListFailed() {

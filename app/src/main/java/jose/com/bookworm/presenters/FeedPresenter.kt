@@ -21,6 +21,7 @@ class FeedPresenter(
     private var presentation: FeedPresentation? = null
     private lateinit var compositeDisposable: CompositeDisposable
     private val topBooks = mutableListOf<NYTimesBook>()
+    private val listNameMap = mutableMapOf<String, String>()
 
     fun attach(presentation: FeedPresentation) {
         this.presentation = presentation
@@ -83,6 +84,7 @@ class FeedPresenter(
         val listTitles = mutableListOf<String>()
         for (name in listNames) {
             listTitles.add(name.displayName)
+            listNameMap[name.displayName] = name.listName
         }
         presentation?.loadListNamesChips(listTitles)
     }
@@ -93,7 +95,7 @@ class FeedPresenter(
 
     fun getBestSellersList(listName: String = "", onLoadComplete: () -> Unit = {}) {
         val books = mutableListOf<BestSellersBook>()
-        compositeDisposable += apiClient.getBestSellersList(listName)
+        compositeDisposable += apiClient.getBestSellersList(listNameMap[listName].toString())
             .map {
                 for (item in it.results) {
                     books.add(item.bookDetails[0])
@@ -115,8 +117,12 @@ class FeedPresenter(
     }
 
     private fun onGetBestSellersListSuccess(listName: String, books: MutableList<BestSellersBook>) {
-        presentation?.showBestSellersList(books)
-        presentation?.showGetBestSellersSuccess(listName)
+        if (books.size < 1) {
+            presentation?.showNoResults()
+        } else {
+            presentation?.showBestSellersList(books)
+            presentation?.showGetBestSellersSuccess(listName)
+        }
     }
 
     private fun onGetBestSellersListFailed() {

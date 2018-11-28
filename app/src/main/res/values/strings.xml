@@ -20,4 +20,6 @@
     <string name="string_edit">Edit</string>
     <string name="best_sellers">NY Times Best Sellers %1$s</string>
     <string name="best_sellers_failed">Couldn\'t load best-sellers</string>
+    <string name="no_results">No Results for this list 😐</string>
+    <string name="filter_icon_description">Icon to filter best-sellers by category</string>
 </resources>

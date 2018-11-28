@@ -5,7 +5,6 @@ import jose.com.bookworm.model.nytimes.BestSellersListNamesResponse
 import jose.com.bookworm.model.nytimes.BestSellersListResponse
 import jose.com.bookworm.model.nytimes.BestSellersOverviewResponse
 import retrofit2.http.GET
-import retrofit2.http.Path
 import retrofit2.http.Query
 
 /**
@@ -19,10 +18,10 @@ interface NYTimesApi {
      *
      * "https://api.nytimes.com/svc/books/v3/lists/overview.json?api-key=3f015948418c4a2383be12847ff477f1
      */
-    @GET("lists.json{list}")
+    @GET("lists.json")
     fun getBestSellersList(
-        @Path("list") listName: String,
-        @Query("api-key") apiKey: String
+        @Query("api-key") apiKey: String,
+        @Query("list") listName: String
     ): Single<BestSellersListResponse>
 
     /**
