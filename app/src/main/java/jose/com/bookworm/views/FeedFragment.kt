@@ -1,14 +1,12 @@
 package jose.com.bookworm.views
 
 import android.os.Bundle
-import android.support.design.chip.Chip
-import android.support.v4.app.Fragment
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import com.google.android.material.chip.Chip
 import jose.com.bookworm.R
 import jose.com.bookworm.adapter.BestSellersViewHolder
 import jose.com.bookworm.adapter.GenericAdapter
@@ -22,7 +20,7 @@ import jose.com.bookworm.presenters.FeedPresenter
 import kotlinx.android.synthetic.main.fragment_feed.*
 import javax.inject.Inject
 
-class FeedFragment : Fragment(), FeedPresentation {
+class FeedFragment : androidx.fragment.app.Fragment(), FeedPresentation {
     @Inject
     lateinit var presenter: FeedPresenter
     private lateinit var bestSellersAdapter: GenericAdapter<NYTimesBook>
@@ -46,7 +44,7 @@ class FeedFragment : Fragment(), FeedPresentation {
         Injector.applicationComponent.inject(this)
 
         bestSellersAdapter = object : GenericAdapter<NYTimesBook>() {
-            override fun getViewHolder(view: View, viewType: Int): RecyclerView.ViewHolder {
+            override fun getViewHolder(view: View, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder {
                 return BestSellersViewHolder(view)
             }
 

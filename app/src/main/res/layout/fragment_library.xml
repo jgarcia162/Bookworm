@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -17,22 +17,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <android.support.design.chip.ChipGroup
+        <com.google.android.material.chip.ChipGroup
             android:id="@+id/chipgroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <android.support.design.chip.Chip
+            <com.google.android.material.chip.Chip
                 style="@style/Widget.MaterialComponents.Chip.Filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="Fiction" />
 
-        </android.support.design.chip.ChipGroup>
+        </com.google.android.material.chip.ChipGroup>
 
     </HorizontalScrollView>
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/library_rv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -42,7 +42,7 @@
         app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView"
         tools:listitem="@layout/book_list_item">
 
-    </android.support.v7.widget.RecyclerView>
+    </androidx.recyclerview.widget.RecyclerView>
 
     <ImageView
         android:id="@+id/imageView"
@@ -56,4 +56,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

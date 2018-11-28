@@ -1,6 +1,6 @@
 package jose.com.bookworm.adapter
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 class LibraryBookViewHolder(
   itemView: View
-): RecyclerView.ViewHolder(itemView), GenericAdapter.Binder<Book>, View.OnClickListener {
+): androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), GenericAdapter.Binder<Book>, View.OnClickListener {
   @Inject
   lateinit var presenter: LibraryPresenter
 

@@ -1,8 +1,8 @@
 package jose.com.bookworm.adapter
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 
-class CurrentReadingViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+class CurrentReadingViewHolder(view: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view) {
 
 }

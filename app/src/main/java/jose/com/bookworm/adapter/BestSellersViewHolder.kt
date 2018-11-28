@@ -1,6 +1,6 @@
 package jose.com.bookworm.adapter
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.widget.TextView
 import jose.com.bookworm.R
@@ -8,7 +8,7 @@ import jose.com.bookworm.model.nytimes.NYTimesBook
 
 class BestSellersViewHolder(
     itemView: View
-) : RecyclerView.ViewHolder(itemView), GenericAdapter.Binder<NYTimesBook>, View.OnClickListener  {
+) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), GenericAdapter.Binder<NYTimesBook>, View.OnClickListener  {
     private val titleTV: TextView = itemView.findViewById(R.id.seller_title_tv)
     private val authorTV: TextView = itemView.findViewById(R.id.seller_author_tv)
 

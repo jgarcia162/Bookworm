@@ -1,9 +1,9 @@
 package jose.com.bookworm.room
 
-import android.arch.persistence.room.Database
-import android.arch.persistence.room.Room
-import android.arch.persistence.room.RoomDatabase
-import android.arch.persistence.room.TypeConverters
+import androidx.room.Database
+import androidx.room.Room
+import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import android.content.Context
 import jose.com.bookworm.model.roommodel.Book
 

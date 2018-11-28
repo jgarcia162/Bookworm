@@ -1,9 +1,9 @@
 package jose.com.bookworm.model.roommodel
 
-import android.arch.persistence.room.Embedded
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.PrimaryKey
-import android.arch.persistence.room.TypeConverters
+import androidx.room.Embedded
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
 import jose.com.bookworm.room.Converters
 import jose.com.bookworm.room.User
 
