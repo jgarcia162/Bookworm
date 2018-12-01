@@ -15,4 +15,5 @@ interface FeedPresentation {
     fun showGetBestSellersSuccess(listName: String = "")
     fun loadListNamesChips(listTitles: MutableList<String>)
     fun showNoResults()
+    fun getBestSellerList(listName: String)
 }

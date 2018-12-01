@@ -63,7 +63,10 @@ class FeedFragment : androidx.fragment.app.Fragment(), FeedPresentation, View.On
         filter_icon.onClick {
             //TODO re-inflate fragment if created
             ChipsDialogFragment()
-                .apply { chipTitles = categoryTitles }
+                .apply {
+                    listener = this@FeedFragment
+                    chipTitles = categoryTitles
+                }
                 .show(childFragmentManager.beginTransaction(), "categories_fragment")
         }
     }
@@ -130,6 +133,10 @@ class FeedFragment : androidx.fragment.app.Fragment(), FeedPresentation, View.On
 
     override fun showBestSellersList(books: List<NYTimesBook>) {
         bestSellersAdapter.data = books
+    }
+
+    override fun getBestSellerList(listName: String) {
+        presenter.getBestSellersList(listName)
     }
 
     override fun showNoResults() {
