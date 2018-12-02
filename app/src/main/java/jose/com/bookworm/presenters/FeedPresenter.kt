@@ -12,6 +12,7 @@ import jose.com.bookworm.model.nytimes.BestSellersOverviewList
 import jose.com.bookworm.model.nytimes.NYTimesBook
 import jose.com.bookworm.network.ApiClient
 import jose.com.bookworm.presentations.FeedPresentation
+import timber.log.Timber
 
 class FeedPresenter(
     private val context: Context,
@@ -144,12 +145,15 @@ class FeedPresenter(
                 onLoadComplete()
             }
             .flatMap {
-                apiClient.getBestSellersList(it)
+                Timber.d("MULTIPLE Flatmap1 $it")
+
+                apiClient.getBestSellersList(listNameMap[it]!!)
                     .subscribeOn(ioScheduler)
-                    .observeOn(ioScheduler)
+                    .observeOn(mainThreadScheduler)
                     .toObservable()
             }
             .flatMap{
+                Timber.d("Num results - ${it.numResults}")
                 for (item in it.results) {
                     books.add(item.bookDetails[0])
                 }

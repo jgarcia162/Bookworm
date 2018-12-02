@@ -17,9 +17,9 @@ import kotlinx.android.synthetic.main.layout_category_chips.*
 //TODO persist categories so they are not reset to none when this fragment is created
 class ChipsDialogFragment : DialogFragment() {
     var chipTitles: List<String> = emptyList()
-    var selectedLists: MutableList<String> = mutableListOf()
     private lateinit var chipGroup: ChipGroup
     var listener: FeedPresentation? = null
+    private val selectedLists: MutableList<String> = mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,14 +32,22 @@ class ChipsDialogFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         chipGroup = view.findViewById(R.id.best_sellers_chipgroup)
-        chipGroup.addChips(chipTitles)
-        done_button.onClick {
-            for(chip in chipGroup.touchables){
-                if((chip as Chip).isSelected){
-                    selectedLists.add(chip.text.toString())
-                }
+        chipGroup.addChips(chipTitles){
+            it as Chip
+            if(it.isChecked){
+                selectedLists.add(it.text.toString())
+            }else{
+                selectedLists.remove(it.text.toString())
             }
-            listener?.getMultipleLists(selectedLists)
+        }
+
+        done_button.onClick {
+            if(selectedLists.size < 1){
+                dismiss()
+            }else{
+                listener?.getMultipleLists(selectedLists)
+                dismiss()
+            }
         }
 
         cancel_button.onClick {
