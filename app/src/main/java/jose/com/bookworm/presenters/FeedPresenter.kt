@@ -130,7 +130,7 @@ class FeedPresenter(
         presentation?.showGetBestSellersFailed()
     }
 
-    fun getMultipleLists(listNames: List<String>, onLoadComplete: () -> Unit = {}) {
+    fun getMultipleLists(listNames: Set<String>, onLoadComplete: () -> Unit = {}) {
         val books = mutableListOf<BestSellersBook>()
         val observable: Observable<String> = Observable.fromIterable(listNames)
         compositeDisposable += observable
@@ -139,17 +139,17 @@ class FeedPresenter(
             .doOnSubscribe {
                 presentation?.showLoading()
             }
-            .doOnTerminate{
+            .doOnTerminate {
                 presentation?.hideLoading()
                 onLoadComplete()
             }
             .flatMap {
-                apiClient.getBestSellersList(it)
+                apiClient.getBestSellersList(listNameMap[it]!!)
                     .subscribeOn(ioScheduler)
-                    .observeOn(ioScheduler)
+                    .observeOn(mainThreadScheduler)
                     .toObservable()
             }
-            .flatMap{
+            .flatMap {
                 for (item in it.results) {
                     books.add(item.bookDetails[0])
                 }

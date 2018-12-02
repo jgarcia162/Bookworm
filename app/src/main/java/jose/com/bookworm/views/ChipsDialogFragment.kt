@@ -9,6 +9,7 @@ import androidx.fragment.app.DialogFragment
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import jose.com.bookworm.R
+import jose.com.bookworm.SharedPreferencesHelper
 import jose.com.bookworm.extensions.addChips
 import jose.com.bookworm.extensions.onClick
 import jose.com.bookworm.presentations.FeedPresentation
@@ -17,9 +18,10 @@ import kotlinx.android.synthetic.main.layout_category_chips.*
 //TODO persist categories so they are not reset to none when this fragment is created
 class ChipsDialogFragment : DialogFragment() {
     var chipTitles: List<String> = emptyList()
-    var selectedLists: MutableList<String> = mutableListOf()
+    private var selectedLists: MutableSet<String> = mutableSetOf()
     private lateinit var chipGroup: ChipGroup
     var listener: FeedPresentation? = null
+    lateinit var prefHelper: SharedPreferencesHelper
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,15 +33,28 @@ class ChipsDialogFragment : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        prefHelper = SharedPreferencesHelper(view.context)
+        selectedLists = prefHelper.getFilters()
         chipGroup = view.findViewById(R.id.best_sellers_chipgroup)
-        chipGroup.addChips(chipTitles)
-        done_button.onClick {
-            for(chip in chipGroup.touchables){
-                if((chip as Chip).isSelected){
-                    selectedLists.add(chip.text.toString())
-                }
+        chipGroup.addChips(chipTitles) {
+            it as Chip
+            if (it.isChecked) {
+                selectedLists.add(it.text.toString())
+            } else {
+                selectedLists.remove(it.text.toString())
             }
-            listener?.getMultipleLists(selectedLists)
+        }
+
+        done_button.onClick {
+            if (selectedLists.size < 1) {
+                prefHelper.saveFilters(selectedLists)
+                listener?.getOverviewList()
+                dismiss()
+            } else {
+                prefHelper.saveFilters(selectedLists)
+                listener?.getMultipleLists(selectedLists)
+                dismiss()
+            }
         }
 
         cancel_button.onClick {

@@ -137,8 +137,12 @@ class FeedFragment : androidx.fragment.app.Fragment(), FeedPresentation, View.On
         presenter.getBestSellersList(listName)
     }
 
-    override fun getMultipleLists(listNames: List<String>) {
+    override fun getMultipleLists(listNames: Set<String>) {
         presenter.getMultipleLists(listNames)
+    }
+
+    override fun getOverviewList() {
+        presenter.getBestSellersOverview()
     }
 
     override fun showNoResults() {

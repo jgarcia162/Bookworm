@@ -16,5 +16,6 @@ interface FeedPresentation {
     fun loadListNamesChips(listTitles: MutableList<String>)
     fun showNoResults()
     fun getBestSellerList(listName: String)
-    fun getMultipleLists(listNames: List<String>)
+    fun getMultipleLists(listNames: Set<String>)
+    fun getOverviewList()
 }
