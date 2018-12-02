@@ -1,6 +1,7 @@
 package jose.com.bookworm.presenters
 
 import android.content.Context
+import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
@@ -126,7 +127,46 @@ class FeedPresenter(
     }
 
     private fun onGetBestSellersListFailed() {
+        presentation?.showGetBestSellersFailed()
+    }
 
+    fun getMultipleLists(listNames: List<String>, onLoadComplete: () -> Unit = {}) {
+        val books = mutableListOf<BestSellersBook>()
+        val observable: Observable<String> = Observable.fromIterable(listNames)
+        compositeDisposable += observable
+            .subscribeOn(ioScheduler)
+            .observeOn(mainThreadScheduler)
+            .doOnSubscribe {
+                presentation?.showLoading()
+            }
+            .doOnTerminate{
+                presentation?.hideLoading()
+                onLoadComplete()
+            }
+            .flatMap {
+                apiClient.getBestSellersList(it)
+                    .subscribeOn(ioScheduler)
+                    .observeOn(ioScheduler)
+                    .toObservable()
+            }
+            .flatMap{
+                for (item in it.results) {
+                    books.add(item.bookDetails[0])
+                }
+                Observable.just(books)
+            }
+            .subscribeBy(
+                onComplete = { onGetMultipleListsSuccess(books) },
+                onError = { onGetMultipleListsFailed() }
+            )
+    }
+
+    private fun onGetMultipleListsSuccess(books: MutableList<BestSellersBook>) {
+        presentation?.showBestSellersList(books)
+    }
+
+    private fun onGetMultipleListsFailed() {
+        presentation?.showGetBestSellersFailed()
     }
 
     override fun onitemClicked(item: Any) {

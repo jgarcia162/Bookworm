@@ -22,4 +22,6 @@
     <string name="best_sellers_failed">Couldn\'t load best-sellers</string>
     <string name="no_results">No Results for this list 😐</string>
     <string name="filter_icon_description">Icon to filter best-sellers by category</string>
+    <string name="done">Done</string>
+    <string name="cancel">Cancel</string>
 </resources>

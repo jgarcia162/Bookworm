@@ -9,23 +9,17 @@ import androidx.fragment.app.DialogFragment
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import jose.com.bookworm.R
-import jose.com.bookworm.di.Injector
 import jose.com.bookworm.extensions.addChips
+import jose.com.bookworm.extensions.onClick
 import jose.com.bookworm.presentations.FeedPresentation
-import jose.com.bookworm.presenters.FeedPresenter
-import javax.inject.Inject
+import kotlinx.android.synthetic.main.layout_category_chips.*
+
 //TODO persist categories so they are not reset to none when this fragment is created
-class ChipsDialogFragment: DialogFragment(){
-    @Inject lateinit var presenter: FeedPresenter
+class ChipsDialogFragment : DialogFragment() {
     var chipTitles: List<String> = emptyList()
+    var selectedLists: MutableList<String> = mutableListOf()
     private lateinit var chipGroup: ChipGroup
     var listener: FeedPresentation? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        Injector.applicationComponent.inject(this)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,8 +32,17 @@ class ChipsDialogFragment: DialogFragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         chipGroup = view.findViewById(R.id.best_sellers_chipgroup)
-        chipGroup.addChips(chipTitles){
-            listener?.getBestSellerList((it as Chip).text.toString())
+        chipGroup.addChips(chipTitles)
+        done_button.onClick {
+            for(chip in chipGroup.touchables){
+                if((chip as Chip).isSelected){
+                    selectedLists.add(chip.text.toString())
+                }
+            }
+            listener?.getMultipleLists(selectedLists)
+        }
+
+        cancel_button.onClick {
             dismiss()
         }
     }

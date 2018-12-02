@@ -7,7 +7,10 @@ import jose.com.bookworm.presenters.FeedPresenter
 import jose.com.bookworm.presenters.LibraryPresenter
 import jose.com.bookworm.presenters.SearchPresenter
 import jose.com.bookworm.room.BookDao
-import jose.com.bookworm.views.*
+import jose.com.bookworm.views.BookDetailsFragment
+import jose.com.bookworm.views.FeedFragment
+import jose.com.bookworm.views.LibraryFragment
+import jose.com.bookworm.views.MainActivity
 import javax.inject.Singleton
 
 @Singleton
@@ -40,6 +43,4 @@ interface ApplicationComponent {
     fun inject(bookDetailsFragment: BookDetailsFragment)
 
     fun inject(libraryFragment: LibraryFragment)
-
-    fun inject(chipsDialogFragment: ChipsDialogFragment)
 }

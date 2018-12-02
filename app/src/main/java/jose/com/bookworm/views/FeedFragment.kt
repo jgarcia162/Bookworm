@@ -18,7 +18,6 @@ import jose.com.bookworm.model.roommodel.Book
 import jose.com.bookworm.presentations.FeedPresentation
 import jose.com.bookworm.presenters.FeedPresenter
 import kotlinx.android.synthetic.main.fragment_feed.*
-import timber.log.Timber
 import javax.inject.Inject
 
 class FeedFragment : androidx.fragment.app.Fragment(), FeedPresentation, View.OnClickListener {
@@ -116,7 +115,6 @@ class FeedFragment : androidx.fragment.app.Fragment(), FeedPresentation, View.On
 
     override fun onClick(v: View?) {
         val chip = v as Chip
-        Timber.d("CHIP TEXT ${chip.text}")
         presenter.getBestSellersList(chip.text!!.toString())
     }
 
@@ -137,6 +135,10 @@ class FeedFragment : androidx.fragment.app.Fragment(), FeedPresentation, View.On
 
     override fun getBestSellerList(listName: String) {
         presenter.getBestSellersList(listName)
+    }
+
+    override fun getMultipleLists(listNames: List<String>) {
+        presenter.getMultipleLists(listNames)
     }
 
     override fun showNoResults() {
