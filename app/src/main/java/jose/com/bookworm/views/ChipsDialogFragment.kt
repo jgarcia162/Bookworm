@@ -19,7 +19,6 @@ class ChipsDialogFragment : DialogFragment() {
     var chipTitles: List<String> = emptyList()
     private lateinit var chipGroup: ChipGroup
     var listener: FeedPresentation? = null
-    private val selectedLists: MutableList<String> = mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,19 +31,19 @@ class ChipsDialogFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         chipGroup = view.findViewById(R.id.best_sellers_chipgroup)
-        chipGroup.addChips(chipTitles){
+        chipGroup.addChips(chipTitles) {
             it as Chip
-            if(it.isChecked){
+            if (it.isChecked) {
                 selectedLists.add(it.text.toString())
-            }else{
+            } else {
                 selectedLists.remove(it.text.toString())
             }
         }
 
         done_button.onClick {
-            if(selectedLists.size < 1){
+            if (selectedLists.size < 1) {
                 dismiss()
-            }else{
+            } else {
                 listener?.getMultipleLists(selectedLists)
                 dismiss()
             }
@@ -58,5 +57,9 @@ class ChipsDialogFragment : DialogFragment() {
     override fun onDismiss(dialog: DialogInterface?) {
         super.onDismiss(dialog)
         listener = null
+    }
+
+    companion object {
+        val selectedLists: MutableList<String> = mutableListOf()
     }
 }
