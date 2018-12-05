@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.chip.Chip
-import com.google.android.material.chip.ChipGroup
 import jose.com.bookworm.R
 import jose.com.bookworm.SharedPreferencesHelper
 import jose.com.bookworm.extensions.addChips
@@ -17,11 +16,10 @@ import kotlinx.android.synthetic.main.layout_category_chips.*
 
 //TODO persist categories so they are not reset to none when this fragment is created
 class ChipsDialogFragment : DialogFragment() {
+    private lateinit var prefHelper: SharedPreferencesHelper
+    private val selectedLists: MutableSet<String> = mutableSetOf()
     var chipTitles: List<String> = emptyList()
-    private var selectedLists: MutableSet<String> = mutableSetOf()
-    private lateinit var chipGroup: ChipGroup
     var listener: FeedPresentation? = null
-    lateinit var prefHelper: SharedPreferencesHelper
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,9 +32,20 @@ class ChipsDialogFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         prefHelper = SharedPreferencesHelper(view.context)
-        selectedLists = prefHelper.getFilters()
-        chipGroup = view.findViewById(R.id.best_sellers_chipgroup)
-        chipGroup.addChips(chipTitles) {
+
+        selectedLists.addAll(prefHelper.getFilters())
+
+        val chips = chipTitles.map {
+            Chip(this.context).apply{
+                text = it
+                isClickable = true
+                isCheckable = true
+                setPadding(12,2,12,2)
+                isChecked = selectedLists.contains(it)
+            }
+        }
+
+        best_sellers_chipgroup.addChips(chips) {
             it as Chip
             if (it.isChecked) {
                 selectedLists.add(it.text.toString())
@@ -47,14 +56,11 @@ class ChipsDialogFragment : DialogFragment() {
 
         done_button.onClick {
             if (selectedLists.size < 1) {
-                prefHelper.saveFilters(selectedLists)
                 listener?.getOverviewList()
-                dismiss()
             } else {
-                prefHelper.saveFilters(selectedLists)
                 listener?.getMultipleLists(selectedLists)
-                dismiss()
             }
+            dismiss()
         }
 
         cancel_button.onClick {
@@ -64,6 +70,7 @@ class ChipsDialogFragment : DialogFragment() {
 
     override fun onDismiss(dialog: DialogInterface?) {
         super.onDismiss(dialog)
+        prefHelper.saveFilters(selectedLists)
         listener = null
     }
 }

@@ -3,8 +3,6 @@ package jose.com.bookworm.views
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.INVISIBLE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 import com.google.android.material.chip.Chip
 import jose.com.bookworm.R
@@ -75,8 +73,8 @@ class FeedFragment : androidx.fragment.app.Fragment(), FeedPresentation, View.On
 
         presenter.attach(this)
 
-        presenter.getBestSellersOverview()
         presenter.getBestSellersListNames()
+        presenter.getBestSellersOverview()
     }
 
     override fun onStop() {
@@ -120,13 +118,11 @@ class FeedFragment : androidx.fragment.app.Fragment(), FeedPresentation, View.On
 
     override fun showGetBestSellersSuccess(listName: String) {
         suggestions_tv.text = getString(R.string.best_sellers, listName)
-        filter_icon.visibility = VISIBLE
     }
 
     override fun showGetBestSellersFailed() {
         activity?.toast(getString(R.string.best_sellers_failed))
         suggestions_tv.text = getString(R.string.best_sellers_failed)
-        filter_icon.visibility = INVISIBLE
     }
 
     override fun showBestSellersList(books: List<NYTimesBook>) {
