@@ -66,6 +66,8 @@ class FeedFragment : androidx.fragment.app.Fragment(), FeedPresentation, View.On
                 }
                 .show(childFragmentManager.beginTransaction(), "categories_fragment")
         }
+
+
     }
 
     override fun onStart() {

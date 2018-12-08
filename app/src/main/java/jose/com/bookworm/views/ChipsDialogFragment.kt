@@ -36,11 +36,11 @@ class ChipsDialogFragment : DialogFragment() {
         selectedLists.addAll(prefHelper.getFilters())
 
         val chips = chipTitles.map {
-            Chip(this.context).apply{
+            Chip(this.context).apply {
                 text = it
                 isClickable = true
                 isCheckable = true
-                setPadding(12,2,12,2)
+                setPadding(12, 2, 12, 2)
                 isChecked = selectedLists.contains(it)
             }
         }
@@ -61,6 +61,13 @@ class ChipsDialogFragment : DialogFragment() {
                 listener?.getMultipleLists(selectedLists)
             }
             dismiss()
+        }
+
+        clear_button.onClick {
+            selectedLists.clear()
+            for (child in 0 until best_sellers_chipgroup.childCount) {
+                (best_sellers_chipgroup.getChildAt(child) as Chip).isChecked = false
+            }
         }
 
         cancel_button.onClick {
