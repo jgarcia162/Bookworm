@@ -17,6 +17,6 @@ class BookViewModel : ViewModel(){
     }
 
     private fun loadBooks(){
-        //TODO load books from database
+        
     }
 }

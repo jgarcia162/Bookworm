@@ -7,7 +7,7 @@
     tools:context="jose.com.bookworm.views.FeedFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/reading_rv"
+        android:id="@+id/current_reading_rv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="horizontal"
@@ -24,15 +24,15 @@
         android:id="@+id/suggestions_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/recommended_rv"
+        app:layout_constraintBottom_toTopOf="@+id/best_sellers_rv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/reading_rv"
+        app:layout_constraintTop_toBottomOf="@id/current_reading_rv"
         tools:text="NY Times Best Sellers" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recommended_rv"
+        android:id="@+id/best_sellers_rv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -42,7 +42,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/filter_icon"
-        app:layout_constraintTop_toBottomOf="@+id/reading_rv"
+        app:layout_constraintTop_toBottomOf="@+id/current_reading_rv"
         app:layout_constraintVertical_bias="1.0"
         app:layout_constraintVertical_weight="1"
         tools:listitem="@layout/best_seller_list_item" />

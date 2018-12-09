@@ -1,12 +1,12 @@
 package jose.com.bookworm.adapter
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import jose.com.bookworm.R
 
 @Suppress("UNCHECKED_CAST")
-abstract class GenericAdapter<T> : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
+class GenericAdapter<T> (val layout: Int) : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
     var data: List<T> = emptyList()
         set(value) {
             field = value
@@ -24,18 +24,15 @@ abstract class GenericAdapter<T> : androidx.recyclerview.widget.RecyclerView.Ada
         )
     }
 
-    abstract fun getViewHolder(view: View, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder
-//        return when (viewType) {
-//            R.layout.book_list_item -> LibraryBookViewHolder(view)
-//            R.layout.best_seller_list_item -> BestSellersViewHolder(view)
-//            else -> CurrentReadingViewHolder(view)
-//        }
+    private fun getViewHolder(view: View, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder {
+        return when (viewType) {
+            R.layout.book_list_item -> LibraryBookViewHolder(view)
+            R.layout.best_seller_list_item -> BestSellersViewHolder(view)
+            else -> CurrentReadingViewHolder(view)
+        }
+    }
 
-
-    override fun getItemViewType(position: Int): Int =
-        getLayoutId(position, data[position])
-
-    abstract fun getLayoutId(position: Int, obj: T): Int
+    override fun getItemViewType(position: Int): Int = layout
 
     override fun onBindViewHolder(
         holder: androidx.recyclerview.widget.RecyclerView.ViewHolder,

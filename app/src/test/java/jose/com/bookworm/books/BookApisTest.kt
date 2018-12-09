@@ -1,7 +1,7 @@
 package jose.com.bookworm.books
 
 import io.reactivex.observers.TestObserver
-import jose.com.bookworm.model.VolumesResponse
+import jose.com.bookworm.model.googlebooks.VolumesResponse
 import jose.com.bookworm.model.nytimes.BestSellersListNamesResponse
 import jose.com.bookworm.model.nytimes.BestSellersListResponse
 import jose.com.bookworm.model.nytimes.BestSellersOverviewList

@@ -12,7 +12,7 @@ import jose.com.bookworm.SharedPreferencesHelper
 import jose.com.bookworm.extensions.addChips
 import jose.com.bookworm.extensions.onClick
 import jose.com.bookworm.presentations.FeedPresentation
-import kotlinx.android.synthetic.main.layout_category_chips.*
+import kotlinx.android.synthetic.main.fragment_chips_dialog.*
 
 //TODO persist categories so they are not reset to none when this fragment is created
 class ChipsDialogFragment : DialogFragment() {
@@ -26,7 +26,7 @@ class ChipsDialogFragment : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.layout_category_chips, container, false)
+        return inflater.inflate(R.layout.fragment_chips_dialog, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -60,6 +60,7 @@ class ChipsDialogFragment : DialogFragment() {
             } else {
                 listener?.getMultipleLists(selectedLists)
             }
+            prefHelper.saveFilters(selectedLists)
             dismiss()
         }
 
@@ -77,7 +78,6 @@ class ChipsDialogFragment : DialogFragment() {
 
     override fun onDismiss(dialog: DialogInterface?) {
         super.onDismiss(dialog)
-        prefHelper.saveFilters(selectedLists)
         listener = null
     }
 }

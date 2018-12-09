@@ -113,7 +113,7 @@ class FeedPresenter(
             }
             .subscribeBy(
                 onSuccess = { onGetBestSellersListSuccess(listName, books) },
-                onError = { onGetBestSellersListFailed() }
+                onError = { onGetBestSellersListFailed(listName) }
             )
     }
 
@@ -126,8 +126,8 @@ class FeedPresenter(
         }
     }
 
-    private fun onGetBestSellersListFailed() {
-        presentation?.showGetBestSellersFailed()
+    private fun onGetBestSellersListFailed(listName: String) {
+        presentation?.showBestSellersListFailed(listName)
     }
 
     fun getMultipleLists(listNames: Set<String>, onLoadComplete: () -> Unit = {}) {
@@ -170,6 +170,10 @@ class FeedPresenter(
     }
 
     override fun onitemClicked(item: Any) {
+
+    }
+
+    fun getCurrentReadings() {
 
     }
 }

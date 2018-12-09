@@ -1,7 +1,7 @@
 package jose.com.bookworm.network
 
 import io.reactivex.Single
-import jose.com.bookworm.model.VolumesResponse
+import jose.com.bookworm.model.googlebooks.VolumesResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 

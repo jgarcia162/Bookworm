@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.google.android.material.chip.Chip
 import jose.com.bookworm.R
-import jose.com.bookworm.adapter.BestSellersViewHolder
 import jose.com.bookworm.adapter.GenericAdapter
 import jose.com.bookworm.di.Injector
 import jose.com.bookworm.extensions.onClick
@@ -18,7 +18,7 @@ import jose.com.bookworm.presenters.FeedPresenter
 import kotlinx.android.synthetic.main.fragment_feed.*
 import javax.inject.Inject
 
-class FeedFragment : androidx.fragment.app.Fragment(), FeedPresentation, View.OnClickListener {
+class FeedFragment : Fragment(), FeedPresentation, View.OnClickListener {
     @Inject
     lateinit var presenter: FeedPresenter
     private lateinit var bestSellersAdapter: GenericAdapter<NYTimesBook>
@@ -42,20 +42,14 @@ class FeedFragment : androidx.fragment.app.Fragment(), FeedPresentation, View.On
 
         Injector.applicationComponent.inject(this)
 
-        bestSellersAdapter = object : GenericAdapter<NYTimesBook>() {
-            override fun getViewHolder(
-                view: View,
-                viewType: Int
-            ): androidx.recyclerview.widget.RecyclerView.ViewHolder {
-                return BestSellersViewHolder(view)
-            }
+        bestSellersAdapter = GenericAdapter(R.layout.best_seller_list_item)
 
-            override fun getLayoutId(position: Int, obj: NYTimesBook): Int {
-                return R.layout.best_seller_list_item
-            }
-        }
-        recommended_rv.setHasFixedSize(true)
-        recommended_rv.adapter = bestSellersAdapter
+        best_sellers_rv.setHasFixedSize(true)
+        best_sellers_rv.adapter = bestSellersAdapter
+
+        currentReadingAdapter = GenericAdapter(R.layout.current_reading_list_item)
+
+        current_reading_rv.adapter = currentReadingAdapter
 
         filter_icon.onClick {
             //TODO re-inflate fragment if created
@@ -66,8 +60,6 @@ class FeedFragment : androidx.fragment.app.Fragment(), FeedPresentation, View.On
                 }
                 .show(childFragmentManager.beginTransaction(), "categories_fragment")
         }
-
-
     }
 
     override fun onStart() {
@@ -77,6 +69,7 @@ class FeedFragment : androidx.fragment.app.Fragment(), FeedPresentation, View.On
 
         presenter.getBestSellersListNames()
         presenter.getBestSellersOverview()
+        presenter.getCurrentReadings()
     }
 
     override fun onStop() {
@@ -147,7 +140,7 @@ class FeedFragment : androidx.fragment.app.Fragment(), FeedPresentation, View.On
         activity?.toast(getString(R.string.no_results))
     }
 
-    override fun showBestSellersListFailed() {
-
+    override fun showBestSellersListFailed(listName: String) {
+        activity?.toast("Couldn't load books for list $listName")
     }
 }

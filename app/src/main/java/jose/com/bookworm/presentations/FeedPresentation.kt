@@ -10,7 +10,7 @@ interface FeedPresentation {
     fun showLoading()
     fun hideLoading()
     fun showBestSellersList(books: List<NYTimesBook>)
-    fun showBestSellersListFailed()
+    fun showBestSellersListFailed(listName: String)
     fun showGetBestSellersFailed()
     fun showGetBestSellersSuccess(listName: String = "")
     fun loadListNamesChips(listTitles: MutableList<String>)
