@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -14,7 +15,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/divider"
-        tools:src="@tools:sample/avatars"/>
+        tools:src="@tools:sample/avatars"
+        android:contentDescription="@string/add_book_cover_description" />
 
     <View
         android:id="@+id/divider"
@@ -50,7 +52,7 @@
         android:id="@+id/author_input_et"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/category_input_et"
+        app:layout_constraintBottom_toTopOf="@+id/genre_input_et"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title_input_et">
@@ -67,7 +69,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/category_input_et"
+        android:id="@+id/genre_input_et"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -83,12 +85,12 @@
             android:ems="10"
             android:inputType="textPersonName"
             android:textColorHint="@color/colorSecondaryFont"
-            tools:hint="Category" />
+            tools:hint="Genre" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/published_input_et"
+        android:id="@+id/year_published_input_et"
         android:layout_width="107dp"
         android:layout_height="20dp"
         android:layout_marginStart="8dp"
@@ -132,7 +134,7 @@
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/pages_input_et"
-        app:layout_constraintStart_toEndOf="@+id/published_input_et">
+        app:layout_constraintStart_toEndOf="@+id/year_published_input_et">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"

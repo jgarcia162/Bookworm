@@ -25,4 +25,7 @@
     <string name="done">Done</string>
     <string name="cancel">Cancel</string>
     <string name="clear">Clear</string>
+    <string name="add_book_cover_description">Image for cover of the book being added</string>
+    <string name="add_menu_button">Add</string>
+    <string name="search_menu_button">Search</string>
 </resources>

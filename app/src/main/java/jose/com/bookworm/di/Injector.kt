@@ -8,5 +8,6 @@ object Injector{
                 .builder()
                 .applicationModule(ApplicationModule(APP_CONTEXT))
                 .daoModule(DaoModule())
+                .apiModule(ApiModule())
                 .build()
 }

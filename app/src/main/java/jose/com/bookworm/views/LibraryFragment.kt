@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import jose.com.bookworm.R
 import jose.com.bookworm.adapter.GenericAdapter
+import jose.com.bookworm.di.Injector
 import jose.com.bookworm.model.roommodel.Book
 import jose.com.bookworm.presentations.LibraryPresentation
 import jose.com.bookworm.presenters.LibraryPresenter
@@ -17,6 +18,7 @@ class LibraryFragment : androidx.fragment.app.Fragment(), LibraryPresentation {
   private lateinit var adapter: GenericAdapter<Book>
 
   override fun onCreate(savedInstanceState: Bundle?) {
+    Injector.applicationComponent.inject(this)
     super.onCreate(savedInstanceState)
   }
 

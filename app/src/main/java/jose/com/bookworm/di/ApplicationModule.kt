@@ -12,61 +12,52 @@ import jose.com.bookworm.presenters.FeedPresenter
 import jose.com.bookworm.presenters.LibraryPresenter
 import jose.com.bookworm.presenters.SearchPresenter
 import jose.com.bookworm.repository.BookRepository
-import jose.com.bookworm.room.BookDatabase
-import okhttp3.logging.HttpLoggingInterceptor
-import timber.log.Timber
+import jose.com.bookworm.room.DatabaseHelper
 import javax.inject.Singleton
 
-@Module(includes = [DaoModule::class])
+@Module(includes = [DaoModule::class, ApiModule::class])
 class ApplicationModule(val app: Application) {
-
-    private val httpLoggingInterceptor = HttpLoggingInterceptor { it ->
-        Timber.d("LOGGER: $it")
-    }.apply { level = HttpLoggingInterceptor.Level.BODY }
+    private val mainThreadScheduler = AndroidSchedulers.mainThread()
+    private val scheduler = Schedulers.io()
 
     @Provides
     fun provideContext(): Context = app
 
     @Provides
     @Singleton
-    fun provideApiClient(): ApiClient {
-//        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-        return ApiClient(
-            loggingInterceptor = httpLoggingInterceptor
-        )
-    }
-
-    @Provides
-    @Singleton
-    fun provideBookRespository(): BookRepository{
+    fun provideBookRepository(
+        apiClient: ApiClient,
+        databaseHelper: DatabaseHelper
+    ): BookRepository{
         return BookRepository(
-            apiClient = provideApiClient(),
-            bookDao = BookDatabase.getAppDatabase(app)!!.bookDao()
+            apiClient = apiClient,
+            databaseHelper = databaseHelper
         )
     }
 
     @Provides
-    fun provideFeedPresenter(): FeedPresenter {
+    fun provideFeedPresenter(
+        repository: BookRepository
+    ): FeedPresenter {
         return FeedPresenter(
-            context = app,
-            repository = provideBookRespository(),
-            mainThreadScheduler = AndroidSchedulers.mainThread(),
-            ioScheduler = Schedulers.io()
+            repository = repository,
+            mainThreadScheduler = mainThreadScheduler,
+            ioScheduler = scheduler
         )
     }
 
     @Provides
-    fun provideBookDetailsPresenter(): BookDetailsPresenter {
-        return BookDetailsPresenter(provideApiClient())
+    fun provideBookDetailsPresenter(apiClient: ApiClient): BookDetailsPresenter {
+        return BookDetailsPresenter(apiClient)
     }
 
     @Provides
-    fun provideLibraryPresenter(): LibraryPresenter {
-        return LibraryPresenter(provideApiClient())
+    fun provideLibraryPresenter(apiClient: ApiClient): LibraryPresenter {
+        return LibraryPresenter(apiClient)
     }
 
     @Provides
-    fun provideSearchPresenter(): SearchPresenter {
-        return SearchPresenter(provideApiClient())
+    fun provideSearchPresenter(apiClient: ApiClient): SearchPresenter {
+        return SearchPresenter(apiClient)
     }
 }
