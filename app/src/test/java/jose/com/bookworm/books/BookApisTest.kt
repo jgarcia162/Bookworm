@@ -76,7 +76,7 @@ class BookApisTest: BaseApiTest(){
         mockWebServer.enqueue(successfulGetTopFiveBestSellersResponse)
 
         val testObserver = TestObserver<List<BestSellersOverviewList>>()
-        val response = client.getTopFiveBestSellers()
+        val response = client.getBestSellersOverview()
 
         response.subscribe(testObserver)
         testObserver.awaitTerminalEvent(2, SECONDS)

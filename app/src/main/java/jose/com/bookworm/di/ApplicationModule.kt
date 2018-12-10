@@ -11,6 +11,8 @@ import jose.com.bookworm.presenters.BookDetailsPresenter
 import jose.com.bookworm.presenters.FeedPresenter
 import jose.com.bookworm.presenters.LibraryPresenter
 import jose.com.bookworm.presenters.SearchPresenter
+import jose.com.bookworm.repository.BookRepository
+import jose.com.bookworm.room.BookDatabase
 import okhttp3.logging.HttpLoggingInterceptor
 import timber.log.Timber
 import javax.inject.Singleton
@@ -35,10 +37,19 @@ class ApplicationModule(val app: Application) {
     }
 
     @Provides
+    @Singleton
+    fun provideBookRespository(): BookRepository{
+        return BookRepository(
+            apiClient = provideApiClient(),
+            bookDao = BookDatabase.getAppDatabase(app)!!.bookDao()
+        )
+    }
+
+    @Provides
     fun provideFeedPresenter(): FeedPresenter {
         return FeedPresenter(
             context = app,
-            apiClient = ApiClient(httpLoggingInterceptor),
+            repository = provideBookRespository(),
             mainThreadScheduler = AndroidSchedulers.mainThread(),
             ioScheduler = Schedulers.io()
         )
@@ -46,16 +57,16 @@ class ApplicationModule(val app: Application) {
 
     @Provides
     fun provideBookDetailsPresenter(): BookDetailsPresenter {
-        return BookDetailsPresenter(apiClient = ApiClient(httpLoggingInterceptor))
+        return BookDetailsPresenter(provideApiClient())
     }
 
     @Provides
     fun provideLibraryPresenter(): LibraryPresenter {
-        return LibraryPresenter(apiClient = ApiClient(httpLoggingInterceptor))
+        return LibraryPresenter(provideApiClient())
     }
 
     @Provides
     fun provideSearchPresenter(): SearchPresenter {
-        return SearchPresenter(apiClient = ApiClient(httpLoggingInterceptor))
+        return SearchPresenter(provideApiClient())
     }
 }

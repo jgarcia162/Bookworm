@@ -1,15 +1,11 @@
 package jose.com.bookworm.views
 
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import jose.com.bookworm.R
 import jose.com.bookworm.adapter.GenericAdapter
-import jose.com.bookworm.model.BookViewModel
 import jose.com.bookworm.model.roommodel.Book
 import jose.com.bookworm.presentations.LibraryPresentation
 import jose.com.bookworm.presenters.LibraryPresenter
@@ -34,12 +30,6 @@ class LibraryFragment : androidx.fragment.app.Fragment(), LibraryPresentation {
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-
-    val model = ViewModelProviders.of(this).get(BookViewModel::class.java)
-    model.getBooks().observe(this, Observer<List<Book>> { books ->
-//      adapter = GenericAdapter(R.layout.book_list_item)
-//      adapter.data = books!!
-    })
   }
 
   override fun onStart() {

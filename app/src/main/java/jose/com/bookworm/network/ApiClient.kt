@@ -108,7 +108,7 @@ class ApiClient(
      *
      * See [NYTimesApi.getTopFiveBestSellers]
      */
-    fun getTopFiveBestSellers(): Single<List<BestSellersOverviewList>> {
+    fun getBestSellersOverview(): Single<List<BestSellersOverviewList>> {
         return nyTimesApi.getTopFiveBestSellers(NYTIMES_API_KEY).map { it.results.lists }
     }
 

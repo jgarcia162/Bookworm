@@ -6,6 +6,7 @@ import jose.com.bookworm.presenters.BookDetailsPresenter
 import jose.com.bookworm.presenters.FeedPresenter
 import jose.com.bookworm.presenters.LibraryPresenter
 import jose.com.bookworm.presenters.SearchPresenter
+import jose.com.bookworm.repository.BookRepository
 import jose.com.bookworm.room.BookDao
 import jose.com.bookworm.views.BookDetailsFragment
 import jose.com.bookworm.views.FeedFragment
@@ -16,6 +17,8 @@ import javax.inject.Singleton
 @Singleton
 @Component(modules = [ApplicationModule::class, DaoModule::class])
 interface ApplicationComponent {
+    fun provideBookRepository(): BookRepository
+
     fun provideApiClient(): ApiClient
 
     fun provideFeedPresenter(): FeedPresenter

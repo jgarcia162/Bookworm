@@ -10,12 +10,12 @@ import jose.com.bookworm.model.nytimes.BestSellersBook
 import jose.com.bookworm.model.nytimes.BestSellersListName
 import jose.com.bookworm.model.nytimes.BestSellersOverviewList
 import jose.com.bookworm.model.nytimes.NYTimesBook
-import jose.com.bookworm.network.ApiClient
 import jose.com.bookworm.presentations.FeedPresentation
+import jose.com.bookworm.repository.BookRepository
 
 class FeedPresenter(
     private val context: Context,
-    private val apiClient: ApiClient,
+    private val repository: BookRepository,
     private val mainThreadScheduler: Scheduler,
     private val ioScheduler: Scheduler
 ) : BasePresenter() {
@@ -37,7 +37,7 @@ class FeedPresenter(
     }
 
     fun getBestSellersOverview(onLoadComplete: () -> Unit = {}) {
-        compositeDisposable += apiClient.getTopFiveBestSellers()
+        compositeDisposable += repository.getBestSellersOverview()
             .subscribeOn(ioScheduler)
             .observeOn(mainThreadScheduler)
             .doOnSubscribe {
@@ -66,7 +66,7 @@ class FeedPresenter(
     }
 
     fun getBestSellersListNames(onLoadComplete: () -> Unit = {}) {
-        compositeDisposable += apiClient.getBestSellersListNames()
+        compositeDisposable += repository.getBestSellersListNames()
             .map {
                 it.results
             }
@@ -96,7 +96,7 @@ class FeedPresenter(
 
     fun getBestSellersList(listName: String = "", onLoadComplete: () -> Unit = {}) {
         val books = mutableListOf<BestSellersBook>()
-        compositeDisposable += apiClient.getBestSellersList(listNameMap[listName].toString())
+        compositeDisposable += repository.getBestSellersList(listNameMap[listName].toString())
             .map {
                 for (item in it.results) {
                     books.add(item.bookDetails[0])
@@ -144,7 +144,7 @@ class FeedPresenter(
                 onLoadComplete()
             }
             .flatMap {
-                apiClient.getBestSellersList(listNameMap[it]!!)
+                repository.getBestSellersList(listNameMap[it]!!)
                     .subscribeOn(ioScheduler)
                     .observeOn(mainThreadScheduler)
                     .toObservable()
