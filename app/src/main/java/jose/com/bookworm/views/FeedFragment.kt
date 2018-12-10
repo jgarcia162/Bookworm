@@ -26,6 +26,8 @@ class FeedFragment : Fragment(), FeedPresentation, View.OnClickListener {
     private lateinit var categoryTitles: List<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Injector.applicationComponent.inject(this)
+
         super.onCreate(savedInstanceState)
     }
 
@@ -39,9 +41,6 @@ class FeedFragment : Fragment(), FeedPresentation, View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        Injector.applicationComponent.inject(this)
-
         bestSellersAdapter = GenericAdapter(R.layout.best_seller_list_item)
 
         best_sellers_rv.setHasFixedSize(true)

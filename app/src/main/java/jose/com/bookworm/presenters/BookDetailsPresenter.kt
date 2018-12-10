@@ -1,6 +1,5 @@
 package jose.com.bookworm.presenters
 
-import jose.com.bookworm.di.Injector
 import jose.com.bookworm.network.ApiClient
 import jose.com.bookworm.presentations.BookDetailsPresentation
 
@@ -11,8 +10,6 @@ class BookDetailsPresenter(
 
     fun attach(presentation: BookDetailsPresentation){
         this.presentation = presentation
-
-        Injector.applicationComponent.inject(this)
     }
 
     fun detach(){

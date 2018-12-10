@@ -1,6 +1,5 @@
 package jose.com.bookworm.presenters
 
-import android.content.Context
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
@@ -14,7 +13,6 @@ import jose.com.bookworm.presentations.FeedPresentation
 import jose.com.bookworm.repository.BookRepository
 
 class FeedPresenter(
-    private val context: Context,
     private val repository: BookRepository,
     private val mainThreadScheduler: Scheduler,
     private val ioScheduler: Scheduler

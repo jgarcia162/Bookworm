@@ -23,8 +23,8 @@ interface BookDao {
     @Query("SELECT * FROM books")
     fun getAllBooks(): List<Book>
 
-    @Query("SELECT * FROM books WHERE isInLibrary IS :borrowed")
-    fun getBorrowedBooks(borrowed: Boolean): List<Book>
+    @Query("SELECT * FROM books WHERE isInLibrary = 1")
+    fun getBorrowedBooks(): List<Book>
 
     @Query("SELECT * FROM books WHERE title LIKE :title")
     fun getBookByTitle(title: String) : List<Book>
