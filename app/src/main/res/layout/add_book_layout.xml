@@ -144,5 +144,4 @@
             android:hint="@string/hint_isbn" />
     </com.google.android.material.textfield.TextInputLayout>
 
-
 </androidx.constraintlayout.widget.ConstraintLayout>
