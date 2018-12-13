@@ -15,7 +15,7 @@
     <string name="sort_icon_description">sort by icon</string>
     <string name="currently_reading_iv_description">Currently reading book cover</string>
     <string name="num_pages"># of Pages</string>
-    <string name="year_published">Year Published</string>
+    <string name="year_published">Year</string>
     <string name="hint_isbn">ISBN</string>
     <string name="string_edit">Edit</string>
     <string name="best_sellers">NY Times Best Sellers %1$s</string>
