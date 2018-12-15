@@ -33,7 +33,7 @@ class ChipsDialogFragment : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         prefHelper = SharedPreferencesHelper(view.context)
 
-        selectedLists.addAll(prefHelper.getFilters())
+        prefHelper.getFilters()?.let { selectedLists.addAll(it) }
 
         val chips = chipTitles.map {
             Chip(this.context).apply {
