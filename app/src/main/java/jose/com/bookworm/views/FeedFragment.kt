@@ -23,7 +23,7 @@ class FeedFragment : Fragment(), FeedPresentation, View.OnClickListener {
     lateinit var presenter: FeedPresenter
     private lateinit var bestSellersAdapter: GenericAdapter<NYTimesBook>
     private lateinit var currentReadingAdapter: GenericAdapter<Book>
-    private lateinit var categoryTitles: List<String>
+    private lateinit var categoryTitles: Set<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Injector.applicationComponent.inject(this)
@@ -101,7 +101,7 @@ class FeedFragment : Fragment(), FeedPresentation, View.OnClickListener {
 
     }
 
-    override fun loadListNamesChips(listTitles: MutableList<String>) {
+    override fun loadListNamesChips(listTitles: MutableSet<String>) {
         categoryTitles = listTitles
     }
 

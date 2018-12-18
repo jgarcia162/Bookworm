@@ -18,7 +18,7 @@ class DatabaseHelper @Inject constructor(private val bookDao: BookDao) {
 
     fun deleteBook(book: Book) = bookDao.deleteBook(book)
 
-    fun getBookByISBN(isbn: Int): Book = bookDao.findBookByISBN(isbn)
+    fun getBookByISBN(isbn: String): Book = bookDao.findBookByISBN(isbn)
 
     fun deleteAllBooks() = bookDao.deleteAllBooks()
 

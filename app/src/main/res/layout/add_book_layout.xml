@@ -7,16 +7,18 @@
     tools:layout_editor_absoluteY="81dp">
 
     <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="127dp"
-        android:layout_height="117dp"
+        android:id="@+id/book_cover_image_view"
+        android:layout_width="100dp"
+        android:layout_height="150dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:contentDescription="@string/add_book_cover_description"
-        android:scaleType="fitCenter"
+        android:scaleType="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@tools:sample/avatars" />
+        app:layout_constraintEnd_toStartOf="@id/title_input_et"
+        app:layout_constraintBottom_toTopOf="@id/categories_spinner"
+        android:src="@android:drawable/sym_def_app_icon"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/title_input_et"
@@ -24,10 +26,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
+        android:background="@android:color/transparent"
         app:layout_constraintBottom_toTopOf="@+id/author_input_et"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/imageView2"
-        app:layout_constraintTop_toTopOf="@+id/imageView2">
+        app:layout_constraintStart_toEndOf="@id/book_cover_image_view"
+        app:layout_constraintTop_toTopOf="@+id/book_cover_image_view">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -44,9 +47,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toBottomOf="@id/imageView2"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="@id/book_cover_image_view"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/imageView2"
+        app:layout_constraintStart_toEndOf="@id/book_cover_image_view"
         app:layout_constraintTop_toBottomOf="@id/title_input_et">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -58,58 +62,53 @@
             android:textColorHint="@color/colorSecondaryFont" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/genre_input_et"
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/categories_spinner"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@android:color/transparent"
+
         app:layout_constraintEnd_toStartOf="@id/pages_input_et"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageView2">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:textColorHint="@color/colorSecondaryFont"
-            tools:hint="Genre" />
-
-    </com.google.android.material.textfield.TextInputLayout>
+        app:layout_constraintTop_toBottomOf="@id/book_cover_image_view"
+        tools:listitem="@android:layout/simple_spinner_dropdown_item"/>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/year_published_input_et"
-        android:layout_width="0dp"
+        android:id="@+id/pages_input_et"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/isbn_input_et"
-        app:layout_constraintTop_toBottomOf="@+id/genre_input_et">
+        android:layout_marginEnd="8dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/categories_spinner"
+        app:layout_constraintTop_toTopOf="@id/categories_spinner">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/year_published"
+            android:hint="@string/num_pages"
             android:inputType="number"
             android:textColorHint="@color/colorSecondaryFont" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/pages_input_et"
-        android:layout_width="0dp"
+        android:id="@+id/year_published_input_et"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/genre_input_et"
-        app:layout_constraintTop_toTopOf="@id/genre_input_et">
+        android:layout_marginTop="8dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/isbn_input_et"
+        app:layout_constraintTop_toBottomOf="@+id/categories_spinner">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/num_pages"
+            android:hint="@string/year_published"
             android:inputType="number"
+            android:maxLength="4"
             android:textColorHint="@color/colorSecondaryFont" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -120,16 +119,29 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@android:color/transparent"
+        app:layout_constraintEnd_toEndOf="@id/scan_image_button"
         app:layout_constraintStart_toEndOf="@+id/year_published_input_et"
         app:layout_constraintTop_toBottomOf="@+id/pages_input_et">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:hint="@string/hint_isbn"
             android:inputType="number"
-            android:textColorHint="@color/colorSecondaryFont" />
+            android:maxLength="15"
+            android:textColorHint="@color/colorSecondaryFont"/>
     </com.google.android.material.textfield.TextInputLayout>
+    <ImageButton
+        android:id="@+id/scan_image_button"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/icon_barcode_scan"
+        android:background="@android:color/transparent"
+        app:layout_constraintStart_toEndOf="@id/isbn_input_et"
+        app:layout_constraintTop_toBottomOf="@id/isbn_input_et"
+        app:layout_constraintBottom_toTopOf="@id/isbn_input_et"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:contentDescription="@string/scan_button_description" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,6 +6,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
 import jose.com.bookworm.SharedPreferencesHelper
+import jose.com.bookworm.di.Injector
 import jose.com.bookworm.model.nytimes.BestSellersBook
 import jose.com.bookworm.model.nytimes.BestSellersListName
 import jose.com.bookworm.model.nytimes.BestSellersOverviewList
@@ -19,7 +20,7 @@ class FeedPresenter(
     private val mainThreadScheduler: Scheduler,
     private val ioScheduler: Scheduler
 ) : BasePresenter() {
-    @Inject private lateinit var prefHelper: SharedPreferencesHelper
+    @Inject lateinit var prefHelper: SharedPreferencesHelper
     private var presentation: FeedPresentation? = null
     private lateinit var compositeDisposable: CompositeDisposable
     private val topBooks = mutableListOf<NYTimesBook>()
@@ -27,6 +28,8 @@ class FeedPresenter(
 
     fun attach(presentation: FeedPresentation) {
         this.presentation = presentation
+
+        Injector.applicationComponent.inject(this)
 
         compositeDisposable = CompositeDisposable()
     }
@@ -83,7 +86,7 @@ class FeedPresenter(
     }
 
     private fun onGetBestSellersListNamesSuccess(listNames: List<BestSellersListName>) {
-        val listTitles = mutableListOf<String>()
+        val listTitles = mutableSetOf<String>()
         for (name in listNames) {
             listTitles.add(name.displayName)
             listNameMap[name.displayName] = name.listName

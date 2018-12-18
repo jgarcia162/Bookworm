@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.fragment_chips_dialog.*
 class ChipsDialogFragment : DialogFragment() {
     private lateinit var prefHelper: SharedPreferencesHelper
     private val selectedLists: MutableSet<String> = mutableSetOf()
-    var chipTitles: List<String> = emptyList()
+    var chipTitles: Set<String> = emptySet()
     var listener: FeedPresentation? = null
 
     override fun onCreateView(

@@ -13,7 +13,7 @@ interface FeedPresentation {
     fun showBestSellersListFailed(listName: String)
     fun showGetBestSellersFailed()
     fun showGetBestSellersSuccess(listName: String = "")
-    fun loadListNamesChips(listTitles: MutableList<String>)
+    fun loadListNamesChips(listTitles: MutableSet<String>)
     fun showNoResults()
     fun getBestSellerList(listName: String)
     fun getMultipleLists(listNames: Set<String>)

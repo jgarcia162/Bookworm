@@ -1,9 +1,7 @@
 package jose.com.bookworm.di
 
 import dagger.Component
-import jose.com.bookworm.presenters.BookDetailsPresenter
-import jose.com.bookworm.presenters.LibraryPresenter
-import jose.com.bookworm.presenters.SearchPresenter
+import jose.com.bookworm.presenters.*
 import jose.com.bookworm.views.AddBookDialogFragment
 import jose.com.bookworm.views.BookDetailsFragment
 import jose.com.bookworm.views.FeedFragment
@@ -18,6 +16,10 @@ interface ApplicationComponent {
     fun inject(libraryPresenter: LibraryPresenter)
 
     fun inject(searchPresenter: SearchPresenter)
+
+    fun inject(feedPresenter: FeedPresenter)
+
+    fun inject(addBookPresenter: AddBookPresenter)
 
     fun inject(feedFragment: FeedFragment)
 
