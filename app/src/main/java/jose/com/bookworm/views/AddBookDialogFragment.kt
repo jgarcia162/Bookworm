@@ -4,35 +4,24 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import androidx.fragment.app.DialogFragment
 import jose.com.bookworm.R
-import jose.com.bookworm.SharedPreferencesHelper
 import jose.com.bookworm.di.Injector
 import jose.com.bookworm.extensions.onClick
-import jose.com.bookworm.model.roommodel.Book
 import jose.com.bookworm.presentations.AddBookPresentation
 import jose.com.bookworm.presenters.AddBookPresenter
-import jose.com.bookworm.repository.BookRepository
 import kotlinx.android.synthetic.main.add_book_layout.*
 import kotlinx.android.synthetic.main.dialog_buttons_layout.*
 import javax.inject.Inject
 
 class AddBookDialogFragment : DialogFragment(), AddBookPresentation {
     @Inject
-    lateinit var repository: BookRepository
-    @Inject
-    lateinit var prefHelper: SharedPreferencesHelper
-    @Inject
     lateinit var presenter: AddBookPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Injector.applicationComponent.inject(this)
         super.onCreate(savedInstanceState)
-    }
-
-    override fun onStart() {
-        super.onStart()
-
     }
 
     override fun onCreateView(
@@ -46,26 +35,20 @@ class AddBookDialogFragment : DialogFragment(), AddBookPresentation {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var list = presenter.getCategories()?.map { arrayOf(it) }
+        val categories = presenter.getCategories()
 
-        var languages = arrayOf("Java", "PHP", "Kotlin", "Javascript", "Python", "Swift")
-
-        //TODO create spinner adapter
-//        categories_spinner.adapter =
-//            ArrayAdapter(this, android.R.layout.simple_list_item_1, languages)
-
+        categories_spinner.adapter =
+            ArrayAdapter(context!!, R.layout.category_list_item, mutableListOf(categories))
 
         done_button.onClick {
-            val book = Book(
-                title = getTitle(),
-                author = getAuthor(),
-                isbn = getISBN(),
-                pages = getPages().toInt(),
-                yearPublished = getYearPublished().toInt(),
-                categories = getGenre().split(",")
+            presenter.addBook(
+                getTitle(),
+                getAuthor(),
+                getISBN(),
+                getPages(),
+                getYearPublished(),
+                getGenre()
             )
-
-            repository.addBook(book)
         }
 
         clear_button.onClick {
@@ -79,24 +62,19 @@ class AddBookDialogFragment : DialogFragment(), AddBookPresentation {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    private fun getTitle() = title_input_et.editText?.text.toString()
-
-    private fun getAuthor() = author_input_et.editText?.text.toString()
-
-    private fun getISBN() = isbn_input_et.editText?.text.toString()
-
-    private fun getPages() = pages_input_et.editText?.text.toString()
-
-    private fun getYearPublished() = year_published_input_et.editText?.text.toString()
-
-    private fun getGenre() = year_published_input_et.editText?.text.toString()
+    fun getTitle() = title_input_et.text.toString()
+    fun getAuthor() = author_input_et.text.toString()
+    fun getISBN() = isbn_input_et.text.toString()
+    fun getPages() = pages_input_et.text.toString()
+    fun getYearPublished() = year_published_input_et.text.toString()
+    fun getGenre() = categories_spinner.selectedItem.toString()
 
     private fun clearFields() {
-        title_input_et.editText?.setText("")
-        author_input_et.editText?.setText("")
-        pages_input_et.editText?.setText("")
-        year_published_input_et.editText?.setText("")
-//        categories_spinner.editText?.setText("")
-        isbn_input_et.editText?.setText("")
+        title_input_et.setText("")
+        author_input_et.setText("")
+        pages_input_et.setText("")
+        year_published_input_et.setText("")
+        categories_spinner.setSelection(0)
+        isbn_input_et.setText("")
     }
 }

@@ -3,8 +3,6 @@ package jose.com.bookworm.model.roommodel
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.TypeConverters
-import jose.com.bookworm.room.Converters
 import jose.com.bookworm.room.User
 
 @Entity(tableName = "books")
@@ -15,8 +13,8 @@ data class Book(
     val description: String? = "",
     val yearPublished: Int?,
     val pages: Int?,
-    @TypeConverters(Converters::class)
-    val categories: List<String>,
+//    @TypeConverters(Converters::class)
+    val categories: String,
     val isbn: String,
     val isFinished: Boolean = false,
     val isCurrentlyReading: Boolean = false,

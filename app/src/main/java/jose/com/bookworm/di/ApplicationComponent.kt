@@ -9,7 +9,7 @@ import jose.com.bookworm.views.LibraryFragment
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [ApplicationModule::class, DaoModule::class, ApiModule::class])
+@Component(modules = [ApplicationModule::class, DaoModule::class, ApiModule::class, PresenterModule::class])
 interface ApplicationComponent {
     fun inject(bookDetailsPresenter: BookDetailsPresenter)
 

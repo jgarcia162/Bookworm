@@ -9,5 +9,6 @@ object Injector{
                 .applicationModule(ApplicationModule(APP_CONTEXT))
                 .daoModule(DaoModule())
                 .apiModule(ApiModule())
+                .presenterModule(PresenterModule())
                 .build()
 }
