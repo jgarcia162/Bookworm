@@ -2,24 +2,27 @@ package jose.com.bookworm
 
 import android.content.Context
 import android.preference.PreferenceManager
+import androidx.core.content.edit
 
 class SharedPreferencesHelper(context: Context){
     private val prefs = PreferenceManager.getDefaultSharedPreferences(context)
 
-    fun getFilters(): MutableSet<String>? = prefs.getStringSet(FILTERS_KEY, emptySet())
+    fun getFilters(): MutableSet<String>? = prefs.getStringSet(KEY_FILTERS, emptySet())
 
     fun saveFilters(filters: MutableSet<String>) {
-        prefs.edit().putStringSet(FILTERS_KEY, filters).apply()
+        prefs.edit().putStringSet(KEY_FILTERS, filters).apply()
     }
 
-    fun getCategories(): MutableSet<String>? = prefs.getStringSet(CATEGORIES_KEY, emptySet())
+    fun getCategories(): MutableSet<String>? = prefs.getStringSet(KEY_CATEGORIES, emptySet())
 
-    fun saveCategories(filters: MutableSet<String>) {
-
+    fun saveCategories(categories: MutableSet<String>) {
+        prefs.edit{
+            putStringSet(KEY_CATEGORIES, categories).apply()
+        }
     }
 
     companion object {
-        const val FILTERS_KEY = "filters"
-        const val CATEGORIES_KEY = "categories"
+        const val KEY_FILTERS = "filters"
+        const val KEY_CATEGORIES = "categories"
     }
 }

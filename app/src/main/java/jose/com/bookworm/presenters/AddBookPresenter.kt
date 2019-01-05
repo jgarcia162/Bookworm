@@ -29,8 +29,7 @@ class AddBookPresenter(val prefHelper: SharedPreferencesHelper) {
         author: String,
         isbn: String,
         pages: String,
-        year: String,
-        category: String
+        year: String
     ) {
         val defPages: Int = if (pages.isBlank()) {
             0
@@ -50,8 +49,7 @@ class AddBookPresenter(val prefHelper: SharedPreferencesHelper) {
                 author = author,
                 isbn = isbn,
                 pages = defPages,
-                yearPublished = defYear,
-                categories = category
+                yearPublished = defYear
             )
         )
 

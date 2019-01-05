@@ -27,7 +27,8 @@ ext.deps = [
                                 'rxJava'  : "androidx.room:room-rxjava2:${versions.room}"
                         ],
                         'lifecycle': "androidx.lifecycle:lifecycle-extensions:${versions.lifecycle}"
-                ]
+                ],
+                'ktx'             : "androidx.core:core-ktx:1.0.0"
         ],
         'coroutines': [
                 'kotlin' : "org.jetbrains.kotlinx:kotlinx-coroutines-core:${versions.coroutines}",

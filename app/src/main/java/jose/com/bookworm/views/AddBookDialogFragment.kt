@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import androidx.fragment.app.DialogFragment
 import jose.com.bookworm.R
 import jose.com.bookworm.di.Injector
@@ -35,19 +34,13 @@ class AddBookDialogFragment : DialogFragment(), AddBookPresentation {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val categories = presenter.getCategories()
-
-        categories_spinner.adapter =
-            ArrayAdapter(context!!, R.layout.category_list_item, mutableListOf(categories))
-
         done_button.onClick {
             presenter.addBook(
                 getTitle(),
                 getAuthor(),
                 getISBN(),
                 getPages(),
-                getYearPublished(),
-                getGenre()
+                getYearPublished()
             )
         }
 
@@ -67,14 +60,12 @@ class AddBookDialogFragment : DialogFragment(), AddBookPresentation {
     fun getISBN() = isbn_input_et.text.toString()
     fun getPages() = pages_input_et.text.toString()
     fun getYearPublished() = year_published_input_et.text.toString()
-    fun getGenre() = categories_spinner.selectedItem.toString()
 
     private fun clearFields() {
         title_input_et.setText("")
         author_input_et.setText("")
         pages_input_et.setText("")
         year_published_input_et.setText("")
-        categories_spinner.setSelection(0)
         isbn_input_et.setText("")
     }
 }
