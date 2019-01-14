@@ -73,5 +73,6 @@ ext.deps = [
                 'espresso'  : "androidx.test.espresso:espresso-core:3.1.0",
                 'runner'    : "androidx.test:runner:1.1.0"
         ],
-        'timber'    : "com.jakewharton.timber:timber:4.6.0"
+        'timber'    : "com.jakewharton.timber:timber:4.6.0",
+        'mlkit' : "com.google.firebase:firebase-ml-vision:18.0.2"
 ]
