@@ -55,7 +55,7 @@ dependencies {
     implementation deps.rx.rxAndroid
     implementation deps.rx.kotlin
     implementation deps.parceler.compiler
-//    kapt deps.parceler.processor
+    kapt deps.parceler.processor
     implementation deps.timber
     implementation deps.mlkit
     implementation deps.cameraView
