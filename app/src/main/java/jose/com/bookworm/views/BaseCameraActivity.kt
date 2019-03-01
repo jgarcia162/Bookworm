@@ -1,6 +1,7 @@
 package jose.com.bookworm.views
 
 import android.os.Bundle
+import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.appcompat.app.AppCompatActivity
@@ -12,7 +13,8 @@ import jose.com.bookworm.R
 import jose.com.bookworm.extensions.onClick
 import kotlinx.android.synthetic.main.activity_base_camera.*
 
-open class BaseCameraActivity : AppCompatActivity(), LifecycleOwner {
+abstract class BaseCameraActivity : AppCompatActivity(), LifecycleOwner, View.OnClickListener {
+
     override fun getLifecycle(): Lifecycle {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
@@ -28,8 +30,7 @@ open class BaseCameraActivity : AppCompatActivity(), LifecycleOwner {
             if (camera_view.visibility == VISIBLE) showPreview() else hidePreview()
         }
         camera_view.setLifecycleOwner(this)//TODO implement lifecycle
-        capture_button.onClick {  }
-
+        capture_button.onClick(this)
     }
 
     private fun hidePreview() {
