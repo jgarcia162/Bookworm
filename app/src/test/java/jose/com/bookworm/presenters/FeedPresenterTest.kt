@@ -1,5 +1,6 @@
 package jose.com.bookworm.presenters
 
+import androidx.room.Room
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
@@ -11,7 +12,11 @@ import jose.com.bookworm.books.successfulGetTopFiveBestSellersResponse
 import jose.com.bookworm.model.nytimes.BestSellersBook
 import jose.com.bookworm.model.nytimes.BestSellersOverviewBook
 import jose.com.bookworm.presentations.FeedPresentation
+import jose.com.bookworm.repository.BookRepository
+import jose.com.bookworm.room.BookDatabase
+import jose.com.bookworm.room.DatabaseHelper
 import org.awaitility.Awaitility.await
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import java.util.concurrent.TimeUnit.SECONDS
@@ -19,19 +24,25 @@ import java.util.concurrent.TimeUnit.SECONDS
 class FeedPresenterTest : BaseApiTest() {
     private lateinit var presenter: FeedPresenter
     private lateinit var presentation: FeedPresentation
+    private lateinit var database: BookDatabase
 
     @Before
     override fun setup() {
         super.setup()
-
         presentation = mock()
+        database = Room.inMemoryDatabaseBuilder(context, BookDatabase::class.java).build()
 
         presenter = FeedPresenter(
-            context,
-            client,
+            BookRepository(client, DatabaseHelper(database.bookDao())),
             Schedulers.io(),
             Schedulers.io()
         )
+    }
+
+    @After
+    override fun teardown(){
+        super.teardown()
+        database.close()
     }
 
     @Test
@@ -82,7 +93,7 @@ class FeedPresenterTest : BaseApiTest() {
             .atMost(2, SECONDS)
             .until { listLoaded }
 
-        verify(presentation).loadListNamesChips(mutableListOf("Combined Print & E-Book Fiction"))
+        verify(presentation).loadListNamesChips(mutableSetOf("Combined Print & E-Book Fiction"))
         verifyNoMoreInteractions(presentation)
     }
 

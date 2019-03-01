@@ -5,13 +5,13 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import jose.com.bookworm.R
+import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         title = "BookWorm"
 
         supportFragmentManager.beginTransaction()
@@ -32,5 +32,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun showAddBookFragment() {
         AddBookDialogFragment().show(supportFragmentManager.beginTransaction(), "add_book_fragment")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Timber.d("Destroyed")
     }
 }

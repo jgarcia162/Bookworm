@@ -1,5 +1,6 @@
 package jose.com.bookworm.views
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -33,6 +34,11 @@ class AddBookDialogFragment : DialogFragment(), AddBookPresentation {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        scan_image_button.onClick {
+            val scanBarcodeIntent = Intent(context, ScanBarcodeActivity::class.java)
+            startActivityForResult(scanBarcodeIntent, 1)
+        }
 
         done_button.onClick {
             presenter.addBook(
