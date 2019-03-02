@@ -1,23 +1,24 @@
 package jose.com.bookworm.views
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import jose.com.bookworm.adapter.BookAdapter
+import jose.com.bookworm.R
+import jose.com.bookworm.adapter.GenericAdapter
+import jose.com.bookworm.di.Injector
 import jose.com.bookworm.model.roommodel.Book
-import jose.com.bookworm.model.BookViewModel
 import jose.com.bookworm.presentations.LibraryPresentation
 import jose.com.bookworm.presenters.LibraryPresenter
+import javax.inject.Inject
 
-class LibraryFragment : Fragment(), LibraryPresentation {
+class LibraryFragment : androidx.fragment.app.Fragment(), LibraryPresentation {
+  @Inject
   lateinit var presenter: LibraryPresenter
-  private lateinit var adapter: BookAdapter
+  private lateinit var adapter: GenericAdapter<Book>
 
   override fun onCreate(savedInstanceState: Bundle?) {
+    Injector.applicationComponent.inject(this)
     super.onCreate(savedInstanceState)
   }
 
@@ -31,11 +32,6 @@ class LibraryFragment : Fragment(), LibraryPresentation {
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-
-    val model = ViewModelProviders.of(this).get(BookViewModel::class.java)
-    model.getBooks().observe(this, Observer<List<Book>> { books ->
-      adapter = BookAdapter(books)
-    })
   }
 
   override fun onStart() {
@@ -72,5 +68,9 @@ class LibraryFragment : Fragment(), LibraryPresentation {
 
   override fun showSortedBooks() {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+  }
+
+  override fun showBookDetails(book: Book) {
+    fragmentManager?.beginTransaction()?.replace(R.id.main_fragment_container, LibraryFragment())?.commit()
   }
 }

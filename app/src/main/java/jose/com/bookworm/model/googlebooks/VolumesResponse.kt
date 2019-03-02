@@ -1,6 +1,4 @@
-package jose.com.bookworm.model
-
-import jose.com.bookworm.model.googlebooks.Volume
+package jose.com.bookworm.model.googlebooks
 
 data class VolumesResponse(
     val kind: String,

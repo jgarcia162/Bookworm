@@ -1,41 +1,34 @@
 package jose.com.bookworm.views
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
 import jose.com.bookworm.R
-import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
-  private val addBookButton: Button? = null
 
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_main)
-
-    title = "BookWorm"
-
-    supportFragmentManager.beginTransaction().replace(R.id.main_fragment_container, FeedFragment()).commit()
-  }
-
-  override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-    menuInflater.inflate(R.menu.main_menu, menu)
-    return true
-  }
-
-  override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-    when(item?.itemId){
-      R.id.add_menu_option -> showAddBookFragment()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        title = "BookWorm"
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.main_fragment_container, FeedFragment()).commit()
     }
-    return true
-  }
 
-  private fun showAddBookFragment() {
-    Timber.d("ADDED BOOK")
-  }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
 
-  fun showAllBooks(view: View) { startActivity(intent) }
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.add_menu_option -> showAddBookFragment()
+        }
+        return true
+    }
+
+    private fun showAddBookFragment() {
+        AddBookDialogFragment().show(supportFragmentManager, "add_book_fragment")
+    }
 }

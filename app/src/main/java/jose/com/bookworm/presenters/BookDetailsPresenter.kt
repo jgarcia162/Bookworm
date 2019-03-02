@@ -1,8 +1,11 @@
 package jose.com.bookworm.presenters
 
+import jose.com.bookworm.network.ApiClient
 import jose.com.bookworm.presentations.BookDetailsPresentation
 
-class BookDetailsPresenter {
+class BookDetailsPresenter(
+    private val apiClient: ApiClient
+): BasePresenter() {
     private var presentation: BookDetailsPresentation? = null
 
     fun attach(presentation: BookDetailsPresentation){
@@ -31,5 +34,9 @@ class BookDetailsPresenter {
 
     fun updateProgress(){
         //TODO updates book progress
+    }
+
+    override fun onitemClicked(item: Any) {
+
     }
 }

@@ -1,15 +1,17 @@
 package jose.com.bookworm.views
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import jose.com.bookworm.model.roommodel.Book
 import jose.com.bookworm.presentations.SearchPresentation
 import jose.com.bookworm.presenters.SearchPresenter
+import javax.inject.Inject
 
-class SearchFragment : Fragment(), SearchPresentation{
+class SearchFragment() : androidx.fragment.app.Fragment(), SearchPresentation{
+    @Inject
     lateinit var presenter: SearchPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {

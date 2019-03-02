@@ -3,7 +3,9 @@ package jose.com.bookworm.books
 import okhttp3.mockwebserver.MockResponse
 import org.intellij.lang.annotations.Language
 
-/** Mocked responses from [NYTimesApi] endpoints*/
+/**
+ * Mocked responses from [NYTimesApi] endpoints
+ */
 
 @Language("JSON")
 const val successfulGetBestSellersListJson =
@@ -74,7 +76,7 @@ const val successfulGetTopFiveBestSellersJson =
     "published_date_description": "latest",
     "previous_published_date": "2018-11-18",
     "next_published_date": "",
-    "overviewLists": [
+    "lists": [
       {
         "list_id": 704,
         "list_name": "Combined Print and E-Book Fiction",
@@ -109,20 +111,7 @@ const val successfulGetTopFiveBestSellersJson =
             "title": "PAST TENSE",
             "updated_date": "2018-11-14 23:02:10",
             "weeks_on_list": 1,
-            "buy_links": [
-              {
-                "name": "Amazon",
-                "url": "https://www.amazon.com/Past-Tense-Jack-Reacher-Novel/dp/0399593519?tag=NYTBS-20"
-              },
-              {
-                "name": "Local Booksellers",
-                "url": "http://www.indiebound.org/book/9781473542303?aff=NYT"
-              },
-              {
-                "name": "Barnes and Noble",
-                "url": "http://www.anrdoezrs.net/click-7990613-11819508?url=http%3A%2F%2Fwww.barnesandnoble.com%2Fw%2F%3Fean%3D9781473542303"
-              }
-            ]
+            "buy_links": []
           }
         ]
       }

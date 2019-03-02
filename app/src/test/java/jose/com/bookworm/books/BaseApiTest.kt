@@ -1,18 +1,23 @@
 package jose.com.bookworm.books
 
+import android.content.Context
 import jose.com.bookworm.network.ApiClient
 import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
 import org.junit.Before
+import org.mockito.Mockito.mock
 
 open class BaseApiTest {
+    lateinit var context: Context
     lateinit var mockWebServer: MockWebServer
     lateinit var client: ApiClient
     lateinit var mockBaseUrl: String
+    lateinit var loggingInterceptor: HttpLoggingInterceptor
 
     @Before
-    open fun setup(){
+    open fun setup() {
+        context = mock(Context::class.java)
         mockWebServer = MockWebServer()
         mockWebServer.start()
 
@@ -20,17 +25,22 @@ open class BaseApiTest {
             .url("/")
             .toString()
 
+        HttpLoggingInterceptor {
+            println(it)
+        }.apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
+
         client = ApiClient(
-            mockBaseUrl,
-            mockBaseUrl,
-            HttpLoggingInterceptor{
-                println(it)
-            }.apply { level = HttpLoggingInterceptor.Level.BODY }
-        )
+         loggingInterceptor
+        ).apply {
+            booksBaseUrl = mockBaseUrl
+            nyTimesBaseUrl = mockBaseUrl
+        }
     }
 
     @After
-    fun teardown(){
+    open fun teardown() {
         mockWebServer.shutdown()
     }
 }

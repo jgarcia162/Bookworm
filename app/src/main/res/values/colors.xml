@@ -4,6 +4,6 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorPrimaryFont">#202021</color>
-    <color name="colorSecondaryFont">#4c4d51</color>
+    <color name="colorSecondaryFont">#74757b</color>
     <color name="colorCheckedOut">#a7030e</color>
 </resources>
