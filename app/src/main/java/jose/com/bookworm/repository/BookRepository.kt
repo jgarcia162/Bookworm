@@ -16,7 +16,7 @@ class BookRepository(
 
     fun deleteBook(book: Book) = databaseHelper.deleteBook(book)
 
-    fun getBookByISBN(isbn: Int) = databaseHelper.getBookByISBN(isbn)
+    fun getBookByISBN(isbn: String) = databaseHelper.getBookByISBN(isbn)
 
     fun deleteAllBooks() = databaseHelper.deleteAllBooks()
 

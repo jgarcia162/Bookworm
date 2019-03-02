@@ -46,8 +46,8 @@ class ApiClient(
     private inline fun <reified T : Any> createApi(baseUrl: String): T {
         val builder = OkHttpClient.Builder()
 
-        if (loggingInterceptor != null) {
-            builder.addInterceptor(loggingInterceptor!!)
+        loggingInterceptor?.let {
+            builder.addInterceptor(it)
         }
 
         val client = builder.build()

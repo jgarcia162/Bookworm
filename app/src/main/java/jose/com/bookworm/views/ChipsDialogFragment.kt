@@ -12,13 +12,13 @@ import jose.com.bookworm.SharedPreferencesHelper
 import jose.com.bookworm.extensions.addChips
 import jose.com.bookworm.extensions.onClick
 import jose.com.bookworm.presentations.FeedPresentation
+import kotlinx.android.synthetic.main.dialog_buttons_layout.*
 import kotlinx.android.synthetic.main.fragment_chips_dialog.*
 
-//TODO persist categories so they are not reset to none when this fragment is created
 class ChipsDialogFragment : DialogFragment() {
     private lateinit var prefHelper: SharedPreferencesHelper
     private val selectedLists: MutableSet<String> = mutableSetOf()
-    var chipTitles: List<String> = emptyList()
+    var chipTitles: Set<String> = emptySet()
     var listener: FeedPresentation? = null
 
     override fun onCreateView(
@@ -33,7 +33,7 @@ class ChipsDialogFragment : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         prefHelper = SharedPreferencesHelper(view.context)
 
-        selectedLists.addAll(prefHelper.getFilters())
+        prefHelper.getFilters()?.let { selectedLists.addAll(it) }
 
         val chips = chipTitles.map {
             Chip(this.context).apply {

@@ -1,6 +1,5 @@
 package jose.com.bookworm.adapter
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -33,7 +32,7 @@ class LibraryBookViewHolder(
     authorTV.text = data.author
     publishedTV.text = data.yearPublished.toString()
     checkedTV.text = if(data.isInLibrary) "" else "OUT"
-    categoryTV.text = data.categories[0]
+    categoryTV.text = data.categories
     //TODO set cover image
     itemView.setOnClickListener(this)
   }

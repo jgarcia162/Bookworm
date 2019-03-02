@@ -13,6 +13,7 @@ open class BaseApiTest {
     lateinit var mockWebServer: MockWebServer
     lateinit var client: ApiClient
     lateinit var mockBaseUrl: String
+    lateinit var loggingInterceptor: HttpLoggingInterceptor
 
     @Before
     open fun setup() {
@@ -24,12 +25,14 @@ open class BaseApiTest {
             .url("/")
             .toString()
 
+        HttpLoggingInterceptor {
+            println(it)
+        }.apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
+
         client = ApiClient(
-            HttpLoggingInterceptor {
-                println(it)
-            }.apply {
-                level = HttpLoggingInterceptor.Level.BODY
-            }
+         loggingInterceptor
         ).apply {
             booksBaseUrl = mockBaseUrl
             nyTimesBaseUrl = mockBaseUrl
@@ -37,7 +40,7 @@ open class BaseApiTest {
     }
 
     @After
-    fun teardown() {
+    open fun teardown() {
         mockWebServer.shutdown()
     }
 }

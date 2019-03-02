@@ -8,14 +8,14 @@ android {
     buildToolsVersion '28.0.3'
     defaultConfig {
         applicationId "jose.com.bookworm"
-        minSdkVersion 21
+        minSdkVersion 28
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
-        debug{
+        debug {
             buildConfigField 'String', "ApiKey", GOOGLE_BOOKS_API_KEY
             buildConfigField 'String', "TimesApiKey", NYTIMES_BOOKS_API_KEY
         }
@@ -39,6 +39,7 @@ dependencies {
     implementation deps.android.arch.lifecycle
     implementation deps.android.arch.room.runtime
     implementation deps.android.arch.room.rxJava
+    implementation deps.android.ktx
     kapt deps.android.arch.room.compiler
     implementation deps.coroutines.kotlin
     implementation deps.coroutines.android
@@ -56,6 +57,8 @@ dependencies {
     implementation deps.parceler.compiler
     kapt deps.parceler.processor
     implementation deps.timber
+    implementation deps.mlkit
+    implementation deps.cameraView
     testImplementation deps.testing.mockito.core
     testImplementation deps.testing.mockito.kotlin
     testImplementation deps.testing.junit
