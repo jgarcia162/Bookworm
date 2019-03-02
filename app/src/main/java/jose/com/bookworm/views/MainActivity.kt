@@ -5,7 +5,6 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import jose.com.bookworm.R
-import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
 
@@ -13,7 +12,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         title = "BookWorm"
-
         supportFragmentManager.beginTransaction()
             .replace(R.id.main_fragment_container, FeedFragment()).commit()
     }
@@ -31,11 +29,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showAddBookFragment() {
-        AddBookDialogFragment().show(supportFragmentManager.beginTransaction(), "add_book_fragment")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Timber.d("Destroyed")
+        AddBookDialogFragment().show(supportFragmentManager, "add_book_fragment")
     }
 }

@@ -36,8 +36,7 @@ class AddBookDialogFragment : DialogFragment(), AddBookPresentation {
         super.onViewCreated(view, savedInstanceState)
 
         scan_image_button.onClick {
-            val scanBarcodeIntent = Intent(context, ScanBarcodeActivity::class.java)
-            startActivityForResult(scanBarcodeIntent, 1)
+            startActivityForResult(Intent(context, ScanBarcodeActivity::class.java), 1)
         }
 
         done_button.onClick {
@@ -50,16 +49,11 @@ class AddBookDialogFragment : DialogFragment(), AddBookPresentation {
             )
         }
 
-        clear_button.onClick {
-            clearFields()
-        }
-
+        clear_button.onClick { clearFields() }
         cancel_button.onClick { dismiss() }
     }
 
-    override fun setCategories(categories: MutableSet<String>?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun setCategories(categories: MutableSet<String>?) {}
 
     fun getTitle() = title_input_et.text.toString()
     fun getAuthor() = author_input_et.text.toString()
