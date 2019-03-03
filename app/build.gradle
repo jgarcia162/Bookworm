@@ -68,5 +68,7 @@ dependencies {
 }
 
 repositories {
+    google()
     mavenCentral()
 }
+apply plugin: 'com.google.gms.google-services'

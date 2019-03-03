@@ -1,6 +1,7 @@
 package jose.com.bookworm
 
 import android.app.Application
+import com.google.firebase.FirebaseApp
 import timber.log.Timber
 
 
@@ -10,6 +11,8 @@ class BookWormApplication : Application() {
 
         APP_CONTEXT = this
         Timber.plant(Timber.DebugTree())
+
+        FirebaseApp.initializeApp(this)
 
 //        RxJavaPlugins.setErrorHandler {
 //            Timber.e(it.message)

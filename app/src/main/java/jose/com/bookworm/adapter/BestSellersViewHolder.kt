@@ -1,6 +1,5 @@
 package jose.com.bookworm.adapter
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.widget.TextView
 import jose.com.bookworm.R

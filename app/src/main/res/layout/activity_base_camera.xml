@@ -6,6 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".views.ScanBarcodeActivity">
 
+    <ProgressBar
+        android:id="@+id/camera_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
+
     <FrameLayout
         android:id="@+id/preview_frame"
         android:layout_width="match_parent"
@@ -27,22 +33,10 @@
             android:text="@string/retry" />
 
     </FrameLayout>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/bottom_sheet_layout"
+    <com.otaliastudios.cameraview.CameraView
+        android:id="@+id/camera_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="4dp"
-        app:behavior_hideable="true"
-        app:behavior_peekHeight="20dp"
-        app:cardCornerRadius="8dp"
-        app:layout_behavior="@string/bottom_sheet_behavior">
-
-        <com.otaliastudios.cameraview.CameraView
-            android:id="@+id/camera_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </androidx.cardview.widget.CardView>
+        android:layout_height="match_parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/capture_button"
@@ -52,8 +46,7 @@
         android:src="@drawable/icon_barcode_scan"
         app:backgroundTint="@color/colorPrimary"
         app:fabSize="normal"
-        app:layout_anchor="@id/bottom_sheet_layout"
-        app:layout_anchorGravity="end"
+        android:layout_gravity="bottom|center"
         app:rippleColor="@color/colorAccent" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
