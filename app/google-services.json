@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "231272119712",
+    "firebase_url": "https://bookworm-222400.firebaseio.com",
+    "project_id": "bookworm-222400",
+    "storage_bucket": "bookworm-222400.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:231272119712:android:ecc700d1652d36be",
+        "android_client_info": {
+          "package_name": "jose.com.bookworm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "231272119712-ihghdmlo6vt52j4vb24dbpn761mbo1d7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBW_Dz70IHBhhr0vI7niFFpzYXLvOU1g0o"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
