@@ -5,24 +5,12 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.appcompat.app.AppCompatActivity
-import androidx.cardview.widget.CardView
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import jose.com.bookworm.R
 import jose.com.bookworm.extensions.onClick
 import kotlinx.android.synthetic.main.activity_base_camera.*
 
 abstract class BaseCameraActivity : AppCompatActivity(), LifecycleOwner, View.OnClickListener {
-
-    override fun getLifecycle(): Lifecycle {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    val sheetBehavior: BottomSheetBehavior<CardView> by lazy {
-        BottomSheetBehavior.from(bottom_sheet_layout)
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_base_camera)
