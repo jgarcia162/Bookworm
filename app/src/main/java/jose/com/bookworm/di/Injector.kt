@@ -10,5 +10,6 @@ object Injector{
                 .daoModule(DaoModule())
                 .apiModule(ApiModule())
                 .presenterModule(PresenterModule())
+                .schedulerModule(SchedulerModule())
                 .build()
 }

@@ -2,21 +2,22 @@ package jose.com.bookworm.di
 
 import dagger.Module
 import dagger.Provides
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.rxjava3.core.Scheduler
+import io.reactivex.rxjava3.schedulers.Schedulers
 import jose.com.bookworm.SharedPreferencesHelper
 import jose.com.bookworm.network.ApiClient
 import jose.com.bookworm.presenters.*
 import jose.com.bookworm.repository.BookRepository
+import javax.inject.Named
 
-@Module(includes = [ApiModule::class, ApplicationModule::class])
+@Module(includes = [ApiModule::class, ApplicationModule::class, SchedulerModule::class])
 class PresenterModule{
-    private val mainThreadScheduler = AndroidSchedulers.mainThread()
-    private val scheduler = Schedulers.io()
 
     @Provides
     fun provideFeedPresenter(
-        repository: BookRepository
+        repository: BookRepository,
+        @Named("ioScheduler") scheduler: Scheduler,
+        @Named("mainThreadScheduler") mainThreadScheduler: Scheduler
     ): FeedPresenter {
         return FeedPresenter(
             repository = repository,

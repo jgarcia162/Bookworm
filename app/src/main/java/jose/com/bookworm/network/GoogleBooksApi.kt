@@ -1,6 +1,6 @@
 package jose.com.bookworm.network
 
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Single
 import jose.com.bookworm.model.googlebooks.VolumesResponse
 import retrofit2.http.GET
 import retrofit2.http.Query

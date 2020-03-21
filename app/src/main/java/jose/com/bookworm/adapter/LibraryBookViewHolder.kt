@@ -33,7 +33,7 @@ class LibraryBookViewHolder(
     authorTV.text = data.author
     publishedTV.text = data.yearPublished.toString()
     checkedTV.text = if(data.isInLibrary) "" else "OUT"
-    categoryTV.text = data.categories[0]
+    categoryTV.text = data.categories[0].toString()
     //TODO set cover image
     itemView.setOnClickListener(this)
   }

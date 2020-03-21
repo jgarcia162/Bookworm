@@ -1,7 +1,7 @@
 package jose.com.bookworm
 
 import android.content.Context
-import android.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 
 class SharedPreferencesHelper(context: Context){
     private val prefs = PreferenceManager.getDefaultSharedPreferences(context)

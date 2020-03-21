@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/BookWorm.iml" filepath="$PROJECT_DIR$/BookWorm.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Bookworm.iml" filepath="$PROJECT_DIR$/.idea/Bookworm.iml" group="Bookworm" />
+      <module fileurl="file://$PROJECT_DIR$/app/Bookworm-app.iml" filepath="$PROJECT_DIR$/app/Bookworm-app.iml" group="Bookworm/app" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

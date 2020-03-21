@@ -1,6 +1,6 @@
 package jose.com.bookworm.network
 
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Single
 import jose.com.bookworm.model.nytimes.BestSellersListNamesResponse
 import jose.com.bookworm.model.nytimes.BestSellersListResponse
 import jose.com.bookworm.model.nytimes.BestSellersOverviewResponse

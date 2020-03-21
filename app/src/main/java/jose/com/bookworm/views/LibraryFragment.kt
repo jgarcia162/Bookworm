@@ -71,6 +71,6 @@ class LibraryFragment : androidx.fragment.app.Fragment(), LibraryPresentation {
   }
 
   override fun showBookDetails(book: Book) {
-    fragmentManager?.beginTransaction()?.replace(R.id.main_fragment_container, LibraryFragment())?.commit()
+    activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.main_fragment_container, LibraryFragment())?.commit()
   }
 }

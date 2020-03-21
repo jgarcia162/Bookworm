@@ -1,26 +1,28 @@
 ext.versions = [
-        'kotlin'    : '1.2.70',
-        'coroutines': '1.0.0',
-        'dagger'    : '2.17',
-        'retrofit'  : '2.4.0',
-        'rxJava'    : '2.2.2',
-        'rxAndroid' : '2.1.0',
-        'rxAdapter' : '2.3.0',
-        'okhttp3'   : '3.9.1',
-        'lifecycle' : '2.0.0',
-        'room'      : '2.1.0-alpha02',
-        'mockito'   : '2.0.0',
-        'parceler'  : '1.1.11'
+        'kotlin'    : '1.3.70',
+        'coroutines': '1.3.5',
+        'dagger'    : '2.27',
+        'retrofit'  : '2.7.2',
+        'rxJava'    : '3.0.0',
+        'rxAndroid' : '3.0.0',
+        'rxAdapter' : '3.0.0',
+        'rxKotlin'  : '3.0.0-RC1',
+        'okhttp3'   : '4.4.0',
+        'lifecycle' : '2.2.0',
+        'room'      : '2.2.5',
+        'mockito'   : '3.3.3',
+        'parceler'  : '1.1.13'
 ]
 
 ext.deps = [
         'android'   : [
-                'appCompat'       : "androidx.appcompat:appcompat:1.0.2",
-                'constraintLayout': "androidx.constraintlayout:constraintlayout:2.0.0-alpha2",
-                'material'        : "com.google.android.material:material:1.1.0-alpha01",
-                'recyclerView'    : "androidx.recyclerview:recyclerview:1.0.0",
-                'exifinterface'   : "androidx.exifinterface:exifinterface:1.0.0",
-                'arch'            : [
+                'appCompat'        : "androidx.appcompat:appcompat:1.1.0",
+                'constraintLayout' : "androidx.constraintlayout:constraintlayout:2.0.0-beta4",
+                'material'         : "com.google.android.material:material:1.0.0",
+                'recyclerView'     : "androidx.recyclerview:recyclerview:1.1.0",
+                'exifinterface'    : "androidx.exifinterface:exifinterface:1.1.0",
+                'preferenceManager': "androidx.preference:preference-ktx:1.1.0",
+                'arch'             : [
                         'room'     : [
                                 'runtime' : "androidx.room:room-runtime:${versions.room}",
                                 'compiler': "androidx.room:room-compiler:${versions.room}",
@@ -45,7 +47,7 @@ ext.deps = [
                 'retrofit2': [
                         'core'         : "com.squareup.retrofit2:retrofit:${versions.retrofit}",
                         'gsonConverter': "com.squareup.retrofit2:converter-gson:${versions.retrofit}",
-                        'rxAdapter'    : "com.squareup.retrofit2:adapter-rxjava2:${versions.rxAdapter}"
+                        'rxAdapter'    : "com.github.akarnokd:rxjava3-retrofit-adapter:${versions.rxAdapter}"
                 ],
                 'okhttp3'  : [
                         'loggingInterceptor': "com.squareup.okhttp3:logging-interceptor:${versions.okhttp3}",
@@ -54,9 +56,9 @@ ext.deps = [
                 'picasso'  : "com.squareup.picasso:picasso:2.71828"
         ],
         'rx'        : [
-                'rxJava'   : "io.reactivex.rxjava2:rxjava:${versions.rxJava}",
-                'rxAndroid': "io.reactivex.rxjava2:rxandroid:${versions.rxAndroid}",
-                'kotlin'   : "io.reactivex.rxjava2:rxkotlin:2.3.0"
+                'rxJava'   : "io.reactivex.rxjava3:rxjava:${versions.rxJava}",
+                'rxAndroid': "io.reactivex.rxjava3:rxandroid:${versions.rxAndroid}",
+                'kotlin'   : "io.reactivex.rxjava3:rxkotlin:${versions.rxKotlin}"
         ],
         'parceler'  : [
                 'compiler' : "org.parceler:parceler-api:${versions.parceler}",
@@ -65,12 +67,12 @@ ext.deps = [
         'testing'   : [
                 'mockito'   : [
                         'core'  : "org.mockito:mockito-core:${versions.mockito}",
-                        'kotlin': "com.nhaarman.mockitokotlin2:mockito-kotlin:${versions.mockito}"
+                        'kotlin': "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
                 ],
                 'junit'     : "junit:junit:4.12",
-                'awaitility': "org.awaitility:awaitility:3.0.0",
-                'espresso'  : "androidx.test.espresso:espresso-core:3.1.0",
-                'runner'    : "androidx.test:runner:1.1.0"
+                'awaitility': "org.awaitility:awaitility:4.0.2",
+                'espresso'  : "androidx.test.espresso:espresso-core:3.2.0",
+                'runner'    : "androidx.test:runner:1.2.0"
         ],
-        'timber'    : "com.jakewharton.timber:timber:4.6.0"
+        'timber'    : "com.jakewharton.timber:timber:4.7.1"
 ]

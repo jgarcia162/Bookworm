@@ -1,10 +1,10 @@
 package jose.com.bookworm.presenters
 
-import io.reactivex.Observable
-import io.reactivex.Scheduler
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.rxkotlin.plusAssign
-import io.reactivex.rxkotlin.subscribeBy
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Scheduler
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxkotlin3.plusAssign
+import io.reactivex.rxkotlin3.subscribeBy
 import jose.com.bookworm.SharedPreferencesHelper
 import jose.com.bookworm.di.Injector
 import jose.com.bookworm.model.nytimes.BestSellersBook
@@ -14,11 +14,12 @@ import jose.com.bookworm.model.nytimes.NYTimesBook
 import jose.com.bookworm.presentations.FeedPresentation
 import jose.com.bookworm.repository.BookRepository
 import javax.inject.Inject
+import javax.inject.Named
 
 class FeedPresenter(
     private val repository: BookRepository,
-    private val mainThreadScheduler: Scheduler,
-    private val ioScheduler: Scheduler
+    @Named("mainThreadScheduler") private val mainThreadScheduler: Scheduler,
+    @Named("ioScheduler") private val ioScheduler: Scheduler
 ) : BasePresenter() {
     @Inject lateinit var prefHelper: SharedPreferencesHelper
     private var presentation: FeedPresentation? = null
