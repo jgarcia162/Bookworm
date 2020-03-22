@@ -3,8 +3,8 @@ package jose.com.bookworm.presenters
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxkotlin3.plusAssign
-import io.reactivex.rxkotlin3.subscribeBy
+import io.reactivex.rxjava3.kotlin.plusAssign
+import io.reactivex.rxjava3.kotlin.subscribeBy
 import jose.com.bookworm.SharedPreferencesHelper
 import jose.com.bookworm.di.Injector
 import jose.com.bookworm.model.nytimes.BestSellersBook

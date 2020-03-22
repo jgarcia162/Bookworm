@@ -4,17 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import dagger.android.support.DaggerFragment
 import jose.com.bookworm.R
 import jose.com.bookworm.adapter.GenericAdapter
 import jose.com.bookworm.di.Injector
 import jose.com.bookworm.model.roommodel.Book
-import jose.com.bookworm.presentations.LibraryPresentation
-import jose.com.bookworm.presenters.LibraryPresenter
+import jose.com.bookworm.viewmodel.LibraryViewModel
 import javax.inject.Inject
 
-class LibraryFragment : androidx.fragment.app.Fragment(), LibraryPresentation {
+class LibraryFragment : DaggerFragment() {
   @Inject
-  lateinit var presenter: LibraryPresenter
+  lateinit var libraryViewModel: LibraryViewModel
   private lateinit var adapter: GenericAdapter<Book>
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,41 +36,37 @@ class LibraryFragment : androidx.fragment.app.Fragment(), LibraryPresentation {
 
   override fun onStart() {
     super.onStart()
-
-    presenter.attach(this)
   }
 
   override fun onStop() {
     super.onStop()
-
-    presenter.detach()
   }
 
-  override fun showBookDeleted() {
+  fun showBookDeleted() {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
   }
 
-  override fun showLoading() {
+  fun showLoading() {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
   }
 
-  override fun hideLoading() {
+  fun hideLoading() {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
   }
 
-  override fun showEmptyLibrary() {
+  fun showEmptyLibrary() {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
   }
 
-  override fun hideEmptyLibrary() {
+  fun hideEmptyLibrary() {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
   }
 
-  override fun showSortedBooks() {
+  fun showSortedBooks() {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
   }
 
-  override fun showBookDetails(book: Book) {
+  fun showBookDetails(book: Book) {
     activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.main_fragment_container, LibraryFragment())?.commit()
   }
 }

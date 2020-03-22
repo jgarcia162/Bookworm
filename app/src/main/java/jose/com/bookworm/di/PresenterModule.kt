@@ -37,7 +37,4 @@ class PresenterModule{
 
     @Provides
     fun provideSearchPresenter(apiClient: ApiClient): SearchPresenter = SearchPresenter(apiClient)
-
-    @Provides
-    fun provideAddBookPresenter(prefHelper: SharedPreferencesHelper): AddBookPresenter = AddBookPresenter(prefHelper)
 }

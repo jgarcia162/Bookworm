@@ -1,28 +1,21 @@
-package jose.com.bookworm.presenters
+package jose.com.bookworm.viewmodel
 
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import jose.com.bookworm.SharedPreferencesHelper
-import jose.com.bookworm.di.Injector
 import jose.com.bookworm.model.roommodel.Book
-import jose.com.bookworm.presentations.AddBookPresentation
 import jose.com.bookworm.repository.BookRepository
 import javax.inject.Inject
 
-class AddBookPresenter(val prefHelper: SharedPreferencesHelper) {
-    @Inject
-    lateinit var repository: BookRepository
-    private var presentation: AddBookPresentation? = null
+class AddBookViewModel @Inject constructor(
+    private val repository: BookRepository,
+    private val prefHelper: SharedPreferencesHelper
+) : ViewModel() {
+    val categoriesLiveData = MutableLiveData<MutableSet<String>>()
 
-    fun attach(presentation: AddBookPresentation) {
-        this.presentation = presentation
-
-        Injector.applicationComponent.inject(this)
+    fun getCategories() {
+        categoriesLiveData.postValue(prefHelper.getCategories())
     }
-
-    fun detach() {
-        this.presentation = null
-    }
-
-    fun getCategories() = prefHelper.getCategories()
 
     fun addBook(
         title: String,
@@ -54,6 +47,9 @@ class AddBookPresenter(val prefHelper: SharedPreferencesHelper) {
                 categories = category
             )
         )
+    }
 
+    override fun onCleared() {
+        super.onCleared()
     }
 }
