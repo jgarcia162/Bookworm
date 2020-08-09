@@ -23,7 +23,7 @@ ext.deps = [
                 'exifinterface'    : "androidx.exifinterface:exifinterface:1.1.0",
                 'preferenceManager': "androidx.preference:preference-ktx:1.1.0",
                 'arch'             : [
-                        'room'     : [
+                        'room': [
                                 'runtime' : "androidx.room:room-runtime:${versions.room}",
                                 'compiler': "androidx.room:room-compiler:${versions.room}",
                                 'rxJava'  : "androidx.room:room-rxjava2:${versions.room}"
@@ -31,8 +31,8 @@ ext.deps = [
                 ]
         ],
         'lifecycle' : [
-                'viewmodel': "androidx.lifecycle:lifecycle-viewmodel:$versions.lifecycle",
-                'livedata' : "androidx.lifecycle:lifecycle-livedata:$versions.lifecycle",
+                'viewmodel'          : "androidx.lifecycle:lifecycle-viewmodel:$versions.lifecycle",
+                'livedata'           : "androidx.lifecycle:lifecycle-livedata:$versions.lifecycle",
                 'lifecycleExtensions': "androidx.lifecycle:lifecycle-extensions:${versions.lifecycle}"
         ],
         'coroutines': [
@@ -40,8 +40,9 @@ ext.deps = [
                 'android': "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versions.coroutines}"
         ],
         'dagger2'   : [
-                'runtime' : "com.google.dagger:dagger-android-support:${versions.dagger}",
-                'compiler': "com.google.dagger:dagger-compiler:${versions.dagger}"
+                'runtime'         : "com.google.dagger:dagger-android-support:${versions.dagger}",
+                'compiler'        : "com.google.dagger:dagger-compiler:${versions.dagger}",
+                'androidProcessor': "com.google.dagger:dagger-android-processor:${versions.dagger}"
         ],
         'kotlin'    : [
                 'gradlePlugin': "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}",

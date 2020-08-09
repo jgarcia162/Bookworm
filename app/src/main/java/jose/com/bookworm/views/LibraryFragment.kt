@@ -7,20 +7,15 @@ import android.view.ViewGroup
 import dagger.android.support.DaggerFragment
 import jose.com.bookworm.R
 import jose.com.bookworm.adapter.GenericAdapter
-import jose.com.bookworm.di.Injector
 import jose.com.bookworm.model.roommodel.Book
 import jose.com.bookworm.viewmodel.LibraryViewModel
 import javax.inject.Inject
 
 class LibraryFragment : DaggerFragment() {
+  private lateinit var adapter: GenericAdapter<Book>
+  
   @Inject
   lateinit var libraryViewModel: LibraryViewModel
-  private lateinit var adapter: GenericAdapter<Book>
-
-  override fun onCreate(savedInstanceState: Bundle?) {
-    Injector.applicationComponent.inject(this)
-    super.onCreate(savedInstanceState)
-  }
 
   override fun onCreateView(
     inflater: LayoutInflater,

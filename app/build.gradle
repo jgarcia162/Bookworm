@@ -53,6 +53,7 @@ dependencies {
     implementation deps.coroutines.android
     implementation deps.dagger2.runtime
     kapt deps.dagger2.compiler
+    kapt deps.dagger2.androidProcessor
     implementation deps.square.retrofit2.core
     implementation deps.square.retrofit2.gsonConverter
     implementation deps.square.retrofit2.rxAdapter

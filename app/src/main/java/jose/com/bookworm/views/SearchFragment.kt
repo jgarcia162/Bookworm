@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import dagger.android.support.DaggerFragment
-import jose.com.bookworm.di.Injector
 import jose.com.bookworm.model.roommodel.Book
 import jose.com.bookworm.viewmodel.SearchViewModel
 import javax.inject.Inject
@@ -13,11 +12,6 @@ import javax.inject.Inject
 class SearchFragment() : DaggerFragment(){
     @Inject
     lateinit var searchViewModel: SearchViewModel
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        Injector.applicationComponent.inject(this)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

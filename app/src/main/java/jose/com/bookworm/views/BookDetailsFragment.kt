@@ -2,10 +2,8 @@ package jose.com.bookworm.views
 
 import android.os.Bundle
 import android.view.*
-import androidx.lifecycle.ViewModel
 import dagger.android.support.DaggerFragment
 import jose.com.bookworm.R
-import jose.com.bookworm.di.Injector
 import jose.com.bookworm.model.roommodel.Book
 import jose.com.bookworm.viewmodel.BookDetailsViewModel
 import javax.inject.Inject
@@ -14,12 +12,6 @@ class BookDetailsFragment : DaggerFragment() {
   
   @Inject
   lateinit var bookDetailsViewModel: BookDetailsViewModel
-  
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    
-    Injector.applicationComponent.inject(this)
-  }
 
   override fun onCreateView(
     inflater: LayoutInflater,
