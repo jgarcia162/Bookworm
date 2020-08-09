@@ -4,18 +4,24 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     buildToolsVersion '28.0.3'
     defaultConfig {
         applicationId "jose.com.bookworm"
-        minSdkVersion 28
-        targetSdkVersion 28
+        minSdkVersion 21
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
     buildTypes {
-        debug {
+        debug{
             buildConfigField 'String', "ApiKey", GOOGLE_BOOKS_API_KEY
             buildConfigField 'String', "TimesApiKey", NYTIMES_BOOKS_API_KEY
         }
@@ -36,15 +42,19 @@ dependencies {
     implementation deps.android.constraintLayout
     implementation deps.android.recyclerView
     implementation deps.android.exifinterface
-    implementation deps.android.arch.lifecycle
+    implementation deps.android.preferenceManager
     implementation deps.android.arch.room.runtime
     implementation deps.android.arch.room.rxJava
-    implementation deps.android.ktx
+    implementation deps.firebaseMLKit
     kapt deps.android.arch.room.compiler
+    implementation deps.lifecycle.lifecycleExtensions
+    implementation deps.lifecycle.viewmodel
+    implementation deps.lifecycle.livedata
     implementation deps.coroutines.kotlin
     implementation deps.coroutines.android
     implementation deps.dagger2.runtime
     kapt deps.dagger2.compiler
+    kapt deps.dagger2.androidProcessor
     implementation deps.square.retrofit2.core
     implementation deps.square.retrofit2.gsonConverter
     implementation deps.square.retrofit2.rxAdapter
@@ -57,8 +67,7 @@ dependencies {
     implementation deps.parceler.compiler
     kapt deps.parceler.processor
     implementation deps.timber
-    implementation deps.mlkit
-    implementation deps.cameraView
+    api deps.cameraView
     testImplementation deps.testing.mockito.core
     testImplementation deps.testing.mockito.kotlin
     testImplementation deps.testing.junit
@@ -68,7 +77,5 @@ dependencies {
 }
 
 repositories {
-    google()
     mavenCentral()
 }
-apply plugin: 'com.google.gms.google-services'

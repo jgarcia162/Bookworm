@@ -1,22 +1,17 @@
 package jose.com.bookworm.views
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import dagger.android.support.DaggerFragment
 import jose.com.bookworm.model.roommodel.Book
-import jose.com.bookworm.presentations.SearchPresentation
-import jose.com.bookworm.presenters.SearchPresenter
+import jose.com.bookworm.viewmodel.SearchViewModel
 import javax.inject.Inject
 
-class SearchFragment() : androidx.fragment.app.Fragment(), SearchPresentation{
+class SearchFragment() : DaggerFragment(){
     @Inject
-    lateinit var presenter: SearchPresenter
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    lateinit var searchViewModel: SearchViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,37 +27,33 @@ class SearchFragment() : androidx.fragment.app.Fragment(), SearchPresentation{
 
     override fun onStart() {
         super.onStart()
-
-        presenter.attach(this)
     }
 
     override fun onStop() {
         super.onStop()
-
-        presenter.detach()
     }
 
-    override fun showNoResults() {
+    fun showNoResults() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun updateRV(results: List<Book>) {
+    fun updateRV(results: List<Book>) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun showLoading() {
+    fun showLoading() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun hideLoading() {
+    fun hideLoading() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun showSearchForBookText() {
+    fun showSearchForBookText() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun hideSearchForBookText() {
+    fun hideSearchForBookText() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

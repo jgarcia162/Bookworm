@@ -1,13 +1,13 @@
 package jose.com.bookworm.network
 
-import io.reactivex.Single
+import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory
+import io.reactivex.rxjava3.core.Single
 import jose.com.bookworm.BuildConfig
 import jose.com.bookworm.model.googlebooks.Volume
 import jose.com.bookworm.model.nytimes.BestSellersOverviewList
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 /** This is a wrapper around the following APIs:
@@ -54,7 +54,7 @@ class ApiClient(
 
         val retrofit = Retrofit.Builder()
             .baseUrl(baseUrl)
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()

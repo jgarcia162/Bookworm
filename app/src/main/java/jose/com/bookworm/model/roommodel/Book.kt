@@ -13,7 +13,6 @@ data class Book(
     val description: String? = "",
     val yearPublished: Int?,
     val pages: Int?,
-//    @TypeConverters(Converters::class)
     val categories: String? = "",
     val isbn: String,
     val isFinished: Boolean = false,

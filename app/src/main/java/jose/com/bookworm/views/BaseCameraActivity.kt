@@ -6,11 +6,12 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleOwner
+import dagger.android.support.DaggerAppCompatActivity
 import jose.com.bookworm.R
 import jose.com.bookworm.extensions.onClick
 import kotlinx.android.synthetic.main.activity_base_camera.*
 
-abstract class BaseCameraActivity : AppCompatActivity(), LifecycleOwner, View.OnClickListener {
+abstract class BaseCameraActivity : DaggerAppCompatActivity(), LifecycleOwner, View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_base_camera)

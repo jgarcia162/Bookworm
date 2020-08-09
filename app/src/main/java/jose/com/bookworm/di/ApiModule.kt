@@ -10,9 +10,9 @@ import javax.inject.Singleton
 @Module
 class ApiModule{
     @Provides
-    fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor = HttpLoggingInterceptor { it ->
-        Timber.d("LOGGER: $it")
-    }.apply { level = HttpLoggingInterceptor.Level.BODY }
+    fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
+        level = HttpLoggingInterceptor.Level.BODY
+    }
 
     @Provides
     @Singleton

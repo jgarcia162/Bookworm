@@ -3,8 +3,9 @@ package jose.com.bookworm.repository
 import jose.com.bookworm.model.roommodel.Book
 import jose.com.bookworm.network.ApiClient
 import jose.com.bookworm.room.DatabaseHelper
+import javax.inject.Inject
 
-class BookRepository(
+class BookRepository @Inject constructor(
     private val apiClient: ApiClient,
     private val databaseHelper: DatabaseHelper
 ) {

@@ -1,28 +1,22 @@
 package jose.com.bookworm.views
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
+import android.widget.ArrayAdapter
+import androidx.lifecycle.Observer
+import dagger.android.support.DaggerDialogFragment
 import jose.com.bookworm.R
-import jose.com.bookworm.di.Injector
 import jose.com.bookworm.extensions.onClick
-import jose.com.bookworm.presentations.AddBookPresentation
-import jose.com.bookworm.presenters.AddBookPresenter
+import jose.com.bookworm.viewmodel.AddBookViewModel
 import kotlinx.android.synthetic.main.add_book_layout.*
 import kotlinx.android.synthetic.main.dialog_buttons_layout.*
 import javax.inject.Inject
 
-class AddBookDialogFragment : DialogFragment(), AddBookPresentation {
+class AddBookDialogFragment : DaggerDialogFragment() {
     @Inject
-    lateinit var presenter: AddBookPresenter
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        Injector.applicationComponent.inject(this)
-        super.onCreate(savedInstanceState)
-    }
+    lateinit var viewModel: AddBookViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,38 +28,44 @@ class AddBookDialogFragment : DialogFragment(), AddBookPresentation {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        scan_image_button.onClick {
-            startActivityForResult(Intent(context, ScanBarcodeActivity::class.java), 1)
-        }
+        viewModel.getCategoriesLiveData().observe(viewLifecycleOwner, Observer(::setCategories))
 
         done_button.onClick {
-            presenter.addBook(
+            viewModel.addBook(
                 getTitle(),
                 getAuthor(),
                 getISBN(),
                 getPages(),
-                getYearPublished()
+                getYearPublished(),
+                getGenre()
             )
         }
 
-        clear_button.onClick { clearFields() }
+        clear_button.onClick {
+            clearFields()
+        }
+
         cancel_button.onClick { dismiss() }
     }
 
-    override fun setCategories(categories: MutableSet<String>?) {}
+    private fun setCategories(categories: MutableSet<String>) {
+        categories_spinner.adapter =
+            ArrayAdapter(requireContext(), R.layout.category_list_item, categories.toMutableList())
+    }
 
-    fun getTitle() = title_input_et.text.toString()
-    fun getAuthor() = author_input_et.text.toString()
-    fun getISBN() = isbn_input_et.text.toString()
-    fun getPages() = pages_input_et.text.toString()
-    fun getYearPublished() = year_published_input_et.text.toString()
+    private fun getTitle() = title_input_et.text.toString()
+    private fun getAuthor() = author_input_et.text.toString()
+    private fun getISBN() = isbn_input_et.text.toString()
+    private fun getPages() = pages_input_et.text.toString()
+    private fun getYearPublished() = year_published_input_et.text.toString()
+    private fun getGenre() = categories_spinner.selectedItem.toString()
 
     private fun clearFields() {
         title_input_et.setText("")
         author_input_et.setText("")
         pages_input_et.setText("")
         year_published_input_et.setText("")
+        categories_spinner.setSelection(0)
         isbn_input_et.setText("")
     }
 }

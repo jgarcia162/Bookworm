@@ -25,9 +25,7 @@ open class BaseApiTest {
             .url("/")
             .toString()
 
-        HttpLoggingInterceptor {
-            println(it)
-        }.apply {
+        HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
         }
 

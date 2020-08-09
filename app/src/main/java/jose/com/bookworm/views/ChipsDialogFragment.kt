@@ -7,19 +7,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.chip.Chip
+import dagger.android.support.DaggerDialogFragment
 import jose.com.bookworm.R
 import jose.com.bookworm.SharedPreferencesHelper
 import jose.com.bookworm.extensions.addChips
 import jose.com.bookworm.extensions.onClick
-import jose.com.bookworm.presentations.FeedPresentation
 import kotlinx.android.synthetic.main.dialog_buttons_layout.*
 import kotlinx.android.synthetic.main.fragment_chips_dialog.*
 
-class ChipsDialogFragment : DialogFragment() {
+class ChipsDialogFragment : DaggerDialogFragment() {
     private lateinit var prefHelper: SharedPreferencesHelper
     private val selectedLists: MutableSet<String> = mutableSetOf()
     var chipTitles: Set<String> = emptySet()
-    var listener: FeedPresentation? = null
+    var listener: ChipsListener? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -76,8 +76,14 @@ class ChipsDialogFragment : DialogFragment() {
         }
     }
 
-    override fun onDismiss(dialog: DialogInterface?) {
+    override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
         listener = null
+    }
+    
+    interface ChipsListener {
+        fun getOverviewList()
+        
+        fun getMultipleLists(selectedLists: MutableSet<String>)
     }
 }

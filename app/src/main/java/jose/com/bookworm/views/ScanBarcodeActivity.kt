@@ -4,12 +4,12 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.View
-import com.google.firebase.FirebaseApp
 import com.google.firebase.ml.vision.FirebaseVision
 import com.google.firebase.ml.vision.barcode.FirebaseVisionBarcode
 import com.google.firebase.ml.vision.barcode.FirebaseVisionBarcodeDetectorOptions
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import com.otaliastudios.cameraview.CameraListener
+import com.otaliastudios.cameraview.PictureResult
 import kotlinx.android.synthetic.main.activity_base_camera.*
 
 class ScanBarcodeActivity : BaseCameraActivity() {
@@ -17,17 +17,18 @@ class ScanBarcodeActivity : BaseCameraActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         camera_view.addCameraListener(object : CameraListener() {
-            override fun onPictureTaken(jpeg: ByteArray?) {
-                val bitmap = jpeg?.size?.let { BitmapFactory.decodeByteArray(jpeg, 0, it) }
+            override fun onPictureTaken(result: PictureResult) {
+                super.onPictureTaken(result)
+                val bitmap = result.data.size.let { BitmapFactory.decodeByteArray(result.data, 0, it) }
                 bitmap?.let { runBarcodeScanner(it) }
-                super.onPictureTaken(jpeg)
+                super.onPictureTaken(result)
             }
         })
     }
 
     override fun onClick(v: View?) {
         camera_progress_bar.visibility = View.VISIBLE
-        camera_view.captureSnapshot()
+        camera_view.takePictureSnapshot()
     }
 
     private fun runBarcodeScanner(bitmap: Bitmap) {
