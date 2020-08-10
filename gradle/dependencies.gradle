@@ -59,7 +59,8 @@ ext.deps = [
                         'loggingInterceptor': "com.squareup.okhttp3:logging-interceptor:${versions.okhttp3}",
                         'mockwebserver'     : "com.squareup.okhttp3:mockwebserver:${versions.okhttp3}"
                 ],
-                'picasso'  : "com.squareup.picasso:picasso:2.71828"
+                'picasso'  : "com.squareup.picasso:picasso:2.71828",
+                'leakCanary': "com.squareup.leakcanary:leakcanary-android:2.4"
         ],
         'rx'        : [
                 'rxJava'   : "io.reactivex.rxjava3:rxjava:${versions.rxJava}",
