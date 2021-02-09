@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import dagger.android.support.DaggerDialogFragment
+import dagger.hilt.android.AndroidEntryPoint
 import jose.com.bookworm.R
 import jose.com.bookworm.extensions.onClick
 import jose.com.bookworm.viewmodel.AddBookViewModel
@@ -14,9 +16,9 @@ import kotlinx.android.synthetic.main.add_book_layout.*
 import kotlinx.android.synthetic.main.dialog_buttons_layout.*
 import javax.inject.Inject
 
-class AddBookDialogFragment : DaggerDialogFragment() {
-    @Inject
-    lateinit var viewModel: AddBookViewModel
+@AndroidEntryPoint
+class AddBookDialogFragment : DialogFragment() {
+    private val viewModel: AddBookViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,

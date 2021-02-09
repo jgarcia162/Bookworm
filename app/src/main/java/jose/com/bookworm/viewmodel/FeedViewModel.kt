@@ -2,6 +2,7 @@ package jose.com.bookworm.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -16,6 +17,7 @@ import jose.com.bookworm.repository.BookRepository
 import javax.inject.Inject
 import javax.inject.Named
 
+@HiltViewModel
 class FeedViewModel
 @Inject constructor(
   private val repository: BookRepository,

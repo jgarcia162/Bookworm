@@ -4,14 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import dagger.android.support.DaggerFragment
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import dagger.hilt.android.AndroidEntryPoint
 import jose.com.bookworm.model.roommodel.Book
 import jose.com.bookworm.viewmodel.SearchViewModel
-import javax.inject.Inject
 
-class SearchFragment() : DaggerFragment(){
-    @Inject
-    lateinit var searchViewModel: SearchViewModel
+@AndroidEntryPoint
+class SearchFragment() : Fragment(){
+    private val searchViewModel: SearchViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,

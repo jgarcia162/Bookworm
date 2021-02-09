@@ -2,11 +2,13 @@ package jose.com.bookworm.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import jose.com.bookworm.SharedPreferencesHelper
 import jose.com.bookworm.model.roommodel.Book
 import jose.com.bookworm.repository.BookRepository
 import javax.inject.Inject
 
+@HiltViewModel
 class AddBookViewModel @Inject constructor(
   private val repository: BookRepository,
   private val prefHelper: SharedPreferencesHelper

@@ -2,8 +2,10 @@ package jose.com.bookworm
 
 import android.content.Context
 import androidx.preference.PreferenceManager
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-class SharedPreferencesHelper(context: Context) {
+class SharedPreferencesHelper @Inject constructor(context: Context) {
   private val prefs = PreferenceManager.getDefaultSharedPreferences(context)
   
   fun getFilters(): MutableSet<String>? = prefs.getStringSet(FILTERS_KEY, emptySet())

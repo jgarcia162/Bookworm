@@ -1,10 +1,12 @@
 package jose.com.bookworm.viewmodel
 
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import jose.com.bookworm.model.roommodel.Book
 import jose.com.bookworm.network.ApiClient
 import javax.inject.Inject
 
+@HiltViewModel
 class SearchViewModel @Inject constructor(
   private val apiClient: ApiClient
 ) : ViewModel() {

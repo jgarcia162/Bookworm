@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.chip.Chip
-import dagger.android.support.DaggerDialogFragment
+import dagger.hilt.android.AndroidEntryPoint
 import jose.com.bookworm.R
 import jose.com.bookworm.SharedPreferencesHelper
 import jose.com.bookworm.extensions.addChips
@@ -15,7 +15,8 @@ import jose.com.bookworm.extensions.onClick
 import kotlinx.android.synthetic.main.dialog_buttons_layout.*
 import kotlinx.android.synthetic.main.fragment_chips_dialog.*
 
-class ChipsDialogFragment : DaggerDialogFragment() {
+@AndroidEntryPoint
+class ChipsDialogFragment : DialogFragment() {
     private lateinit var prefHelper: SharedPreferencesHelper
     private val selectedLists: MutableSet<String> = mutableSetOf()
     var chipTitles: Set<String> = emptySet()

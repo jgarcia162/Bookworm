@@ -1,9 +1,11 @@
 package jose.com.bookworm.viewmodel
 
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import jose.com.bookworm.network.ApiClient
 import javax.inject.Inject
 
+@HiltViewModel
 class BookDetailsViewModel @Inject constructor(
   private val apiClient: ApiClient
 ) : ViewModel() {

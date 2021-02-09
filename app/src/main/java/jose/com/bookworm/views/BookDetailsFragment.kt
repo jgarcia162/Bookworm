@@ -2,16 +2,18 @@ package jose.com.bookworm.views
 
 import android.os.Bundle
 import android.view.*
-import dagger.android.support.DaggerFragment
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import dagger.hilt.android.AndroidEntryPoint
 import jose.com.bookworm.R
 import jose.com.bookworm.model.roommodel.Book
 import jose.com.bookworm.viewmodel.BookDetailsViewModel
 import javax.inject.Inject
 
-class BookDetailsFragment : DaggerFragment() {
+@AndroidEntryPoint
+class BookDetailsFragment : Fragment() {
   
-  @Inject
-  lateinit var bookDetailsViewModel: BookDetailsViewModel
+  private val bookDetailsViewModel: BookDetailsViewModel by viewModels()
 
   override fun onCreateView(
     inflater: LayoutInflater,

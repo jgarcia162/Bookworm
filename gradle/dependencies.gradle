@@ -11,17 +11,19 @@ ext.versions = [
         'lifecycle' : '2.2.0',
         'room'      : '2.2.5',
         'mockito'   : '3.3.3',
-        'parceler'  : '1.1.13'
+        'parceler'  : '1.1.13',
+        'hilt'      : '2.31.2-alpha'
 ]
 
 ext.deps = [
-        'android'   : [
+        'android'      : [
                 'appCompat'        : "androidx.appcompat:appcompat:1.1.0",
                 'constraintLayout' : "androidx.constraintlayout:constraintlayout:2.0.0-beta4",
                 'material'         : "com.google.android.material:material:1.0.0",
                 'recyclerView'     : "androidx.recyclerview:recyclerview:1.1.0",
                 'exifinterface'    : "androidx.exifinterface:exifinterface:1.1.0",
                 'preferenceManager': "androidx.preference:preference-ktx:1.1.0",
+                'fragment_ktx'     : "androidx.fragment:fragment-ktx:1.2.5",
                 'arch'             : [
                         'room': [
                                 'runtime' : "androidx.room:room-runtime:${versions.room}",
@@ -30,48 +32,49 @@ ext.deps = [
                         ],
                 ]
         ],
-        'firebaseMLKit':       "com.google.firebase:firebase-ml-vision:24.0.3",
-        'lifecycle' : [
+        'firebaseMLKit': "com.google.firebase:firebase-ml-vision:24.0.3",
+        'lifecycle'    : [
                 'viewmodel'          : "androidx.lifecycle:lifecycle-viewmodel:$versions.lifecycle",
                 'livedata'           : "androidx.lifecycle:lifecycle-livedata:$versions.lifecycle",
                 'lifecycleExtensions': "androidx.lifecycle:lifecycle-extensions:${versions.lifecycle}"
         ],
-        'coroutines': [
+        'coroutines'   : [
                 'kotlin' : "org.jetbrains.kotlinx:kotlinx-coroutines-core:${versions.coroutines}",
                 'android': "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versions.coroutines}"
         ],
-        'dagger2'   : [
-                'runtime'         : "com.google.dagger:dagger-android-support:${versions.dagger}",
-                'compiler'        : "com.google.dagger:dagger-compiler:${versions.dagger}",
-                'androidProcessor': "com.google.dagger:dagger-android-processor:${versions.dagger}"
+        'hilt'         : [
+                core        : "com.google.dagger:hilt-android:${versions.hilt}",
+                gradlePlugin: "com.google.dagger:hilt-android-gradle-plugin:${versions.hilt}",
+                viewmodel   : "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03",
+                compiler    : "com.google.dagger:hilt-android-compiler:${versions.hilt}"
         ],
-        'kotlin'    : [
+        'kotlin'       : [
                 'gradlePlugin': "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}",
                 'stdlib'      : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
         ],
-        'square'    : [
-                'retrofit2': [
+        'square'       : [
+                'retrofit2' : [
                         'core'         : "com.squareup.retrofit2:retrofit:${versions.retrofit}",
                         'gsonConverter': "com.squareup.retrofit2:converter-gson:${versions.retrofit}",
                         'rxAdapter'    : "com.github.akarnokd:rxjava3-retrofit-adapter:${versions.rxAdapter}"
                 ],
-                'okhttp3'  : [
+                'okhttp3'   : [
                         'loggingInterceptor': "com.squareup.okhttp3:logging-interceptor:${versions.okhttp3}",
                         'mockwebserver'     : "com.squareup.okhttp3:mockwebserver:${versions.okhttp3}"
                 ],
-                'picasso'  : "com.squareup.picasso:picasso:2.71828",
+                'picasso'   : "com.squareup.picasso:picasso:2.71828",
                 'leakCanary': "com.squareup.leakcanary:leakcanary-android:2.4"
         ],
-        'rx'        : [
+        'rx'           : [
                 'rxJava'   : "io.reactivex.rxjava3:rxjava:${versions.rxJava}",
                 'rxAndroid': "io.reactivex.rxjava3:rxandroid:${versions.rxAndroid}",
                 'kotlin'   : "io.reactivex.rxjava3:rxkotlin:${versions.rxKotlin}"
         ],
-        'parceler'  : [
+        'parceler'     : [
                 'compiler' : "org.parceler:parceler-api:${versions.parceler}",
                 'processor': "org.parceler:parceler:${versions.parceler}"
         ],
-        'testing'   : [
+        'testing'      : [
                 'mockito'   : [
                         'core'  : "org.mockito:mockito-core:${versions.mockito}",
                         'kotlin': "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
@@ -81,6 +84,6 @@ ext.deps = [
                 'espresso'  : "androidx.test.espresso:espresso-core:3.2.0",
                 'runner'    : "androidx.test:runner:1.2.0"
         ],
-        'timber'    : "com.jakewharton.timber:timber:4.7.1",
-        'cameraView' : "com.otaliastudios:cameraview:2.6.3"
+        'timber'       : "com.jakewharton.timber:timber:4.7.1",
+        'cameraView'   : "com.otaliastudios:cameraview:2.6.3"
 ]

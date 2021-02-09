@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.google.android.material.chip.Chip
-import dagger.android.support.DaggerFragment
+import dagger.hilt.android.AndroidEntryPoint
 import jose.com.bookworm.R
 import jose.com.bookworm.adapter.GenericAdapter
 import jose.com.bookworm.extensions.onClick
@@ -15,15 +17,14 @@ import jose.com.bookworm.model.nytimes.NYTimesBook
 import jose.com.bookworm.model.roommodel.Book
 import jose.com.bookworm.viewmodel.FeedViewModel
 import kotlinx.android.synthetic.main.fragment_feed.*
-import javax.inject.Inject
 
-class FeedFragment : DaggerFragment(), View.OnClickListener, ChipsDialogFragment.ChipsListener {
+@AndroidEntryPoint
+class FeedFragment : Fragment(), View.OnClickListener, ChipsDialogFragment.ChipsListener {
   private lateinit var bestSellersAdapter: GenericAdapter<NYTimesBook>
   private lateinit var currentReadingAdapter: GenericAdapter<Book>
   private lateinit var categoryTitles: Set<String>
   
-  @Inject
-  lateinit var feedViewModel: FeedViewModel
+  private val feedViewModel: FeedViewModel by viewModels()
   
   override fun onCreateView(
     inflater: LayoutInflater,

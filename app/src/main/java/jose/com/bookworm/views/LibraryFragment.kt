@@ -4,18 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import dagger.android.support.DaggerFragment
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import dagger.hilt.android.AndroidEntryPoint
 import jose.com.bookworm.R
 import jose.com.bookworm.adapter.GenericAdapter
 import jose.com.bookworm.model.roommodel.Book
 import jose.com.bookworm.viewmodel.LibraryViewModel
-import javax.inject.Inject
 
-class LibraryFragment : DaggerFragment() {
+@AndroidEntryPoint
+class LibraryFragment : Fragment() {
   private lateinit var adapter: GenericAdapter<Book>
   
-  @Inject
-  lateinit var libraryViewModel: LibraryViewModel
+  private val libraryViewModel: LibraryViewModel by viewModels()
 
   override fun onCreateView(
     inflater: LayoutInflater,
