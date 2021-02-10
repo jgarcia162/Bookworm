@@ -9,9 +9,10 @@ import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import jose.com.bookworm.model.roommodel.Book
 import jose.com.bookworm.viewmodel.SearchViewModel
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class SearchFragment() : Fragment(){
+class SearchFragment @Inject constructor() : Fragment(){
     private val searchViewModel: SearchViewModel by viewModels()
 
     override fun onCreateView(

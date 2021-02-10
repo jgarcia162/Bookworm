@@ -11,9 +11,11 @@ import jose.com.bookworm.R
 import jose.com.bookworm.adapter.GenericAdapter
 import jose.com.bookworm.model.roommodel.Book
 import jose.com.bookworm.viewmodel.LibraryViewModel
+import kotlinx.android.synthetic.main.fragment_library.*
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class LibraryFragment : Fragment() {
+class LibraryFragment @Inject constructor() : Fragment() {
   private lateinit var adapter: GenericAdapter<Book>
   
   private val libraryViewModel: LibraryViewModel by viewModels()
@@ -23,11 +25,24 @@ class LibraryFragment : Fragment() {
     container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View? {
-    return super.onCreateView(inflater, container, savedInstanceState)
+    return inflater.inflate(R.layout.fragment_library, container, false)
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
+    adapter = GenericAdapter(R.layout.best_seller_list_item)
+  
+    library_rv.setHasFixedSize(true)
+    library_rv.adapter = adapter
+    
+    observeLiveData()
+    libraryViewModel.getAllBooks()
+  }
+  
+  private fun observeLiveData() {
+    libraryViewModel.getBooks().observe(viewLifecycleOwner,{ books ->
+      adapter.data = books
+    })
   }
 
   override fun onStart() {

@@ -1,6 +1,5 @@
 package jose.com.bookworm.di
 
-import android.app.Application
 import android.content.Context
 import dagger.Module
 import dagger.Provides
@@ -11,7 +10,6 @@ import jose.com.bookworm.SharedPreferencesHelper
 import jose.com.bookworm.network.ApiClient
 import jose.com.bookworm.repository.BookRepository
 import jose.com.bookworm.room.DatabaseHelper
-import javax.inject.Inject
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
@@ -19,7 +17,7 @@ import javax.inject.Singleton
 object ApplicationModule{
 
     @Provides
-    fun provideSharedPreferencesHelper(@ApplicationContext context: Context): SharedPreferencesHelper =
+    fun provideSharedPreferencesHelper(@ApplicationContext context: Context) =
         SharedPreferencesHelper(context)
 
     @Provides

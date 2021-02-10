@@ -1,12 +1,14 @@
 package jose.com.bookworm.room
 
+import io.reactivex.rxjava3.core.Single
 import jose.com.bookworm.model.roommodel.Book
 import javax.inject.Inject
 
 class DatabaseHelper @Inject constructor(private val bookDao: BookDao) {
     fun getAllBooksByAuthor(author: String) = bookDao.getAllBooksByAuthor(author)
 
-    fun getAllCurrentlyReading() = bookDao.getAllBooks().filter { it.isCurrentlyReading }
+    //TODO reimplement this
+//    fun getAllCurrentlyReading()  = bookDao.getAllBooks().filter { it.isCurrentlyReading }
 
     fun getAllBorrowedBooks() = bookDao.getBorrowedBooks()
 
@@ -18,11 +20,11 @@ class DatabaseHelper @Inject constructor(private val bookDao: BookDao) {
 
     fun deleteBook(book: Book) = bookDao.deleteBook(book)
 
-    fun getBookByISBN(isbn: String): Book = bookDao.findBookByISBN(isbn)
+    fun getBookByISBN(isbn: String): Single<Book> = bookDao.findBookByISBN(isbn)
 
     fun deleteAllBooks() = bookDao.deleteAllBooks()
 
-    fun getBookByTitle(title: String): List<Book> = bookDao.getBookByTitle(title)
+    fun getBookByTitle(title: String): Single<List<Book>> = bookDao.getBookByTitle(title)
 
-    fun getAllBooksBorrowedByUser(name: String): List<Book> = bookDao.getAllBooksBorrowedByUser(name)
+    fun getAllBooksBorrowedByUser(name: String): Single<List<Book>> = bookDao.getAllBooksBorrowedByUser(name)
 }

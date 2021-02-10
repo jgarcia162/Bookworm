@@ -3,6 +3,7 @@ package jose.com.bookworm
 import android.content.Context
 import androidx.preference.PreferenceManager
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 class SharedPreferencesHelper @Inject constructor(context: Context) {

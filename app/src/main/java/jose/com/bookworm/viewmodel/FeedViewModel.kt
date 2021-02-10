@@ -32,8 +32,8 @@ class FeedViewModel
   private val isLoadingLiveData = MutableLiveData<Boolean>()
   private val listTitlesLiveData = MutableLiveData<MutableSet<String>>()
   private val bestSellersListLiveData = MutableLiveData<List<NYTimesBook>>()
-  private val isEmptyLiveData = MutableLiveData<Boolean>(true)
-  private val isSuccessfulLiveData = MutableLiveData<Pair<Boolean, String>>(Pair(true, ""))
+  private val isEmptyLiveData = MutableLiveData(true)
+  private val isSuccessfulLiveData = MutableLiveData(Pair(true, ""))
   
   fun getBestSellersOverview(onLoadComplete: () -> Unit = {}) {
     compositeDisposable += repository.getBestSellersOverview()

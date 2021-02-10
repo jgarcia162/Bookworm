@@ -17,9 +17,10 @@ import jose.com.bookworm.model.nytimes.NYTimesBook
 import jose.com.bookworm.model.roommodel.Book
 import jose.com.bookworm.viewmodel.FeedViewModel
 import kotlinx.android.synthetic.main.fragment_feed.*
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class FeedFragment : Fragment(), View.OnClickListener, ChipsDialogFragment.ChipsListener {
+class FeedFragment @Inject constructor(): Fragment(), View.OnClickListener, ChipsDialogFragment.ChipsListener {
   private lateinit var bestSellersAdapter: GenericAdapter<NYTimesBook>
   private lateinit var currentReadingAdapter: GenericAdapter<Book>
   private lateinit var categoryTitles: Set<String>

@@ -27,7 +27,7 @@ class BookRepository @Inject constructor(
 
     fun getAllBooksBorrowedByUser(name: String) = databaseHelper.getAllBooksBorrowedByUser(name)
 
-    fun getAllCurrentlyReading() = databaseHelper.getAllCurrentlyReading()
+//    fun getAllCurrentlyReading() = databaseHelper.getAllCurrentlyReading()
 
     fun getAllBorrowedBooks() = databaseHelper.getAllBorrowedBooks()
 

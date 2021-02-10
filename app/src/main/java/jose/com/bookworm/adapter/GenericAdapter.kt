@@ -10,6 +10,7 @@ class GenericAdapter<T> (val layout: Int) : androidx.recyclerview.widget.Recycle
     var data: List<T> = emptyList()
         set(value) {
             field = value
+            //TODO change this to implement DiffUtils
             notifyDataSetChanged()
         }
 

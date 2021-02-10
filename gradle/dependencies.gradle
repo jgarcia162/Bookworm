@@ -6,10 +6,10 @@ ext.versions = [
         'rxJava'    : '3.0.4',
         'rxAndroid' : '3.0.0',
         'rxAdapter' : '3.0.0',
-        'rxKotlin'  : '3.0.0',
+        'rxKotlin'  : '3.0.1',
         'okhttp3'   : '4.7.2',
         'lifecycle' : '2.2.0',
-        'room'      : '2.2.5',
+        'room'      : '2.3.0-beta01',
         'mockito'   : '3.3.3',
         'parceler'  : '1.1.13',
         'hilt'      : '2.31.2-alpha'
@@ -28,7 +28,7 @@ ext.deps = [
                         'room': [
                                 'runtime' : "androidx.room:room-runtime:${versions.room}",
                                 'compiler': "androidx.room:room-compiler:${versions.room}",
-                                'rxJava'  : "androidx.room:room-rxjava2:${versions.room}"
+                                'rxJava'  : "androidx.room:room-rxjava3:${versions.room}"
                         ],
                 ]
         ],

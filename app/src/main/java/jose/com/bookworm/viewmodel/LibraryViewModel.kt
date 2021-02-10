@@ -1,12 +1,63 @@
 package jose.com.bookworm.viewmodel
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.reactivex.rxjava3.core.Scheduler
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import jose.com.bookworm.model.roommodel.Book
+import jose.com.bookworm.repository.BookRepository
 import javax.inject.Inject
+import javax.inject.Named
+import io.reactivex.rxjava3.kotlin.plusAssign
+import io.reactivex.rxjava3.kotlin.subscribeBy
+
 
 @HiltViewModel
-class LibraryViewModel @Inject constructor(): ViewModel() {
+class LibraryViewModel @Inject constructor(
+  @Named("mainThreadScheduler") private val mainThreadScheduler: Scheduler,
+  @Named("ioScheduler") private val ioScheduler: Scheduler,
+  private val bookRepository: BookRepository
+) : ViewModel() {
+  
+  private var compositeDisposable: CompositeDisposable = CompositeDisposable()
+  private var booksLiveData: MutableLiveData<List<Book>> = MutableLiveData<List<Book>>()
+  
+  fun getAllBooks(onGetBooksComplete: () -> Unit = {}) {
+    compositeDisposable += bookRepository.getAllBooks()
+      .subscribeOn(ioScheduler)
+      .observeOn(mainThreadScheduler)
+      .doOnSubscribe {
+        //TODO set loading to true
+      }
+      .doOnTerminate {
+        //TODO set loading to false
+      }
+      .subscribeBy(
+        onSuccess = { booksLiveData.value = it },
+        onError = {
+          //TODO display error
+        }
+      )
+    
+  }
+  
+  fun getBestSellersOverview(onLoadComplete: () -> Unit = {}) {
+//    compositeDisposable += bookRepository.getAllBooks()
+//      .subscribeOn(ioScheduler)
+//      .observeOn(mainThreadScheduler)
+//      .doOnSubscribe {
+//        isLoadingLiveData.value = true
+//      }
+//      .doAfterTerminate {
+//        isLoadingLiveData.value = false
+//        onLoadComplete()
+//      }
+//      .subscribeBy(
+//        onSuccess = { onGetBestSellersOverviewSuccess(it) },
+//        onError = { onGetBestSellersOverviewFailed() }
+//      )
+  }
   
   fun deleteBook(book: Book) {
     //TODO deletes book from db
@@ -30,4 +81,6 @@ class LibraryViewModel @Inject constructor(): ViewModel() {
   fun onitemClicked(item: Any) {
   
   }
+  
+  fun getBooks() = booksLiveData
 }
