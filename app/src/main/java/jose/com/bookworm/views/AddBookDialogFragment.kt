@@ -34,13 +34,15 @@ class AddBookDialogFragment : DialogFragment() {
 
         done_button.onClick {
             viewModel.addBook(
-                getTitle(),
-                getAuthor(),
-                getISBN(),
-                getPages(),
-                getYearPublished(),
-                getGenre()
-            )
+              getTitle(),
+              getAuthor(),
+              getISBN(),
+              getPages(),
+              getYearPublished(),
+              getGenre()
+            ) {
+                dismiss()
+            }
         }
 
         clear_button.onClick {

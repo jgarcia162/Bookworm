@@ -28,7 +28,8 @@ class AddBookViewModel @Inject constructor(
     isbn: String,
     pages: String,
     year: String,
-    category: String
+    category: String,
+    onAddBookComplete: () -> Unit = {}
   ) {
     val defPages: Int = if (pages.isBlank()) {
       0
@@ -55,7 +56,7 @@ class AddBookViewModel @Inject constructor(
       .subscribeOn(ioScheduler)
       .subscribeBy(
         onComplete = {
-          //TODO hide dialog
+          onAddBookComplete()
         },
         onError = {
           //TODO Display error

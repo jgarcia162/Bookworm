@@ -1,9 +1,7 @@
 package jose.com.bookworm.views.library
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
@@ -13,7 +11,6 @@ import jose.com.bookworm.adapter.BaseAdapter
 import jose.com.bookworm.model.roommodel.Book
 import jose.com.bookworm.viewmodel.LibraryViewModel
 import kotlinx.android.synthetic.main.fragment_library.*
-import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -22,6 +19,17 @@ class LibraryFragment @Inject constructor() : Fragment(), LibraryInterface, Life
   
   private val libraryViewModel: LibraryViewModel by viewModels()
   
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setHasOptionsMenu(true)
+  }
+  
+  override fun onPrepareOptionsMenu(menu: Menu) {
+    //hide menu options as we don't need them here
+    menu.clear()
+    super.onPrepareOptionsMenu(menu)
+  }
+  
   override fun onCreateView(
     inflater: LayoutInflater,
     container: ViewGroup?,
@@ -29,7 +37,7 @@ class LibraryFragment @Inject constructor() : Fragment(), LibraryInterface, Life
   ): View? {
     return inflater.inflate(R.layout.fragment_library, container, false)
   }
-
+  
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     adapter = BaseAdapter(R.layout.book_list_item, this)
