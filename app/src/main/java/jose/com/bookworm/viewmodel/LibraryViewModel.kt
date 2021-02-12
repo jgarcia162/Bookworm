@@ -15,13 +15,14 @@ import io.reactivex.rxjava3.kotlin.subscribeBy
 
 @HiltViewModel
 class LibraryViewModel @Inject constructor(
-  @Named("mainThreadScheduler") private val mainThreadScheduler: Scheduler,
-  @Named("ioScheduler") private val ioScheduler: Scheduler,
+  @Named("main") private val mainThreadScheduler: Scheduler,
+  @Named("io") private val ioScheduler: Scheduler,
   private val bookRepository: BookRepository
 ) : ViewModel() {
   
   private var compositeDisposable: CompositeDisposable = CompositeDisposable()
   private var booksLiveData: MutableLiveData<List<Book>> = MutableLiveData<List<Book>>()
+  private var isLoadingLiveData: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
   
   fun getAllBooks(onGetBooksComplete: () -> Unit = {}) {
     compositeDisposable += bookRepository.getAllBooks()
@@ -34,12 +35,14 @@ class LibraryViewModel @Inject constructor(
         //TODO set loading to false
       }
       .subscribeBy(
-        onSuccess = { booksLiveData.value = it },
+        onSuccess = {
+          booksLiveData.value = it
+          onGetBooksComplete()
+        },
         onError = {
           //TODO display error
         }
       )
-    
   }
   
   fun getBestSellersOverview(onLoadComplete: () -> Unit = {}) {
@@ -78,9 +81,6 @@ class LibraryViewModel @Inject constructor(
     //TODO search by text
   }
   
-  fun onitemClicked(item: Any) {
-  
-  }
-  
   fun getBooks() = booksLiveData
+  fun getIsLoading() = isLoadingLiveData
 }

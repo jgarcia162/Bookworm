@@ -10,19 +10,20 @@ import androidx.lifecycle.Observer
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
 import jose.com.bookworm.R
-import jose.com.bookworm.adapter.GenericAdapter
+import jose.com.bookworm.adapter.BaseAdapter
 import jose.com.bookworm.extensions.onClick
 import jose.com.bookworm.extensions.toast
 import jose.com.bookworm.model.nytimes.NYTimesBook
 import jose.com.bookworm.model.roommodel.Book
 import jose.com.bookworm.viewmodel.FeedViewModel
+import jose.com.bookworm.views.library.LibraryInterface
 import kotlinx.android.synthetic.main.fragment_feed.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class FeedFragment @Inject constructor(): Fragment(), View.OnClickListener, ChipsDialogFragment.ChipsListener {
-  private lateinit var bestSellersAdapter: GenericAdapter<NYTimesBook>
-  private lateinit var currentReadingAdapter: GenericAdapter<Book>
+  private lateinit var bestSellersAdapter: BaseAdapter<NYTimesBook, Unit>
+  private lateinit var currentReadingAdapter: BaseAdapter<Book, LibraryInterface>
   private lateinit var categoryTitles: Set<String>
   
   private val feedViewModel: FeedViewModel by viewModels()
@@ -37,22 +38,22 @@ class FeedFragment @Inject constructor(): Fragment(), View.OnClickListener, Chip
   
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    bestSellersAdapter = GenericAdapter(R.layout.best_seller_list_item)
-    
+    bestSellersAdapter = BaseAdapter(R.layout.best_seller_list_item)
+  
     best_sellers_rv.setHasFixedSize(true)
     best_sellers_rv.adapter = bestSellersAdapter
-    
-    currentReadingAdapter = GenericAdapter(R.layout.current_reading_list_item)
-    
+  
+    currentReadingAdapter = BaseAdapter(R.layout.current_reading_list_item)
+  
     current_reading_rv.adapter = currentReadingAdapter
-    
+  
     setFilterClick()
-    
+  
     observeLiveData()
   }
   
   private fun observeLiveData() {
-    feedViewModel.getIsLoadingLiveData().observe(viewLifecycleOwner, Observer<Boolean> { isLoading ->
+    feedViewModel.getIsLoadingLiveData().observe(viewLifecycleOwner, { isLoading ->
       run {
         if (isLoading) {
           showLoading()
@@ -61,17 +62,17 @@ class FeedFragment @Inject constructor(): Fragment(), View.OnClickListener, Chip
         }
       }
     })
-    
+  
     feedViewModel.getListTitlesLiveData()
-      .observe(viewLifecycleOwner, Observer { loadListNamesChips(it) })
-    
+      .observe(viewLifecycleOwner, { loadListNamesChips(it) })
+  
     feedViewModel.getBestSellersListLiveData()
-      .observe(viewLifecycleOwner, Observer { showBestSellersList(it) })
-    
-    feedViewModel.getIsEmptyLiveData().observe(viewLifecycleOwner, Observer { showEmptyState(it) })
-    
+      .observe(viewLifecycleOwner, { showBestSellersList(it) })
+  
+    feedViewModel.getIsEmptyLiveData().observe(viewLifecycleOwner, { showEmptyState(it) })
+  
     feedViewModel.getIsSuccessfulLiveData()
-      .observe(viewLifecycleOwner, Observer { (isSuccessful, listName) ->
+      .observe(viewLifecycleOwner, { (isSuccessful, listName) ->
         if (isSuccessful)
           showGetBestSellersSuccess(listName)
         else {

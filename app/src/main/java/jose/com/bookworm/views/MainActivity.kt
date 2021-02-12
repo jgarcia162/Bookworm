@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
 import jose.com.bookworm.R
 import jose.com.bookworm.extensions.toast
+import jose.com.bookworm.views.library.LibraryFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 

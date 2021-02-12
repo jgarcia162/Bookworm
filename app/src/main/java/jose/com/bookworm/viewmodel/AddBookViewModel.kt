@@ -3,17 +3,24 @@ package jose.com.bookworm.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.reactivex.rxjava3.core.Scheduler
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.kotlin.plusAssign
+import io.reactivex.rxjava3.kotlin.subscribeBy
 import jose.com.bookworm.SharedPreferencesHelper
 import jose.com.bookworm.model.roommodel.Book
 import jose.com.bookworm.repository.BookRepository
 import javax.inject.Inject
+import javax.inject.Named
 
 @HiltViewModel
 class AddBookViewModel @Inject constructor(
   private val repository: BookRepository,
-  private val prefHelper: SharedPreferencesHelper
+  private val prefHelper: SharedPreferencesHelper,
+  @Named("io") private val ioScheduler: Scheduler
 ) : ViewModel() {
   private val categoriesLiveData = MutableLiveData<MutableSet<String>>(prefHelper.getCategories())
+  private val compositeDisposable: CompositeDisposable = CompositeDisposable()
   
   fun addBook(
     title: String,
@@ -28,29 +35,38 @@ class AddBookViewModel @Inject constructor(
     } else {
       pages.toInt()
     }
-    
+  
     val defYear: Int = if (year.isBlank()) {
       0
     } else {
       year.toInt()
     }
-    
-    //TODO move to background thread
-    repository.addBook(
-      Book(
-        title = title,
-        author = author,
-        isbn = isbn,
-        pages = defPages,
-        yearPublished = defYear,
-        categories = category
-      )
+  
+    val book = Book(
+      title = title,
+      author = author,
+      isbn = isbn,
+      pages = defPages,
+      yearPublished = defYear,
+      categories = category
     )
+  
+    compositeDisposable += repository.addBook(book)
+      .subscribeOn(ioScheduler)
+      .subscribeBy(
+        onComplete = {
+          //TODO hide dialog
+        },
+        onError = {
+          //TODO Display error
+        }
+      )
   }
   
   fun getCategoriesLiveData() = categoriesLiveData
   
   override fun onCleared() {
     super.onCleared()
+    compositeDisposable.clear()
   }
 }

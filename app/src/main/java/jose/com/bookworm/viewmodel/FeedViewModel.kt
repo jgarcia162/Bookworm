@@ -22,8 +22,8 @@ class FeedViewModel
 @Inject constructor(
   private val repository: BookRepository,
   private val prefHelper: SharedPreferencesHelper,
-  @Named("mainThreadScheduler") private val mainThreadScheduler: Scheduler,
-  @Named("ioScheduler") private val ioScheduler: Scheduler
+  @Named("main") private val mainThreadScheduler: Scheduler,
+  @Named("io") private val ioScheduler: Scheduler
 ) : ViewModel() {
   private var compositeDisposable: CompositeDisposable = CompositeDisposable()
   private val topBooks = mutableListOf<NYTimesBook>()
@@ -168,10 +168,6 @@ class FeedViewModel
   
   private fun onGetMultipleListsFailed() {
     isSuccessfulLiveData.postValue( Pair(false, ""))
-  }
-  
-  fun onItemClicked(item: Any) {
-  
   }
   
   fun getCurrentReadings() {

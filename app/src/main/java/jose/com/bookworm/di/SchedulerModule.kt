@@ -13,10 +13,10 @@ import javax.inject.Named
 @Module
 object SchedulerModule {
     @Provides
-    @Named("ioScheduler")
+    @Named("io")
     fun provideIOScheduler(): Scheduler = Schedulers.io()
-
+    
     @Provides
-    @Named("mainThreadScheduler")
+    @Named("main")
     fun provideMainThreadScheduler(): Scheduler = AndroidSchedulers.mainThread()
 }

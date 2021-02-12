@@ -45,37 +45,48 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation deps.kotlin.stdlib
     implementation deps.android.appCompat
+    implementation deps.android.androidx
     implementation deps.android.material
     implementation deps.android.constraintLayout
     implementation deps.android.recyclerView
     implementation deps.android.exifinterface
     implementation deps.android.preferenceManager
     implementation deps.android.fragment_ktx
+
     implementation deps.android.arch.room.runtime
     implementation deps.android.arch.room.rxJava
     implementation deps.firebaseMLKit
     kapt deps.android.arch.room.compiler
+
     implementation deps.lifecycle.lifecycleExtensions
     implementation deps.lifecycle.viewmodel
     implementation deps.lifecycle.livedata
+
     implementation deps.coroutines.kotlin
     implementation deps.coroutines.android
+
     implementation deps.square.retrofit2.core
     implementation deps.square.retrofit2.gsonConverter
     implementation deps.square.retrofit2.rxAdapter
     implementation deps.square.picasso
     implementation deps.square.okhttp3.mockwebserver
     implementation deps.square.okhttp3.loggingInterceptor
+
     implementation deps.rx.rxJava
     implementation deps.rx.rxAndroid
     implementation deps.rx.kotlin
-    implementation deps.parceler.compiler
+
     implementation deps.hilt.core
     implementation deps.hilt.viewmodel
     kapt deps.hilt.compiler
+
+    implementation deps.parceler.compiler
     kapt deps.parceler.processor
-    implementation deps.timber
+
     api deps.cameraView
+
+    implementation deps.timber
+
     testImplementation deps.testing.mockito.core
     testImplementation deps.testing.mockito.kotlin
     testImplementation deps.testing.junit
