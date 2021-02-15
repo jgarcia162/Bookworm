@@ -32,4 +32,7 @@
     <string name="capture_button_description">Button to capture barcode image</string>
     <string name="retry">Retry</string>
     <string name="image_preview_description">Preview of captured image</string>
+    <string name="add_book_description">Add a book</string>
+    <string name="error_adding_book">Add Failed</string>
+    <string name="msg_book_added">Book Added</string>
 </resources>

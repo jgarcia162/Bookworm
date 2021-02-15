@@ -17,59 +17,70 @@ import kotlinx.android.synthetic.main.dialog_buttons_layout.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class AddBookDialogFragment : DialogFragment() {
-    private val viewModel: AddBookViewModel by viewModels()
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_add_book, container, false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        viewModel.getCategoriesLiveData().observe(viewLifecycleOwner, Observer(::setCategories))
-
-        done_button.onClick {
-            viewModel.addBook(
-              getTitle(),
-              getAuthor(),
-              getISBN(),
-              getPages(),
-              getYearPublished(),
-              getGenre()
-            ) {
-                dismiss()
-            }
+class AddBookDialogFragment(private val listener: AddBookInterface) : DialogFragment() {
+  private val viewModel: AddBookViewModel by viewModels()
+  
+  override fun onCreateView(
+    inflater: LayoutInflater,
+    container: ViewGroup?,
+    savedInstanceState: Bundle?
+  ): View? {
+    return inflater.inflate(R.layout.fragment_add_book, container, false)
+  }
+  
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+    viewModel.getCategoriesLiveData().observe(viewLifecycleOwner, Observer(::setCategories))
+    
+    done_button.onClick {
+      viewModel.addBook(
+        getTitle(),
+        getAuthor(),
+        getISBN(),
+        getPages(),
+        getYearPublished(),
+        getGenre(),
+        {
+          listener.onAddBookComplete()
+          dismiss()
+        },
+        {
+          listener.onAddBookError()
+          dismiss()
         }
-
-        clear_button.onClick {
-            clearFields()
-        }
-
-        cancel_button.onClick { dismiss() }
+      )
     }
-
-    private fun setCategories(categories: MutableSet<String>) {
-        categories_spinner.adapter =
-            ArrayAdapter(requireContext(), R.layout.category_list_item, categories.toMutableList())
+    
+    clear_button.onClick {
+      clearFields()
     }
-
-    private fun getTitle() = title_input_et.text.toString()
-    private fun getAuthor() = author_input_et.text.toString()
-    private fun getISBN() = isbn_input_et.text.toString()
-    private fun getPages() = pages_input_et.text.toString()
-    private fun getYearPublished() = year_published_input_et.text.toString()
-    private fun getGenre() = categories_spinner.selectedItem.toString()
-
-    private fun clearFields() {
-        title_input_et.setText("")
-        author_input_et.setText("")
-        pages_input_et.setText("")
-        year_published_input_et.setText("")
-        categories_spinner.setSelection(0)
-        isbn_input_et.setText("")
-    }
+    
+    cancel_button.onClick { dismiss() }
+  }
+  
+  private fun setCategories(categories: MutableSet<String>) {
+    categories_spinner.adapter =
+      ArrayAdapter(requireContext(), R.layout.category_list_item, categories.toMutableList())
+  }
+  
+  private fun getTitle() = title_input_et.text.toString()
+  private fun getAuthor() = author_input_et.text.toString()
+  private fun getISBN() = isbn_input_et.text.toString()
+  private fun getPages() = pages_input_et.text.toString()
+  private fun getYearPublished() = year_published_input_et.text.toString()
+  private fun getGenre() = categories_spinner.selectedItem.toString()
+  
+  private fun clearFields() {
+    title_input_et.setText("")
+    author_input_et.setText("")
+    pages_input_et.setText("")
+    year_published_input_et.setText("")
+    categories_spinner.setSelection(0)
+    isbn_input_et.setText("")
+  }
+  
+  interface AddBookInterface {
+    fun onAddBookComplete()
+    fun onAddBookError()
+  }
 }

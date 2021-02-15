@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
     <item
         android:id="@+id/menu_item_home"
+        android:enabled="true"
         android:title="@string/home"
-        android:icon="@drawable/home_white"/>
+        android:icon="@drawable/home_white" />
     <item
         android:id="@+id/menu_item_search"
+        android:enabled="true"
         android:title="@string/search"
-        android:icon="@drawable/magnify_white"/>
+        android:icon="@android:drawable/ic_menu_search" />
     <item
         android:id="@+id/menu_item_library"
+        android:enabled="true"
         android:title="@string/library"
         android:icon="@drawable/book_white"/>
-    <item
-        android:id="@+id/menu_item_settings"
-        android:title="@string/settings"
-        android:icon="@drawable/settings_white"/>
+
 </menu>

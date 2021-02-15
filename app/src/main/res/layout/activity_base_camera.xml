@@ -44,7 +44,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:src="@drawable/icon_barcode_scan"
-        app:backgroundTint="@color/colorPrimary"
         app:fabSize="normal"
         android:layout_gravity="bottom|center"
         app:rippleColor="@color/colorAccent" />

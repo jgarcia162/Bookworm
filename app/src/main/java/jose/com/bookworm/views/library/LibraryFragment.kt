@@ -3,18 +3,22 @@ package jose.com.bookworm.views.library
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
 import dagger.hilt.android.AndroidEntryPoint
 import jose.com.bookworm.R
 import jose.com.bookworm.adapter.BaseAdapter
+import jose.com.bookworm.extensions.onClick
+import jose.com.bookworm.extensions.toast
 import jose.com.bookworm.model.roommodel.Book
 import jose.com.bookworm.viewmodel.LibraryViewModel
+import jose.com.bookworm.views.AddBookDialogFragment
 import kotlinx.android.synthetic.main.fragment_library.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class LibraryFragment @Inject constructor() : Fragment(), LibraryInterface, LifecycleOwner {
+class LibraryFragment @Inject constructor() : Fragment(), LibraryInterface, LifecycleOwner, AddBookDialogFragment.AddBookInterface {
   private lateinit var adapter: BaseAdapter<Book, LibraryInterface>
   
   private val libraryViewModel: LibraryViewModel by viewModels()
@@ -44,7 +48,13 @@ class LibraryFragment @Inject constructor() : Fragment(), LibraryInterface, Life
   
     library_rv.setHasFixedSize(false)
     library_rv.adapter = adapter
-    
+  
+    add_book_fab.onClick {
+      with(parentFragmentManager) {
+        showAddBookFragment(this)
+      }
+    }
+  
     observeLiveData()
   }
   
@@ -52,8 +62,12 @@ class LibraryFragment @Inject constructor() : Fragment(), LibraryInterface, Life
     libraryViewModel.getBooks().observe(viewLifecycleOwner, { books ->
       adapter.data = books
     })
-  
+    
     libraryViewModel.getIsLoading().observe(viewLifecycleOwner, { hideLoading() })
+  }
+  
+  private fun showAddBookFragment(fragmentManager: FragmentManager) {
+    AddBookDialogFragment(this).show(fragmentManager, AddBookDialogFragment::class.simpleName)
   }
   
   override fun onStart() {
@@ -88,6 +102,16 @@ class LibraryFragment @Inject constructor() : Fragment(), LibraryInterface, Life
   override fun showBookDetails(book: Book) {
     //TODO navigate to details screen
 //      activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.main_fragment_container, LibraryFragment())?.commit()
+  }
+  
+  override fun onAddBookComplete() {
+    libraryViewModel.getAllBooks {
+      activity?.toast(getString(R.string.msg_book_added))
+    }
+  }
+  
+  override fun onAddBookError() {
+    activity?.toast(getString(R.string.error_adding_book))
   }
   
 }

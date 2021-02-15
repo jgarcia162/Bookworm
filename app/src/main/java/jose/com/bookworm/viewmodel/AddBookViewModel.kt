@@ -17,7 +17,8 @@ import javax.inject.Named
 class AddBookViewModel @Inject constructor(
   private val repository: BookRepository,
   private val prefHelper: SharedPreferencesHelper,
-  @Named("io") private val ioScheduler: Scheduler
+  @Named("io") private val ioScheduler: Scheduler,
+  @Named("main") private val mainThreadScheduler: Scheduler
 ) : ViewModel() {
   private val categoriesLiveData = MutableLiveData<MutableSet<String>>(prefHelper.getCategories())
   private val compositeDisposable: CompositeDisposable = CompositeDisposable()
@@ -29,7 +30,8 @@ class AddBookViewModel @Inject constructor(
     pages: String,
     year: String,
     category: String,
-    onAddBookComplete: () -> Unit = {}
+    onAddBookComplete: () -> Unit = {},
+    onAddBookError: () -> Unit = {},
   ) {
     val defPages: Int = if (pages.isBlank()) {
       0
@@ -54,12 +56,14 @@ class AddBookViewModel @Inject constructor(
   
     compositeDisposable += repository.addBook(book)
       .subscribeOn(ioScheduler)
+      .observeOn(mainThreadScheduler)
       .subscribeBy(
         onComplete = {
           onAddBookComplete()
         },
         onError = {
           //TODO Display error
+          onAddBookError()
         }
       )
   }
