@@ -15,6 +15,7 @@ import jose.com.bookworm.model.roommodel.Book
 import jose.com.bookworm.viewmodel.LibraryViewModel
 import jose.com.bookworm.views.AddBookDialogFragment
 import kotlinx.android.synthetic.main.fragment_library.*
+import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -61,6 +62,7 @@ class LibraryFragment @Inject constructor() : Fragment(), LibraryInterface, Life
   private fun observeLiveData() {
     libraryViewModel.getBooks().observe(viewLifecycleOwner, { books ->
       adapter.data = books
+      adapter.notifyDataSetChanged()
     })
     
     libraryViewModel.getIsLoading().observe(viewLifecycleOwner, { hideLoading() })

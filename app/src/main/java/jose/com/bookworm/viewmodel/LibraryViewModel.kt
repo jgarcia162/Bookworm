@@ -45,23 +45,6 @@ class LibraryViewModel @Inject constructor(
       )
   }
   
-  fun getBestSellersOverview(onLoadComplete: () -> Unit = {}) {
-//    compositeDisposable += bookRepository.getAllBooks()
-//      .subscribeOn(ioScheduler)
-//      .observeOn(mainThreadScheduler)
-//      .doOnSubscribe {
-//        isLoadingLiveData.value = true
-//      }
-//      .doAfterTerminate {
-//        isLoadingLiveData.value = false
-//        onLoadComplete()
-//      }
-//      .subscribeBy(
-//        onSuccess = { onGetBestSellersOverviewSuccess(it) },
-//        onError = { onGetBestSellersOverviewFailed() }
-//      )
-  }
-  
   fun deleteBook(book: Book) {
     //TODO deletes book from db
   }

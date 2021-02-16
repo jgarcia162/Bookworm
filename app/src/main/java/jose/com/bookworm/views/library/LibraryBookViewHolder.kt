@@ -4,9 +4,11 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import jose.com.bookworm.R
 import jose.com.bookworm.adapter.BaseAdapter
 import jose.com.bookworm.model.roommodel.Book
+import timber.log.Timber
 
 class LibraryBookViewHolder(
   itemView: View
@@ -25,14 +27,21 @@ class LibraryBookViewHolder(
   }
   
   override fun bind(data: Book, listener: LibraryInterface) {
+    libraryInterface = listener
     book = data
+    Timber.d("BOOK $book")
     titleTV.text = data.title
     authorTV.text = data.author
     publishedTV.text = data.yearPublished.toString()
     checkedTV.text = if (data.isInLibrary) "IN" else "OUT"
-    categoryTV.text = data.categories?.get(0).toString()
+    categoryTV.text = data.categories
     //TODO set cover image
+    Picasso
+      .get()
+      .load("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi1.wp.com%2Fwww.tor.com%2Fwp-content%2Fuploads%2F2019%2F07%2FDune-cover-1.jpg%3Ftype%3Dvertical%26ssl%3D1&f=1&nofb=1")
+      .centerCrop()
+      .resize(150, 200)
+      .into(bookCoverIV)
     itemView.setOnClickListener(this)
-    this.libraryInterface = listener
   }
 }

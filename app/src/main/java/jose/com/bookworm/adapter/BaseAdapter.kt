@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import jose.com.bookworm.R
+import jose.com.bookworm.model.roommodel.Book
 import jose.com.bookworm.views.library.LibraryBookViewHolder
 
 /**
