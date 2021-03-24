@@ -18,6 +18,7 @@ import jose.com.bookworm.model.roommodel.Book
 import jose.com.bookworm.viewmodel.FeedViewModel
 import jose.com.bookworm.views.library.LibraryInterface
 import kotlinx.android.synthetic.main.fragment_feed.*
+import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -84,12 +85,12 @@ class FeedFragment @Inject constructor(): Fragment(), View.OnClickListener, Chip
   private fun setFilterClick() {
     filter_icon.onClick {
       //TODO re-inflate fragment if created
-      ChipsDialogFragment()
-        .apply {
-          listener = this@FeedFragment
-          chipTitles = categoryTitles
-        }
-        .show(childFragmentManager.beginTransaction(), "categories_fragment")
+//      ChipsDialogFragment()
+//        .apply {
+//          listener = this@FeedFragment
+//          chipTitles = categoryTitles
+//        }
+//        .show(parentFragmentManager, ChipsDialogFragment::class.simpleName)
     }
   }
   

@@ -18,8 +18,7 @@ import javax.inject.Inject
 import javax.inject.Named
 
 @HiltViewModel
-class FeedViewModel
-@Inject constructor(
+class FeedViewModel @Inject constructor(
   private val repository: BookRepository,
   private val prefHelper: SharedPreferencesHelper,
   @Named("main") private val mainThreadScheduler: Scheduler,
@@ -128,7 +127,7 @@ class FeedViewModel
   }
   
   private fun onGetBestSellersListFailed(listName: String) {
-    isSuccessfulLiveData.postValue( Pair(false, listName))
+    isSuccessfulLiveData.postValue(Pair(false, listName))
   }
   
   fun getMultipleLists(listNames: Set<String>, onLoadComplete: () -> Unit = {}) {
@@ -138,10 +137,10 @@ class FeedViewModel
       .subscribeOn(ioScheduler)
       .observeOn(mainThreadScheduler)
       .doOnSubscribe {
-        isLoadingLiveData.postValue( true)
+        isLoadingLiveData.postValue(true)
       }
       .doOnTerminate {
-        isLoadingLiveData.postValue( false)
+        isLoadingLiveData.postValue(false)
         onLoadComplete()
       }
       .flatMap {
@@ -163,11 +162,11 @@ class FeedViewModel
   }
   
   private fun onGetMultipleListsSuccess(books: MutableList<BestSellersBook>) {
-    bestSellersListLiveData.postValue( books)
+    bestSellersListLiveData.postValue(books)
   }
   
   private fun onGetMultipleListsFailed() {
-    isSuccessfulLiveData.postValue( Pair(false, ""))
+    isSuccessfulLiveData.postValue(Pair(false, ""))
   }
   
   fun getCurrentReadings() {

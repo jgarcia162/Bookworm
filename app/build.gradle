@@ -16,6 +16,13 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += ["room.schemaLocation":
+                                      "$projectDir/schemas".toString()]
+            }
+        }
     }
 
     compileOptions {
@@ -61,6 +68,7 @@ dependencies {
     implementation deps.lifecycle.lifecycleExtensions
     implementation deps.lifecycle.viewmodel
     implementation deps.lifecycle.livedata
+    implementation deps.lifecycle.livedata_ktx
 
     implementation deps.coroutines.kotlin
     implementation deps.coroutines.android
@@ -71,6 +79,7 @@ dependencies {
     implementation deps.square.picasso
     implementation deps.square.okhttp3.mockwebserver
     implementation deps.square.okhttp3.loggingInterceptor
+    debugImplementation deps.square.leakCanary
 
     implementation deps.rx.rxJava
     implementation deps.rx.rxAndroid
@@ -89,9 +98,9 @@ dependencies {
 
     testImplementation deps.testing.mockito.core
     testImplementation deps.testing.mockito.kotlin
-    testImplementation deps.testing.junit
+//    testImplementation deps.testing.junit
     testImplementation deps.testing.awaitility
-    androidTestImplementation deps.testing.runner
+//    androidTestImplementation deps.testing.runner
     androidTestImplementation deps.testing.espresso
 }
 

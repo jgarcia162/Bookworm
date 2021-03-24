@@ -7,15 +7,26 @@
 
     <ImageView
         android:id="@+id/book_cover_iv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:contentDescription="@string/description_book_cover_iv"
+        android:scaleType="centerInside"
+        app:layout_constraintEnd_toStartOf="@id/guideline"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_bias="0"
-        tools:srcCompat="@tools:sample/avatars" />
+        tools:srcCompat="@drawable/placeholder_books" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintGuide_percent=".30"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/title_tv"
@@ -23,9 +34,10 @@
         android:layout_height="wrap_content"
         android:textStyle="bold"
         android:layout_marginStart="8dp"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/author_tv"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/book_cover_iv"
+        app:layout_constraintStart_toEndOf="@id/guideline"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         tools:text="Title" />
@@ -35,9 +47,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toEndOf="@id/guideline"
         app:layout_constraintBottom_toTopOf="@+id/published_tv"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/book_cover_iv"
         app:layout_constraintTop_toBottomOf="@+id/title_tv"
         app:layout_constraintHorizontal_bias="0.0"
         tools:text="@tools:sample/full_names" />
@@ -47,9 +60,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toEndOf="@id/guideline"
         app:layout_constraintBottom_toTopOf="@+id/category_tv"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/book_cover_iv"
         app:layout_constraintTop_toBottomOf="@+id/author_tv"
         app:layout_constraintHorizontal_bias="0.0"
         tools:text="1984" />
@@ -59,9 +73,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toEndOf="@id/guideline"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/book_cover_iv"
         app:layout_constraintTop_toBottomOf="@+id/published_tv"
         app:layout_constraintHorizontal_bias="0.0"
         tools:text="Non-Fiction" />
@@ -75,6 +90,7 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/title_tv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintVertical_chainStyle="spread"
-        tools:text="OUT" />
+        tools:text="@string/book_in"
+        tools:textColor="@color/green" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

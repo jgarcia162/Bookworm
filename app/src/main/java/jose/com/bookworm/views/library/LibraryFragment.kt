@@ -51,9 +51,7 @@ class LibraryFragment @Inject constructor() : Fragment(), LibraryInterface, Life
     library_rv.adapter = adapter
   
     add_book_fab.onClick {
-      with(parentFragmentManager) {
-        showAddBookFragment(this)
-      }
+      showAddBookFragment()
     }
   
     observeLiveData()
@@ -62,14 +60,13 @@ class LibraryFragment @Inject constructor() : Fragment(), LibraryInterface, Life
   private fun observeLiveData() {
     libraryViewModel.getBooks().observe(viewLifecycleOwner, { books ->
       adapter.data = books
-      adapter.notifyDataSetChanged()
     })
     
     libraryViewModel.getIsLoading().observe(viewLifecycleOwner, { hideLoading() })
   }
   
-  private fun showAddBookFragment(fragmentManager: FragmentManager) {
-    AddBookDialogFragment(this).show(fragmentManager, AddBookDialogFragment::class.simpleName)
+  private fun showAddBookFragment() {
+    AddBookDialogFragment(this).show(childFragmentManager, AddBookDialogFragment::class.simpleName)
   }
   
   override fun onStart() {

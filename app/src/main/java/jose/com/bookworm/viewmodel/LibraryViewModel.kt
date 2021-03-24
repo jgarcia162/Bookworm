@@ -11,7 +11,7 @@ import javax.inject.Inject
 import javax.inject.Named
 import io.reactivex.rxjava3.kotlin.plusAssign
 import io.reactivex.rxjava3.kotlin.subscribeBy
-
+import timber.log.Timber
 
 @HiltViewModel
 class LibraryViewModel @Inject constructor(
@@ -36,11 +36,13 @@ class LibraryViewModel @Inject constructor(
       }
       .subscribeBy(
         onSuccess = {
-          booksLiveData.value = it
+          Timber.d("List of books $it")
+          booksLiveData.postValue(it)
           onGetBooksComplete()
         },
         onError = {
           //TODO display error
+          it.printStackTrace()
         }
       )
   }
@@ -52,7 +54,6 @@ class LibraryViewModel @Inject constructor(
   fun deleteAllBooks() {
     //TODO deletes all books from db
   }
-  
   fun showBookDetails(book: Book) {
   }
   
@@ -66,4 +67,9 @@ class LibraryViewModel @Inject constructor(
   
   fun getBooks() = booksLiveData
   fun getIsLoading() = isLoadingLiveData
+  
+  override fun onCleared() {
+    super.onCleared()
+    compositeDisposable.clear()
+  }
 }

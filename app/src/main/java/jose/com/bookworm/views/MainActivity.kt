@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity(), AddBookDialogFragment.AddBookInterface
         setContentView(R.layout.activity_main)
         title = "BookWorm"
         supportFragmentManager.beginTransaction()
-          .replace(R.id.main_fragment_container, FeedFragment()).commit()
+          .replace(R.id.main_fragment_container, feedFragment).commit()
         
         bottom_navigation_view.setOnNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
@@ -64,13 +64,13 @@ class MainActivity : AppCompatActivity(), AddBookDialogFragment.AddBookInterface
     
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.add_menu_option -> showAddBookFragment(supportFragmentManager)
+            R.id.add_menu_option -> showAddBookFragment()
         }
         return true
     }
     
-    private fun showAddBookFragment(fragmentManager: FragmentManager) {
-        AddBookDialogFragment(this).show(fragmentManager, AddBookDialogFragment::class.simpleName)
+    private fun showAddBookFragment() {
+        AddBookDialogFragment(this).show(supportFragmentManager, AddBookDialogFragment::class.simpleName)
     }
     
     override fun onAddBookComplete() {

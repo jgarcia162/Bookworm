@@ -15,7 +15,6 @@ import jose.com.bookworm.extensions.onClick
 import kotlinx.android.synthetic.main.dialog_buttons_layout.*
 import kotlinx.android.synthetic.main.fragment_chips_dialog.*
 
-@AndroidEntryPoint
 class ChipsDialogFragment : DialogFragment() {
     private lateinit var prefHelper: SharedPreferencesHelper
     private val selectedLists: MutableSet<String> = mutableSetOf()

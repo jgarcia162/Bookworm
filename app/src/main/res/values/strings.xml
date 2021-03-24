@@ -35,4 +35,6 @@
     <string name="add_book_description">Add a book</string>
     <string name="error_adding_book">Add Failed</string>
     <string name="msg_book_added">Book Added</string>
+    <string name="book_in">IN</string>
+    <string name="book_out">OUT</string>
 </resources>

@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.dialog_buttons_layout.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class AddBookDialogFragment(private val listener: AddBookInterface) : DialogFragment() {
+class AddBookDialogFragment(var listener: AddBookInterface?) : DialogFragment() {
   private val viewModel: AddBookViewModel by viewModels()
   
   override fun onCreateView(
@@ -41,11 +41,11 @@ class AddBookDialogFragment(private val listener: AddBookInterface) : DialogFrag
         getYearPublished(),
         getGenre(),
         {
-          listener.onAddBookComplete()
+          listener?.onAddBookComplete()
           dismiss()
         },
         {
-          listener.onAddBookError()
+          listener?.onAddBookError()
           dismiss()
         }
       )
@@ -77,6 +77,11 @@ class AddBookDialogFragment(private val listener: AddBookInterface) : DialogFrag
     year_published_input_et.setText("")
     categories_spinner.setSelection(0)
     isbn_input_et.setText("")
+  }
+  
+  override fun onDestroy() {
+    super.onDestroy()
+    listener = null
   }
   
   interface AddBookInterface {

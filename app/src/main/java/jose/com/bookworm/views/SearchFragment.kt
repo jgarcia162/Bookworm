@@ -6,22 +6,23 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LifecycleOwner
 import dagger.hilt.android.AndroidEntryPoint
 import jose.com.bookworm.model.roommodel.Book
 import jose.com.bookworm.viewmodel.SearchViewModel
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SearchFragment @Inject constructor() : Fragment(){
-    private val searchViewModel: SearchViewModel by viewModels()
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return super.onCreateView(inflater, container, savedInstanceState)
-    }
+class SearchFragment @Inject constructor() : Fragment(), LifecycleOwner {
+  private val searchViewModel: SearchViewModel by viewModels()
+  
+  override fun onCreateView(
+    inflater: LayoutInflater,
+    container: ViewGroup?,
+    savedInstanceState: Bundle?
+  ): View? {
+    return super.onCreateView(inflater, container, savedInstanceState)
+  }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
