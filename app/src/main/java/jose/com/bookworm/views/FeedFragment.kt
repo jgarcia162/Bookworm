@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
 import jose.com.bookworm.R
@@ -24,7 +25,6 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class FeedFragment @Inject constructor(): Fragment(), View.OnClickListener, ChipsDialogFragment.ChipsListener {
   private lateinit var bestSellersAdapter: BaseAdapter<NYTimesBook, Unit>
-  private lateinit var currentReadingAdapter: BaseAdapter<Book, LibraryInterface>
   private lateinit var categoryTitles: Set<String>
   
   private val feedViewModel: FeedViewModel by viewModels()
@@ -41,12 +41,8 @@ class FeedFragment @Inject constructor(): Fragment(), View.OnClickListener, Chip
     super.onViewCreated(view, savedInstanceState)
     bestSellersAdapter = BaseAdapter(R.layout.best_seller_list_item)
   
-    best_sellers_rv.setHasFixedSize(true)
+    best_sellers_rv.layoutManager = StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
     best_sellers_rv.adapter = bestSellersAdapter
-  
-    currentReadingAdapter = BaseAdapter(R.layout.current_reading_list_item)
-  
-    current_reading_rv.adapter = currentReadingAdapter
   
     setFilterClick()
   
@@ -85,12 +81,12 @@ class FeedFragment @Inject constructor(): Fragment(), View.OnClickListener, Chip
   private fun setFilterClick() {
     filter_icon.onClick {
       //TODO re-inflate fragment if created
-//      ChipsDialogFragment()
-//        .apply {
-//          listener = this@FeedFragment
-//          chipTitles = categoryTitles
-//        }
-//        .show(parentFragmentManager, ChipsDialogFragment::class.simpleName)
+      ChipsDialogFragment()
+        .apply {
+          listener = this@FeedFragment
+          chipTitles = categoryTitles
+        }
+        .show(parentFragmentManager, ChipsDialogFragment::class.simpleName)
     }
   }
   
@@ -99,7 +95,6 @@ class FeedFragment @Inject constructor(): Fragment(), View.OnClickListener, Chip
     
     feedViewModel.getBestSellersListNames()
     feedViewModel.getBestSellersOverview()
-    feedViewModel.getCurrentReadings()
   }
   
   fun showNotReadingAnyBooksText() {
@@ -136,12 +131,10 @@ class FeedFragment @Inject constructor(): Fragment(), View.OnClickListener, Chip
   }
   
   private fun showGetBestSellersSuccess(listName: String) {
-    suggestions_tv.text = getString(R.string.best_sellers, listName)
   }
   
   private fun showGetBestSellersFailed() {
     activity?.toast(getString(R.string.best_sellers_failed))
-    suggestions_tv.text = getString(R.string.best_sellers_failed)
   }
   
   private fun showBestSellersList(books: List<NYTimesBook>) {

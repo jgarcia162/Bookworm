@@ -1,19 +1,26 @@
 package jose.com.bookworm.adapter
 
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
+import com.squareup.picasso.Picasso
 import jose.com.bookworm.R
+import jose.com.bookworm.model.nytimes.BestSellersBook
+import jose.com.bookworm.model.nytimes.BestSellersOverviewBook
 import jose.com.bookworm.model.nytimes.NYTimesBook
 
 class BestSellersViewHolder(
   itemView: View
 ) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), BaseAdapter.Binder<NYTimesBook, Unit>, View.OnClickListener {
-    private val titleTV: TextView = itemView.findViewById(R.id.seller_title_tv)
-    private val authorTV: TextView = itemView.findViewById(R.id.seller_author_tv)
+    private val bookImageView: ImageView = itemView.findViewById(R.id.book_image_iv)
     
     override fun bind(data: NYTimesBook) {
-        titleTV.text = data.title
-        authorTV.text = data.author
+        when (data) {
+            is BestSellersBook -> Picasso.get().load(data.bookImage).placeholder(R.drawable.placeholder_books)
+              .into(bookImageView)
+            is BestSellersOverviewBook -> Picasso.get().load(data.bookImage).placeholder(R.drawable.placeholder_books)
+              .into(bookImageView)
+        }
     }
     
     override fun onClick(p0: View?) {

@@ -4,12 +4,14 @@ import com.google.gson.annotations.SerializedName
 
 /** Represents a book from a best-seller list */
 data class BestSellersBook(
-    override val title: String,
-    override val author: String,
-    val description: String,
-    val publisher: String,
-    @SerializedName("primary_isbn10")
-    val isbn10: String,
-    @SerializedName("primary_isbn13")
-    val isbn13: String
+  override val title: String,
+  override val author: String,
+  @SerializedName("book_image")
+  val bookImage: String,
+  val description: String,
+  val publisher: String,
+  @SerializedName("primary_isbn10")
+  val isbn10: String,
+  @SerializedName("primary_isbn13")
+  val isbn13: String
 ): NYTimesBook()

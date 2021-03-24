@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import jose.com.bookworm.R
 import jose.com.bookworm.model.roommodel.Book
 import jose.com.bookworm.views.library.LibraryBookViewHolder
+import timber.log.Timber
 
 /**
  * Typed adapter extending from [RecyclerView.Adapter].
@@ -24,6 +25,7 @@ class BaseAdapter<T, U>(
     set(value) {
       field = value
       //TODO change this to implement DiffUtils
+      Timber.d("data in list changed to ${value[0]}")
       notifyDataSetChanged()
     }
   

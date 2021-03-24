@@ -9,7 +9,7 @@
         android:id="@+id/book_cover_iv"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:contentDescription="@string/description_book_cover_iv"
+        android:contentDescription="@string/description_book_cover"
         android:scaleType="centerInside"
         app:layout_constraintEnd_toStartOf="@id/guideline"
         app:layout_constraintBottom_toBottomOf="parent"

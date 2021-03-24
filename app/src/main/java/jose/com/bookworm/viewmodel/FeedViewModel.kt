@@ -120,7 +120,6 @@ class FeedViewModel @Inject constructor(
     if (books.size < 1) {
       isEmptyLiveData.postValue(true)
     } else {
-      
       bestSellersListLiveData.postValue(books)
       isSuccessfulLiveData.postValue(Pair(true, listName))
     }
