@@ -22,20 +22,39 @@ class BestSellersViewHolder(
     this.book = data
     when (data) {
       is BestSellersBook -> {
-        Picasso.get()
-          .load(data.bookImage)
-          .resize(data.bookImageWidth, data.bookImageHeight)
-          .noPlaceholder()
-          .into(bookImageView)
+        loadImageIntoImageView(data.bookImageWidth, data.bookImageHeight, data.bookImage)
       }
-      is BestSellersOverviewBook ->
-        Picasso.get()
-          .load(data.bookImage)
-          .resize(data.bookImageWidth, data.bookImageHeight)
-          .noPlaceholder()
-          .into(bookImageView)
+      is BestSellersOverviewBook -> {
+        loadImageIntoImageView(data.bookImageWidth, data.bookImageHeight, data.bookImage)
+      }
     }
     itemView.setOnClickListener(this)
+  }
+  
+  private fun loadImageIntoImageView(width: Int, height: Int, bookImage: String) {
+    val pair = getImageDimens(width, height)
+    val imageWidth = pair.second
+    val imageHeight = pair.first
+    Picasso.get()
+      .load(bookImage)
+      .resize(imageWidth, imageHeight)
+      .noPlaceholder()
+      .into(bookImageView)
+  }
+  
+  private fun getImageDimens(width: Int, height: Int): Pair<Int, Int> {
+    var width1 = 300
+    var height1 = 500
+    
+    if (width >= 300) {
+      width1 = width
+    }
+    
+    if (height >= 500) {
+      height1 = height
+    }
+    
+    return Pair(height1, width1)
   }
   
   override fun onClick(v: View?) {

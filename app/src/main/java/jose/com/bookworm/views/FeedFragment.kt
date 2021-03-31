@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
 import jose.com.bookworm.R
@@ -39,9 +39,11 @@ class FeedFragment @Inject constructor() : Fragment(), View.OnClickListener, Chi
     super.onViewCreated(view, savedInstanceState)
     bestSellersAdapter = BaseAdapter(R.layout.best_seller_list_item, this)
   
-    best_sellers_rv.layoutManager = StaggeredGridLayoutManager(
+    best_sellers_rv.layoutManager = GridLayoutManager(
+      context,
       3,
-      StaggeredGridLayoutManager.VERTICAL
+      GridLayoutManager.VERTICAL,
+      false
     )
   
     best_sellers_rv.adapter = bestSellersAdapter
