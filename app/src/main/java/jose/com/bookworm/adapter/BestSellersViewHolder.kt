@@ -11,19 +11,26 @@ import jose.com.bookworm.model.nytimes.NYTimesBook
 
 class BestSellersViewHolder(
   itemView: View
-) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), BaseAdapter.Binder<NYTimesBook, Unit>, View.OnClickListener {
-    private val bookImageView: ImageView = itemView.findViewById(R.id.book_image_iv)
+) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), BaseAdapter.Binder<NYTimesBook, Unit> {
+  private val bookImageView: ImageView = itemView.findViewById(R.id.book_image_iv)
+  
+  override fun bind(data: NYTimesBook) {
+    when (data) {
+  
+      is BestSellersBook -> {
     
-    override fun bind(data: NYTimesBook) {
-        when (data) {
-            is BestSellersBook -> Picasso.get().load(data.bookImage).placeholder(R.drawable.placeholder_books)
-              .into(bookImageView)
-            is BestSellersOverviewBook -> Picasso.get().load(data.bookImage).placeholder(R.drawable.placeholder_books)
-              .into(bookImageView)
-        }
+        Picasso.get()
+          .load(data.bookImage)
+          .resize(data.bookImageWidth, data.bookImageHeight)
+          .noPlaceholder()
+          .into(bookImageView)
+      }
+      is BestSellersOverviewBook ->
+        Picasso.get()
+          .load(data.bookImage)
+          .resize(data.bookImageWidth, data.bookImageHeight)
+          .noPlaceholder()
+          .into(bookImageView)
     }
-    
-    override fun onClick(p0: View?) {
-
-    }
+  }
 }

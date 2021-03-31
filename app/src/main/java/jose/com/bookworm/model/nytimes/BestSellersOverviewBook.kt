@@ -11,6 +11,10 @@ data class BestSellersOverviewBook(
   override val author: String,
   @SerializedName("book_image")
   val bookImage: String,
+  @SerializedName("book_image_width")
+  val bookImageWidth: Int,
+  @SerializedName("book_image_height")
+  val bookImageHeight: Int,
   val description: String,
   @SerializedName("primary_isbn10")
   val isbn10: String = "",

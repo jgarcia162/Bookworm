@@ -13,7 +13,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <include layout="@layout/best_seller_card_layout" />
+        <include
+            layout="@layout/best_seller_card_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
     </com.google.android.material.card.MaterialCardView>
 
