@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import jose.com.bookworm.R
-import jose.com.bookworm.model.roommodel.Book
 import jose.com.bookworm.views.library.LibraryBookViewHolder
 import timber.log.Timber
 
@@ -18,14 +17,12 @@ import timber.log.Timber
 @Suppress("UNCHECKED_CAST")
 class BaseAdapter<T, U>(
   private val layout: Int,
-  private val listener: U? = null
+  private val listener: U
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-  
   var data: List<T> = emptyList()
     set(value) {
       field = value
       //TODO change this to implement DiffUtils
-      Timber.d("data in list changed to ${value[0]}")
       notifyDataSetChanged()
     }
   

@@ -6,25 +6,23 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
 import jose.com.bookworm.R
 import jose.com.bookworm.adapter.BaseAdapter
+import jose.com.bookworm.adapter.FeedInterface
 import jose.com.bookworm.extensions.onClick
 import jose.com.bookworm.extensions.toast
 import jose.com.bookworm.model.nytimes.NYTimesBook
-import jose.com.bookworm.model.roommodel.Book
 import jose.com.bookworm.viewmodel.FeedViewModel
-import jose.com.bookworm.views.library.LibraryInterface
 import kotlinx.android.synthetic.main.fragment_feed.*
 import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class FeedFragment @Inject constructor() : Fragment(), View.OnClickListener, ChipsDialogFragment.ChipsListener {
-  private lateinit var bestSellersAdapter: BaseAdapter<NYTimesBook, Unit>
+class FeedFragment @Inject constructor() : Fragment(), View.OnClickListener, ChipsDialogFragment.ChipsListener, FeedInterface {
+  private lateinit var bestSellersAdapter: BaseAdapter<NYTimesBook, FeedInterface>
   private lateinit var categoryTitles: Set<String>
   
   private val feedViewModel: FeedViewModel by viewModels()
@@ -39,7 +37,7 @@ class FeedFragment @Inject constructor() : Fragment(), View.OnClickListener, Chi
   
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    bestSellersAdapter = BaseAdapter(R.layout.best_seller_list_item)
+    bestSellersAdapter = BaseAdapter(R.layout.best_seller_list_item, this)
   
     best_sellers_rv.layoutManager = StaggeredGridLayoutManager(
       3,
@@ -168,5 +166,9 @@ class FeedFragment @Inject constructor() : Fragment(), View.OnClickListener, Chi
   
   fun showBestSellersListFailed(listName: String) {
     activity?.toast("Couldn't load books for list $listName")
+  }
+  
+  override fun clickBook(book: NYTimesBook) {
+    Timber.d("Clicked on ${book.title}")
   }
 }
