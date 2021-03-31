@@ -9,10 +9,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.plusAssign
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import jose.com.bookworm.SharedPreferencesHelper
-import jose.com.bookworm.model.nytimes.BestSellersBook
-import jose.com.bookworm.model.nytimes.BestSellersListName
-import jose.com.bookworm.model.nytimes.BestSellersOverviewList
-import jose.com.bookworm.model.nytimes.NYTimesBook
+import jose.com.bookworm.model.nytimes.*
 import jose.com.bookworm.repository.BookRepository
 import javax.inject.Inject
 import javax.inject.Named
@@ -53,7 +50,16 @@ class FeedViewModel @Inject constructor(
   
   private fun onGetBestSellersOverviewSuccess(lists: List<BestSellersOverviewList>) {
     for (list in lists) {
-      topBooks.addAll(list.books)
+  
+      for (book in list.books) {
+        val filteredList = topBooks.filter {
+          it.title == book.title
+        }
+    
+        if (filteredList.isEmpty()) {
+          topBooks.add(book)
+        }
+      }
     }
     bestSellersListLiveData.value = topBooks
     isSuccessfulLiveData.value = Pair(true, "")

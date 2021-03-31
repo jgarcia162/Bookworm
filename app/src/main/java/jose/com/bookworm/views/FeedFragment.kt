@@ -23,7 +23,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class FeedFragment @Inject constructor(): Fragment(), View.OnClickListener, ChipsDialogFragment.ChipsListener {
+class FeedFragment @Inject constructor() : Fragment(), View.OnClickListener, ChipsDialogFragment.ChipsListener {
   private lateinit var bestSellersAdapter: BaseAdapter<NYTimesBook, Unit>
   private lateinit var categoryTitles: Set<String>
   
@@ -41,7 +41,11 @@ class FeedFragment @Inject constructor(): Fragment(), View.OnClickListener, Chip
     super.onViewCreated(view, savedInstanceState)
     bestSellersAdapter = BaseAdapter(R.layout.best_seller_list_item)
   
-    best_sellers_rv.layoutManager = StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
+    best_sellers_rv.layoutManager = StaggeredGridLayoutManager(
+      3,
+      StaggeredGridLayoutManager.VERTICAL
+    )
+  
     best_sellers_rv.adapter = bestSellersAdapter
   
     setFilterClick()
