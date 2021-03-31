@@ -2,6 +2,7 @@ package jose.com.bookworm.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Scheduler
@@ -11,6 +12,9 @@ import io.reactivex.rxjava3.kotlin.subscribeBy
 import jose.com.bookworm.SharedPreferencesHelper
 import jose.com.bookworm.model.nytimes.*
 import jose.com.bookworm.repository.BookRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -48,21 +52,30 @@ class FeedViewModel @Inject constructor(
       )
   }
   
+  // uses coroutines to offload the filtering to an IO thread
   private fun onGetBestSellersOverviewSuccess(lists: List<BestSellersOverviewList>) {
-    for (list in lists) {
+    viewModelScope.launch {
+      withContext(Dispatchers.IO) {
+        addBooksToList(lists)
+      }
+      
+      bestSellersListLiveData.value = topBooks
+      isSuccessfulLiveData.value = Pair(true, "")
+    }
+  }
   
+  private fun addBooksToList(lists: List<BestSellersOverviewList>) {
+    for (list in lists) {
       for (book in list.books) {
         val filteredList = topBooks.filter {
           it.title == book.title
         }
-    
+        
         if (filteredList.isEmpty()) {
           topBooks.add(book)
         }
       }
     }
-    bestSellersListLiveData.value = topBooks
-    isSuccessfulLiveData.value = Pair(true, "")
   }
   
   private fun onGetBestSellersOverviewFailed() {
