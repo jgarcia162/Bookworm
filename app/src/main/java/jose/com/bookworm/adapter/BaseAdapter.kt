@@ -6,18 +6,22 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import jose.com.bookworm.R
 import jose.com.bookworm.views.library.LibraryBookViewHolder
-import timber.log.Timber
 
 /**
  * Typed adapter extending from [RecyclerView.Adapter].
  *
  * @param layout the ID of the desired ViewHolder layout
- * @param listener optional Nullable listener interface to provide callbacks in calling container.
+ * @param onItemClick function to execute when an item is clicked
+ * @param onItemLongClick function to execute when an item is long pressed
+ *
+ * "UNCHECKED_CAST" warning is suppressed because we must always specify a type when instantiating
+ * this adapter.
  * */
 @Suppress("UNCHECKED_CAST")
-class BaseAdapter<T, U>(
+class BaseAdapter<T>(
   private val layout: Int,
-  private val listener: U
+  private val onItemClick: (T) -> Unit,
+  private val onItemLongClick: (T) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
   var data: List<T> = emptyList()
     set(value) {
@@ -54,17 +58,12 @@ class BaseAdapter<T, U>(
     holder: RecyclerView.ViewHolder,
     position: Int
   ) {
-    if (listener !== null) {
-      (holder as Binder<T, U>).bind(data[position], listener)
-    } else {
-      (holder as Binder<T, U>).bind(data[position])
-    }
+    (holder as Binder<T>).bind(data[position], onItemClick, onItemLongClick)
   }
   
   override fun getItemCount() = data.size
   
-  interface Binder<T, U> {
-    fun bind(data: T) {}
-    fun bind(data: T, listener: U) {}
+  interface Binder<T> {
+    fun bind(data: T, onItemClick: (T) -> Unit = {}, onItemLongClick: (T) -> Unit = {}) {}
   }
 }

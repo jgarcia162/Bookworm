@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
-import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
 import jose.com.bookworm.R
 import jose.com.bookworm.adapter.BaseAdapter
@@ -15,17 +14,19 @@ import jose.com.bookworm.adapter.FeedInterface
 import jose.com.bookworm.extensions.onClick
 import jose.com.bookworm.extensions.toast
 import jose.com.bookworm.model.nytimes.NYTimesBook
+import jose.com.bookworm.viewmodel.AddBookViewModel
 import jose.com.bookworm.viewmodel.FeedViewModel
 import kotlinx.android.synthetic.main.fragment_feed.*
 import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class FeedFragment @Inject constructor() : Fragment(), View.OnClickListener, ChipsDialogFragment.ChipsListener, FeedInterface {
-  private lateinit var bestSellersAdapter: BaseAdapter<NYTimesBook, FeedInterface>
+class FeedFragment @Inject constructor() : Fragment(), ChipsDialogFragment.ChipsListener, FeedInterface {
+  private lateinit var bestSellersAdapter: BaseAdapter<NYTimesBook>
   private lateinit var categoryTitles: Set<String>
   
   private val feedViewModel: FeedViewModel by viewModels()
+  private val addBookViewModel: AddBookViewModel by viewModels()
   
   override fun onCreateView(
     inflater: LayoutInflater,
@@ -37,7 +38,11 @@ class FeedFragment @Inject constructor() : Fragment(), View.OnClickListener, Chi
   
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    bestSellersAdapter = BaseAdapter(R.layout.best_seller_list_item, this)
+    bestSellersAdapter = BaseAdapter(
+      R.layout.best_seller_list_item,
+      onItemClick = { onItemClick(it) },
+      onItemLongClick = { onItemLongClick(it) }
+    )
   
     best_sellers_rv.layoutManager = GridLayoutManager(
       context,
@@ -129,9 +134,17 @@ class FeedFragment @Inject constructor() : Fragment(), View.OnClickListener, Chi
     categoryTitles = listTitles
   }
   
-  override fun onClick(v: View?) {
-    val chip = v as Chip
-    feedViewModel.getBestSellersList(chip.text!!.toString())
+  private fun onItemLongClick(book: NYTimesBook) {
+    addBookViewModel.addBook(
+      title = book.title,
+      author = book.author,
+      onAddBookComplete = { context?.toast("Book Added") },
+      onAddBookError = { context?.toast("Error") }
+    )
+  }
+  
+  private fun onItemClick(book: NYTimesBook) {
+    context?.toast(book.title)
   }
   
   private fun showGetBestSellersSuccess(listName: String) {

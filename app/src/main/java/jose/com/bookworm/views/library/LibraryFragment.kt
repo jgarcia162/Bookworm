@@ -12,6 +12,7 @@ import jose.com.bookworm.adapter.BaseAdapter
 import jose.com.bookworm.extensions.onClick
 import jose.com.bookworm.extensions.toast
 import jose.com.bookworm.model.roommodel.Book
+import jose.com.bookworm.viewmodel.AddBookViewModel
 import jose.com.bookworm.viewmodel.LibraryViewModel
 import jose.com.bookworm.views.AddBookDialogFragment
 import kotlinx.android.synthetic.main.fragment_library.*
@@ -19,8 +20,8 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class LibraryFragment @Inject constructor() : Fragment(), LibraryInterface, LifecycleOwner, AddBookDialogFragment.AddBookInterface {
-  private lateinit var adapter: BaseAdapter<Book, LibraryInterface>
+class LibraryFragment @Inject constructor() : Fragment(), LifecycleOwner, LibraryInterface, AddBookDialogFragment.AddBookInterface {
+  private lateinit var adapter: BaseAdapter<Book>
   
   private val libraryViewModel: LibraryViewModel by viewModels()
   
@@ -45,7 +46,11 @@ class LibraryFragment @Inject constructor() : Fragment(), LibraryInterface, Life
   
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    adapter = BaseAdapter(R.layout.book_list_item, this)
+    adapter = BaseAdapter(
+      R.layout.book_list_item,
+      onItemClick = { showBookDetails(it) },
+      onItemLongClick = { saveToLibrary(it) }
+    )
   
     library_rv.setHasFixedSize(false)
     library_rv.adapter = adapter
@@ -100,7 +105,11 @@ class LibraryFragment @Inject constructor() : Fragment(), LibraryInterface, Life
   
   override fun showBookDetails(book: Book) {
     //TODO navigate to details screen
-//      activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.main_fragment_container, LibraryFragment())?.commit()
+  }
+  
+  override fun saveToLibrary(book: Book) {
+    context?.toast(book.title)
+//    addBookViewModel.addBook(book, { onAddBookComplete() }, { onAddBookError() })
   }
   
   override fun onAddBookComplete() {

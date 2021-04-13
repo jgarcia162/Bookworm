@@ -4,6 +4,8 @@ import android.view.View
 import android.widget.ImageView
 import com.squareup.picasso.Picasso
 import jose.com.bookworm.R
+import jose.com.bookworm.extensions.onClick
+import jose.com.bookworm.extensions.onLongClick
 import jose.com.bookworm.model.nytimes.BestSellersBook
 import jose.com.bookworm.model.nytimes.BestSellersOverviewBook
 import jose.com.bookworm.model.nytimes.NYTimesBook
@@ -11,14 +13,15 @@ import jose.com.bookworm.model.nytimes.NYTimesBook
 class BestSellersViewHolder(
   itemView: View
 ) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView),
-  BaseAdapter.Binder<NYTimesBook, FeedInterface>,
-  View.OnClickListener {
+  BaseAdapter.Binder<NYTimesBook> {
   private val bookImageView: ImageView = itemView.findViewById(R.id.book_image_iv)
-  private lateinit var listener: FeedInterface
   private lateinit var book: NYTimesBook
   
-  override fun bind(data: NYTimesBook, listener: FeedInterface) {
-    this.listener = listener
+  override fun bind(
+    data: NYTimesBook,
+    onItemClick: (NYTimesBook) -> Unit,
+    onItemLongClick: (NYTimesBook) -> Unit
+  ) {
     this.book = data
     when (data) {
       is BestSellersBook -> {
@@ -28,7 +31,14 @@ class BestSellersViewHolder(
         loadImageIntoImageView(data.bookImageWidth, data.bookImageHeight, data.bookImage)
       }
     }
-    itemView.setOnClickListener(this)
+    itemView.onClick {
+      onItemClick(data)
+    }
+    
+    itemView.onLongClick {
+      onItemLongClick(data)
+      return@onLongClick true
+    }
   }
   
   private fun loadImageIntoImageView(width: Int, height: Int, bookImage: String) {
@@ -55,9 +65,5 @@ class BestSellersViewHolder(
     }
     
     return Pair(height1, width1)
-  }
-  
-  override fun onClick(v: View?) {
-    listener.clickBook(book)
   }
 }

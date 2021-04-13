@@ -23,13 +23,26 @@ class AddBookViewModel @Inject constructor(
   private val categoriesLiveData = MutableLiveData<MutableSet<String>>(prefHelper.getCategories())
   private val compositeDisposable: CompositeDisposable = CompositeDisposable()
   
+  fun addBook(book: Book, onAddBookComplete: () -> Unit, onAddBookError: () -> Unit) {
+    addBook(
+      book.title,
+      book.author,
+      book.isbn,
+      book.pages.toString(),
+      book.yearPublished.toString(),
+      book.categories,
+      onAddBookComplete,
+      onAddBookError
+    )
+  }
+  
   fun addBook(
     title: String,
     author: String,
-    isbn: String,
-    pages: String,
-    year: String,
-    category: String,
+    isbn: String = "",
+    pages: String = "",
+    year: String = "",
+    category: String = "",
     onAddBookComplete: () -> Unit = {},
     onAddBookError: () -> Unit = {},
   ) {
@@ -38,13 +51,13 @@ class AddBookViewModel @Inject constructor(
     } else {
       pages.toInt()
     }
-  
+    
     val defYear: Int = if (year.isBlank()) {
       0
     } else {
       year.toInt()
     }
-  
+    
     val book = Book(
       title = title,
       author = author,
@@ -53,7 +66,7 @@ class AddBookViewModel @Inject constructor(
       yearPublished = defYear,
       categories = category
     )
-  
+    
     compositeDisposable += repository.addBook(book)
       .subscribeOn(ioScheduler)
       .observeOn(mainThreadScheduler)
@@ -64,6 +77,7 @@ class AddBookViewModel @Inject constructor(
         onError = {
           //TODO Display error
           onAddBookError()
+          it.printStackTrace()
         }
       )
   }

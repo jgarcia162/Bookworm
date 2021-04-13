@@ -16,4 +16,6 @@ interface LibraryInterface {
   fun showSortedBooks()
   
   fun showBookDetails(book: Book)
+  
+  fun saveToLibrary(book: Book)
 }
