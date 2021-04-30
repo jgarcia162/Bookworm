@@ -1,6 +1,5 @@
 package jose.com.bookworm.network
 
-import io.reactivex.rxjava3.core.Single
 import jose.com.bookworm.model.nytimes.BestSellersListNamesResponse
 import jose.com.bookworm.model.nytimes.BestSellersListResponse
 import jose.com.bookworm.model.nytimes.BestSellersOverviewResponse
@@ -19,24 +18,24 @@ interface NYTimesApi {
      * "https://api.nytimes.com/svc/books/v3/lists/overview.json?api-key=3f015948418c4a2383be12847ff477f1
      */
     @GET("lists.json")
-    fun getBestSellersList(
-        @Query("api-key") apiKey: String,
-        @Query("list") listName: String
-    ): Single<BestSellersListResponse>
-
+    suspend fun getBestSellersListAsync(
+      @Query("api-key") apiKey: String,
+      @Query("list") listName: String
+    ): BestSellersListResponse
+    
     /**
      * Gets top 5 books from each best sellers list
      */
     @GET("lists/overview.json")
-    fun getTopFiveBestSellers(
-        @Query("api-key") apiKey: String
-    ): Single<BestSellersOverviewResponse>
-
+    suspend fun getTopFiveBestSellersAsync(
+      @Query("api-key") apiKey: String
+    ): BestSellersOverviewResponse
+    
     /**
      * Gets list of all best seller list names
      */
     @GET("lists/names.json")
-    fun getBestSellersListNames(
-        @Query("api-key") apiKey: String
-    ): Single<BestSellersListNamesResponse>
+    suspend fun getBestSellersListNamesAsync(
+      @Query("api-key") apiKey: String
+    ): BestSellersListNamesResponse
 }

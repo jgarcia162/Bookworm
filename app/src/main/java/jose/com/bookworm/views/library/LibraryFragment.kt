@@ -3,25 +3,24 @@ package jose.com.bookworm.views.library
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
 import dagger.hilt.android.AndroidEntryPoint
 import jose.com.bookworm.R
 import jose.com.bookworm.adapter.BaseAdapter
+import jose.com.bookworm.databinding.FragmentLibraryBinding
 import jose.com.bookworm.extensions.onClick
 import jose.com.bookworm.extensions.toast
 import jose.com.bookworm.model.roommodel.Book
-import jose.com.bookworm.viewmodel.AddBookViewModel
 import jose.com.bookworm.viewmodel.LibraryViewModel
 import jose.com.bookworm.views.AddBookDialogFragment
-import kotlinx.android.synthetic.main.fragment_library.*
-import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class LibraryFragment @Inject constructor() : Fragment(), LifecycleOwner, LibraryInterface, AddBookDialogFragment.AddBookInterface {
   private lateinit var adapter: BaseAdapter<Book>
+  private lateinit var libraryBinding: FragmentLibraryBinding
+  private val binding get() = libraryBinding!!
   
   private val libraryViewModel: LibraryViewModel by viewModels()
   
@@ -40,8 +39,9 @@ class LibraryFragment @Inject constructor() : Fragment(), LifecycleOwner, Librar
     inflater: LayoutInflater,
     container: ViewGroup?,
     savedInstanceState: Bundle?
-  ): View? {
-    return inflater.inflate(R.layout.fragment_library, container, false)
+  ): View {
+    libraryBinding = FragmentLibraryBinding.inflate(inflater, container, false)
+    return binding.root
   }
   
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -52,10 +52,10 @@ class LibraryFragment @Inject constructor() : Fragment(), LifecycleOwner, Librar
       onItemLongClick = { saveToLibrary(it) }
     )
   
-    library_rv.setHasFixedSize(false)
-    library_rv.adapter = adapter
+    binding.libraryRv.setHasFixedSize(false)
+    binding.libraryRv.adapter = adapter
   
-    add_book_fab.onClick {
+    binding.addBookFab.onClick {
       showAddBookFragment()
     }
   

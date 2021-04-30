@@ -8,7 +8,7 @@ ext.versions = [
         'rxAdapter' : '3.0.0',
         'rxKotlin'  : '3.0.1',
         'okhttp3'   : '4.7.2',
-        'lifecycle' : '2.2.0',
+        'lifecycle' : '2.3.1',
         'room'      : '2.3.0-beta01',
         'mockito'   : '3.3.3',
         'parceler'  : '1.1.13',
@@ -36,6 +36,7 @@ ext.deps = [
         'firebaseMLKit': "com.google.firebase:firebase-ml-vision:24.0.3",
         'lifecycle'    : [
                 'viewmodel'          : "androidx.lifecycle:lifecycle-viewmodel:$versions.lifecycle",
+                'viewmodel-ktx'          : "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.lifecycle",
                 'livedata'           : "androidx.lifecycle:lifecycle-livedata:$versions.lifecycle",
                 'livedata_ktx'           : "androidx.lifecycle:lifecycle-livedata-ktx:$versions.lifecycle",
                 'lifecycleExtensions': "androidx.lifecycle:lifecycle-extensions:${versions.lifecycle}"

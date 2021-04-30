@@ -10,29 +10,38 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import dagger.hilt.android.AndroidEntryPoint
 import jose.com.bookworm.R
+import jose.com.bookworm.databinding.AddBookLayoutBinding
+import jose.com.bookworm.databinding.DialogButtonsLayoutBinding
+import jose.com.bookworm.databinding.FragmentAddBookBinding
 import jose.com.bookworm.extensions.onClick
 import jose.com.bookworm.viewmodel.AddBookViewModel
-import kotlinx.android.synthetic.main.add_book_layout.*
-import kotlinx.android.synthetic.main.dialog_buttons_layout.*
-import javax.inject.Inject
 
 @AndroidEntryPoint
-class AddBookDialogFragment(var listener: AddBookInterface?) : DialogFragment() {
+class AddBookDialogFragment(private var listener: AddBookInterface?) : DialogFragment() {
+  private var fragmentAddBookBinding: FragmentAddBookBinding? = null
+  private var dialogButtonsBinding: DialogButtonsLayoutBinding? = null
+  private var addBookLayoutBinding: AddBookLayoutBinding? = null
+  private val addBookBinding get() = fragmentAddBookBinding!!
+  private val dialogBinding get() = dialogButtonsBinding!!
+  private val layoutBinding get() = addBookLayoutBinding!!
   private val viewModel: AddBookViewModel by viewModels()
   
   override fun onCreateView(
     inflater: LayoutInflater,
     container: ViewGroup?,
     savedInstanceState: Bundle?
-  ): View? {
-    return inflater.inflate(R.layout.fragment_add_book, container, false)
+  ): View {
+    fragmentAddBookBinding = FragmentAddBookBinding.inflate(inflater, container, false)
+    dialogButtonsBinding = DialogButtonsLayoutBinding.inflate(inflater, container, false)
+    addBookLayoutBinding = AddBookLayoutBinding.inflate(inflater, container, false)
+    return addBookBinding.root
   }
   
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     viewModel.getCategoriesLiveData().observe(viewLifecycleOwner, Observer(::setCategories))
-    
-    done_button.onClick {
+  
+    dialogBinding.doneButton.onClick {
       viewModel.addBook(
         getTitle(),
         getAuthor(),
@@ -50,33 +59,33 @@ class AddBookDialogFragment(var listener: AddBookInterface?) : DialogFragment() 
         }
       )
     }
-    
-    clear_button.onClick {
+  
+    dialogBinding.clearButton.onClick {
       clearFields()
     }
-    
-    cancel_button.onClick { dismiss() }
+  
+    dialogBinding.cancelButton.onClick { dismiss() }
   }
   
   private fun setCategories(categories: MutableSet<String>) {
-    categories_spinner.adapter =
+    layoutBinding.categoriesSpinner.adapter =
       ArrayAdapter(requireContext(), R.layout.category_list_item, categories.toMutableList())
   }
   
-  private fun getTitle() = title_input_et.text.toString()
-  private fun getAuthor() = author_input_et.text.toString()
-  private fun getISBN() = isbn_input_et.text.toString()
-  private fun getPages() = pages_input_et.text.toString()
-  private fun getYearPublished() = year_published_input_et.text.toString()
-  private fun getGenre() = categories_spinner.selectedItem.toString()
+  private fun getTitle() = layoutBinding.titleInputEt.text.toString()
+  private fun getAuthor() = layoutBinding.authorInputEt.text.toString()
+  private fun getISBN() = layoutBinding.isbnInputEt.text.toString()
+  private fun getPages() = layoutBinding.pagesInputEt.text.toString()
+  private fun getYearPublished() = layoutBinding.yearPublishedInputEt.text.toString()
+  private fun getGenre() = layoutBinding.categoriesSpinner.selectedItem.toString()
   
   private fun clearFields() {
-    title_input_et.setText("")
-    author_input_et.setText("")
-    pages_input_et.setText("")
-    year_published_input_et.setText("")
-    categories_spinner.setSelection(0)
-    isbn_input_et.setText("")
+    layoutBinding.titleInputEt.setText("")
+    layoutBinding.authorInputEt.setText("")
+    layoutBinding.isbnInputEt.setText("")
+    layoutBinding.pagesInputEt.setText("")
+    layoutBinding.yearPublishedInputEt.setText("")
+    layoutBinding.categoriesSpinner.setSelection(0)
   }
   
   override fun onDestroy() {

@@ -26,14 +26,12 @@ class BookRepository @Inject constructor(
     fun getAllBooksByAuthor(author: String) = databaseHelper.getAllBooksByAuthor(author)
 
     fun getAllBooksBorrowedByUser(name: String) = databaseHelper.getAllBooksBorrowedByUser(name)
-
-//    fun getAllCurrentlyReading() = databaseHelper.getAllCurrentlyReading()
-
+    
     fun getAllBorrowedBooks() = databaseHelper.getAllBorrowedBooks()
-
-    fun getBestSellersOverview() = apiClient.getBestSellersOverview()
-
-    fun getBestSellersListNames() = apiClient.getBestSellersListNames()
-
-    fun getBestSellersList(listName: String) = apiClient.getBestSellersList(listName)
+    
+    suspend fun getBestSellersOverviewAsync() = apiClient.getBestSellersOverviewAsync()
+    
+    suspend fun getBestSellersListNamesAsync() = apiClient.getBestSellersListNamesAsync()
+    
+    suspend fun getBestSellersList(listName: String) = apiClient.getBestSellersList(listName)
 }

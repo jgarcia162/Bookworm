@@ -11,12 +11,15 @@ import dagger.hilt.android.AndroidEntryPoint
 import jose.com.bookworm.R
 import jose.com.bookworm.adapter.BaseAdapter
 import jose.com.bookworm.adapter.FeedInterface
+import jose.com.bookworm.databinding.FragmentFeedBinding
 import jose.com.bookworm.extensions.onClick
 import jose.com.bookworm.extensions.toast
 import jose.com.bookworm.model.nytimes.NYTimesBook
 import jose.com.bookworm.viewmodel.AddBookViewModel
 import jose.com.bookworm.viewmodel.FeedViewModel
-import kotlinx.android.synthetic.main.fragment_feed.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -24,6 +27,8 @@ import javax.inject.Inject
 class FeedFragment @Inject constructor() : Fragment(), ChipsDialogFragment.ChipsListener, FeedInterface {
   private lateinit var bestSellersAdapter: BaseAdapter<NYTimesBook>
   private lateinit var categoryTitles: Set<String>
+  private var fragmentFeedBinding: FragmentFeedBinding? = null
+  private val binding get() = fragmentFeedBinding!!
   
   private val feedViewModel: FeedViewModel by viewModels()
   private val addBookViewModel: AddBookViewModel by viewModels()
@@ -32,8 +37,9 @@ class FeedFragment @Inject constructor() : Fragment(), ChipsDialogFragment.Chips
     inflater: LayoutInflater,
     container: ViewGroup?,
     savedInstanceState: Bundle?
-  ): View? {
-    return inflater.inflate(R.layout.fragment_feed, container, false)
+  ): View {
+    fragmentFeedBinding = FragmentFeedBinding.inflate(inflater, container, false)
+    return binding.root
   }
   
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -44,14 +50,14 @@ class FeedFragment @Inject constructor() : Fragment(), ChipsDialogFragment.Chips
       onItemLongClick = { onItemLongClick(it) }
     )
   
-    best_sellers_rv.layoutManager = GridLayoutManager(
+    binding.bestSellersRv.layoutManager = GridLayoutManager(
       context,
       3,
       GridLayoutManager.VERTICAL,
       false
     )
   
-    best_sellers_rv.adapter = bestSellersAdapter
+    binding.bestSellersRv.adapter = bestSellersAdapter
   
     setFilterClick()
   
@@ -88,7 +94,7 @@ class FeedFragment @Inject constructor() : Fragment(), ChipsDialogFragment.Chips
   }
   
   private fun setFilterClick() {
-    filter_icon.onClick {
+    binding.filterIcon.onClick {
       //TODO re-inflate fragment if created
       ChipsDialogFragment()
         .apply {
@@ -101,9 +107,11 @@ class FeedFragment @Inject constructor() : Fragment(), ChipsDialogFragment.Chips
   
   override fun onStart() {
     super.onStart()
-    
-    feedViewModel.getBestSellersListNames()
-    feedViewModel.getBestSellersOverview()
+  
+    CoroutineScope(Dispatchers.Main).launch {
+      feedViewModel.getBestSellersListNames()
+      feedViewModel.getBestSellersOverview()
+    }
   }
   
   fun showNotReadingAnyBooksText() {
@@ -162,7 +170,7 @@ class FeedFragment @Inject constructor() : Fragment(), ChipsDialogFragment.Chips
     feedViewModel.getBestSellersList(listName)
   }
   
-  override fun getOverviewList() {
+  override suspend fun getOverviewList() {
     feedViewModel.getBestSellersOverview()
   }
   
@@ -185,5 +193,10 @@ class FeedFragment @Inject constructor() : Fragment(), ChipsDialogFragment.Chips
   
   override fun clickBook(book: NYTimesBook) {
     Timber.d("Clicked on ${book.title}")
+  }
+  
+  override fun onDestroyView() {
+    super.onDestroyView()
+    fragmentFeedBinding = null
   }
 }

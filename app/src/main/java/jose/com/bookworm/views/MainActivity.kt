@@ -4,31 +4,35 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentManager
 import dagger.hilt.android.AndroidEntryPoint
 import jose.com.bookworm.R
+import jose.com.bookworm.databinding.ActivityMainBinding
 import jose.com.bookworm.extensions.toast
 import jose.com.bookworm.views.library.LibraryFragment
-import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), AddBookDialogFragment.AddBookInterface {
+    private lateinit var binding: ActivityMainBinding
+    
     @Inject
     lateinit var feedFragment: FeedFragment
+    
     @Inject
     lateinit var searchFragment: SearchFragment
+    
     @Inject
     lateinit var libraryFragment: LibraryFragment
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         title = "BookWorm"
         supportFragmentManager.beginTransaction()
           .replace(R.id.main_fragment_container, feedFragment).commit()
         
-        bottom_navigation_view.setOnNavigationItemSelectedListener { menuItem ->
+        binding.bottomNavigationView.setOnNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.menu_item_home -> {
                     supportFragmentManager

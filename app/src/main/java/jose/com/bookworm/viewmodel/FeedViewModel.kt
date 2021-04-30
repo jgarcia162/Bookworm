@@ -9,12 +9,11 @@ import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.plusAssign
 import io.reactivex.rxjava3.kotlin.subscribeBy
+import io.reactivex.rxjava3.kotlin.toObservable
 import jose.com.bookworm.SharedPreferencesHelper
 import jose.com.bookworm.model.nytimes.*
 import jose.com.bookworm.repository.BookRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -28,31 +27,23 @@ class FeedViewModel @Inject constructor(
   private var compositeDisposable: CompositeDisposable = CompositeDisposable()
   private val topBooks = mutableListOf<NYTimesBook>()
   private val listNameMap = mutableMapOf<String, String>()
-  
   private val isLoadingLiveData = MutableLiveData<Boolean>()
   private val listTitlesLiveData = MutableLiveData<MutableSet<String>>()
   private val bestSellersListLiveData = MutableLiveData<List<NYTimesBook>>()
   private val isEmptyLiveData = MutableLiveData(true)
   private val isSuccessfulLiveData = MutableLiveData(Pair(true, ""))
+  private lateinit var job: Job
   
-  fun getBestSellersOverview(onLoadComplete: () -> Unit = {}) {
-    compositeDisposable += repository.getBestSellersOverview()
-      .subscribeOn(ioScheduler)
-      .observeOn(mainThreadScheduler)
-      .doOnSubscribe {
-        isLoadingLiveData.value = true
-      }
-      .doAfterTerminate {
-        isLoadingLiveData.value = false
-        onLoadComplete()
-      }
-      .subscribeBy(
-        onSuccess = { onGetBestSellersOverviewSuccess(it) },
-        onError = { onGetBestSellersOverviewFailed() }
-      )
+  suspend fun getBestSellersOverview(onLoadComplete: () -> Unit = {}) {
+    isLoadingLiveData.value = true
+    job = viewModelScope.launch {
+      val results = repository.getBestSellersOverviewAsync()
+      isLoadingLiveData.value = false
+      onGetBestSellersOverviewSuccess(results.results.lists)
+      onLoadComplete()
+    }
   }
   
-  // uses coroutines to offload the filtering to an IO thread
   private fun onGetBestSellersOverviewSuccess(lists: List<BestSellersOverviewList>) {
     viewModelScope.launch {
       withContext(Dispatchers.IO) {
@@ -83,19 +74,15 @@ class FeedViewModel @Inject constructor(
   }
   
   fun getBestSellersListNames(onLoadComplete: () -> Unit = {}) {
-    compositeDisposable += repository.getBestSellersListNames()
-      .map {
-        it.results
-      }
-      .subscribeOn(ioScheduler)
-      .observeOn(mainThreadScheduler)
-      .doAfterTerminate {
+    isLoadingLiveData.postValue(true)
+    job = viewModelScope.launch {
+      val list = repository.getBestSellersListNamesAsync()
+      withContext(Dispatchers.Main) {
+        isLoadingLiveData.postValue(false)
+        onGetBestSellersListNamesSuccess(list.results)
         onLoadComplete()
       }
-      .subscribeBy(
-        onSuccess = { onGetBestSellersListNamesSuccess(it) },
-        onError = { onGetBestSellersListNamesFailed() }
-      )
+    }
   }
   
   private fun onGetBestSellersListNamesSuccess(listNames: List<BestSellersListName>) {
@@ -113,26 +100,20 @@ class FeedViewModel @Inject constructor(
   }
   
   fun getBestSellersList(listName: String = "", onLoadComplete: () -> Unit = {}) {
+    isLoadingLiveData.postValue(true)
     val books = mutableListOf<BestSellersBook>()
-    compositeDisposable += repository.getBestSellersList(listNameMap[listName].toString())
-      .map {
-        for (item in it.results) {
-          books.add(item.bookDetails[0])
-        }
+    job = viewModelScope.launch {
+      val list = repository.getBestSellersList(listNameMap[listName].toString())
+    
+      list.results.forEach {
+        books.add(it.bookDetails[0])
       }
-      .subscribeOn(ioScheduler)
-      .observeOn(mainThreadScheduler)
-      .doOnSubscribe {
-        isLoadingLiveData.postValue(true)
-      }
-      .doAfterTerminate {
+      withContext(Dispatchers.Main) {
         isLoadingLiveData.postValue(false)
         onLoadComplete()
+        onGetBestSellersListSuccess(listName, books)
       }
-      .subscribeBy(
-        onSuccess = { onGetBestSellersListSuccess(listName, books) },
-        onError = { onGetBestSellersListFailed(listName) }
-      )
+    }
   }
   
   private fun onGetBestSellersListSuccess(listName: String, books: MutableList<BestSellersBook>) {
@@ -161,16 +142,19 @@ class FeedViewModel @Inject constructor(
         isLoadingLiveData.postValue(false)
         onLoadComplete()
       }
-      .flatMap {
-        repository.getBestSellersList(listNameMap[it]!!)
-          .subscribeOn(ioScheduler)
-          .observeOn(mainThreadScheduler)
-          .toObservable()
+      .map {
+        var listItems: List<BestSellersListItem> = listOf()
+        viewModelScope.launch {
+          val list = repository.getBestSellersList(listNameMap[it]!!)
+          listItems = list.results
+        }
+        listItems.toObservable()
       }
-      .flatMap {
-        for (item in it.results) {
+      .map {
+        it.blockingIterable().forEach { item ->
           books.add(item.bookDetails[0])
         }
+    
         Observable.just(books)
       }
       .subscribeBy(
@@ -203,6 +187,7 @@ class FeedViewModel @Inject constructor(
   
   override fun onCleared() {
     super.onCleared()
+    job.cancel()
     compositeDisposable.clear()
   }
 }

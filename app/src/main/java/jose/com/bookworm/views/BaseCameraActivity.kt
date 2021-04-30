@@ -6,28 +6,30 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleOwner
-import jose.com.bookworm.R
+import jose.com.bookworm.databinding.ActivityBaseCameraBinding
 import jose.com.bookworm.extensions.onClick
-import kotlinx.android.synthetic.main.activity_base_camera.*
 
 abstract class BaseCameraActivity : AppCompatActivity(), LifecycleOwner, View.OnClickListener {
+    private lateinit var binding: ActivityBaseCameraBinding
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_base_camera)
-        retry_button.setOnClickListener {
-            if (camera_view.visibility == VISIBLE) showPreview() else hidePreview()
+        binding = ActivityBaseCameraBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        binding.retryButton.setOnClickListener {
+            if (binding.cameraView.visibility == VISIBLE) showPreview() else hidePreview()
         }
-        camera_view.setLifecycleOwner(this)//TODO implement lifecycle
-        capture_button.onClick(this)
+        binding.cameraView.setLifecycleOwner(this)//TODO implement lifecycle
+        binding.captureButton.onClick(this)
     }
 
     private fun hidePreview() {
-        preview_frame.visibility = GONE
-        camera_view.visibility = VISIBLE
+        binding.previewFrame.visibility = GONE
+        binding.cameraView.visibility = VISIBLE
     }
 
     private fun showPreview() {
-        preview_frame.visibility = VISIBLE
-        camera_view.visibility = GONE
+        binding.previewFrame.visibility = VISIBLE
+        binding.cameraView.visibility = GONE
     }
 }
