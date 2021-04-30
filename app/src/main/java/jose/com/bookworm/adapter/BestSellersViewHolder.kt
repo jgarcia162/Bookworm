@@ -23,12 +23,15 @@ class BestSellersViewHolder(
     onItemLongClick: (NYTimesBook) -> Unit
   ) {
     this.book = data
+    //after a filter is applied to the list of best sellers the book item will change from
+    // BestSellersOverviewBook to BestSellersBook so we use the when statement to handle both cases
+    // even though the fields are the same
     when (data) {
       is BestSellersBook -> {
-        loadImageIntoImageView(data.bookImageWidth, data.bookImageHeight, data.bookImage)
+        loadImageIntoImageView(data.bookImageWidth, data.bookImageHeight, data.bookImageUrl)
       }
       is BestSellersOverviewBook -> {
-        loadImageIntoImageView(data.bookImageWidth, data.bookImageHeight, data.bookImage)
+        loadImageIntoImageView(data.bookImageWidth, data.bookImageHeight, data.bookImageUrl)
       }
     }
     itemView.onClick {

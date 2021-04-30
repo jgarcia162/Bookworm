@@ -43,17 +43,17 @@ class AddBookDialogFragment(private var listener: AddBookInterface?) : DialogFra
   
     dialogBinding.doneButton.onClick {
       viewModel.addBook(
-        getTitle(),
-        getAuthor(),
-        getISBN(),
-        getPages(),
-        getYearPublished(),
-        getGenre(),
-        {
+        title = getTitle(),
+        author = getAuthor(),
+        isbn = getISBN(),
+        pages = getPages(),
+        year = getYearPublished(),
+        category = getGenre(),
+        onAddBookComplete = {
           listener?.onAddBookComplete()
           dismiss()
         },
-        {
+        onAddBookError = {
           listener?.onAddBookError()
           dismiss()
         }

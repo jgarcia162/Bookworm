@@ -2,7 +2,7 @@ package jose.com.bookworm.model.nytimes
 
 import com.google.gson.annotations.SerializedName
 
-/** A list containing [BestSellersBook]s */
+/** A list containing [BestSellersOverviewBook]s */
 data class BestSellersOverviewList(
     @SerializedName("list_id")
     val listId: Int,

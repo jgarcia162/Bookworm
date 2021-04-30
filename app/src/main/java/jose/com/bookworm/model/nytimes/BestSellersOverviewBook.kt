@@ -3,14 +3,15 @@ package jose.com.bookworm.model.nytimes
 import com.google.gson.annotations.SerializedName
 
 /**
- * Represents a book from a best-seller overview list
+ * Represents a book from a best-seller overview list. This object is returned when querying for
+ * overall best sellers.
  */
 data class BestSellersOverviewBook(
   @SerializedName("amazon_product_url")
   val amazonUrl: String = "",
   override val author: String,
   @SerializedName("book_image")
-  val bookImage: String,
+  override val bookImageUrl: String,
   @SerializedName("book_image_width")
   val bookImageWidth: Int,
   @SerializedName("book_image_height")

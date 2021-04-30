@@ -146,6 +146,7 @@ class FeedFragment @Inject constructor() : Fragment(), ChipsDialogFragment.Chips
     addBookViewModel.addBook(
       title = book.title,
       author = book.author,
+      imageUrl = book.bookImageUrl,
       onAddBookComplete = { context?.toast("Book Added") },
       onAddBookError = { context?.toast("Error") }
     )

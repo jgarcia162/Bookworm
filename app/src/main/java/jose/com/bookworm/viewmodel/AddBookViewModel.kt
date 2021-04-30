@@ -31,6 +31,7 @@ class AddBookViewModel @Inject constructor(
       book.pages.toString(),
       book.yearPublished.toString(),
       book.categories,
+      book.coverUrl,
       onAddBookComplete,
       onAddBookError
     )
@@ -43,6 +44,7 @@ class AddBookViewModel @Inject constructor(
     pages: String = "",
     year: String = "",
     category: String = "",
+    imageUrl: String? = "",
     onAddBookComplete: () -> Unit = {},
     onAddBookError: () -> Unit = {},
   ) {
@@ -64,7 +66,8 @@ class AddBookViewModel @Inject constructor(
       isbn = isbn,
       pages = defPages,
       yearPublished = defYear,
-      categories = category
+      categories = category,
+      coverUrl = imageUrl
     )
     
     compositeDisposable += repository.addBook(book)

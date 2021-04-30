@@ -21,5 +21,5 @@ data class Book(
   val isInLibrary: Boolean = true,
   @Embedded(prefix = "usr_")
   val borrowedBy: User? = null,
-  val progressPercentage: Double = 0.0
+  val progressPercentage: Double = 0.0,
 )
