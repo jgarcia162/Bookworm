@@ -66,8 +66,13 @@ dependencies {
 
     implementation deps.android.arch.room.runtime
     implementation deps.android.arch.room.rxJava
-    implementation deps.firebaseMLKit
     kapt deps.android.arch.room.compiler
+
+    implementation deps.firebaseMLKit
+
+    implementation deps.navigation.fragment
+    implementation deps.navigation.ui
+
 
     implementation deps.lifecycle.viewmodel
     implementation deps.lifecycle.livedata

@@ -1,17 +1,20 @@
 package jose.com.bookworm.model.nytimes
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
 /**
  * Represents a book from a best-seller overview list. This object is returned when querying for
  * overall best sellers.
  */
+@Parcelize
 data class BestSellersOverviewBook(
   @SerializedName("amazon_product_url")
   val amazonUrl: String = "",
-  override val author: String,
+  val author: String,
   @SerializedName("book_image")
-  override val bookImageUrl: String,
+  val bookImageUrl: String,
   @SerializedName("book_image_width")
   val bookImageWidth: Int,
   @SerializedName("book_image_height")
@@ -23,7 +26,7 @@ data class BestSellersOverviewBook(
   val isbn13: String = "",
   val publisher: String,
   val rank: Int,
-  override val title: String,
+  val title: String,
   @SerializedName("buy_links")
   val buyLinks: List<BuyLink>
-) : NYTimesBook()
+) : Parcelable

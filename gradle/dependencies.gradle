@@ -10,6 +10,7 @@ ext.versions = [
         'okhttp3'   : '4.7.2',
         'lifecycle' : '2.3.1',
         'room'      : '2.3.0-beta01',
+        'navigation': '2.3.5',
         'mockito'   : '3.3.3',
         'parceler'  : '1.1.13',
         'hilt'      : '2.31.2-alpha'
@@ -32,6 +33,10 @@ ext.deps = [
                                 'rxJava'  : "androidx.room:room-rxjava3:${versions.room}"
                         ],
                 ]
+        ],
+        'navigation':[
+                'fragment': "androidx.navigation:navigation-fragment-ktx:${versions.navigation}",
+                'ui': "androidx.navigation:navigation-ui-ktx:${versions.navigation}"
         ],
         'firebaseMLKit': "com.google.firebase:firebase-ml-vision:24.0.3",
         'lifecycle'    : [
@@ -88,5 +93,5 @@ ext.deps = [
                 'runner'    : "androidx.test:runner:1.2.0"
         ],
         'timber'       : "com.jakewharton.timber:timber:4.7.1",
-        'cameraView'   : "com.otaliastudios:cameraview:2.6.3"
+        'cameraView'   : "com.otaliastudios:cameraview:2.7.0"
 ]

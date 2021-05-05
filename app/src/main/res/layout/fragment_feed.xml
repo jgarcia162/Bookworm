@@ -13,9 +13,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        tools:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+        tools:spanCount="2"
         tools:listitem="@layout/best_seller_list_item" />
 
-    <!--TODO replace with FAB-->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/filter_icon"
         android:layout_width="wrap_content"

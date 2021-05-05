@@ -6,34 +6,24 @@ import com.squareup.picasso.Picasso
 import jose.com.bookworm.R
 import jose.com.bookworm.extensions.onClick
 import jose.com.bookworm.extensions.onLongClick
-import jose.com.bookworm.model.nytimes.BestSellersBook
 import jose.com.bookworm.model.nytimes.BestSellersOverviewBook
-import jose.com.bookworm.model.nytimes.NYTimesBook
 
 class BestSellersViewHolder(
   itemView: View
 ) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView),
-  BaseAdapter.Binder<NYTimesBook> {
+  BaseAdapter.Binder<BestSellersOverviewBook> {
   private val bookImageView: ImageView = itemView.findViewById(R.id.book_image_iv)
-  private lateinit var book: NYTimesBook
+  private lateinit var book: BestSellersOverviewBook
   
   override fun bind(
-    data: NYTimesBook,
-    onItemClick: (NYTimesBook) -> Unit,
-    onItemLongClick: (NYTimesBook) -> Unit
+    data: BestSellersOverviewBook,
+    onItemClick: (BestSellersOverviewBook) -> Unit,
+    onItemLongClick: (BestSellersOverviewBook) -> Unit
   ) {
     this.book = data
-    //after a filter is applied to the list of best sellers the book item will change from
-    // BestSellersOverviewBook to BestSellersBook so we use the when statement to handle both cases
-    // even though the fields are the same
-    when (data) {
-      is BestSellersBook -> {
-        loadImageIntoImageView(data.bookImageWidth, data.bookImageHeight, data.bookImageUrl)
-      }
-      is BestSellersOverviewBook -> {
-        loadImageIntoImageView(data.bookImageWidth, data.bookImageHeight, data.bookImageUrl)
-      }
-    }
+    
+    loadImageIntoImageView(data.bookImageWidth, data.bookImageHeight, data.bookImageUrl)
+    
     itemView.onClick {
       onItemClick(data)
     }
@@ -46,8 +36,8 @@ class BestSellersViewHolder(
   
   private fun loadImageIntoImageView(width: Int, height: Int, bookImage: String) {
     val pair = getImageDimens(width, height)
-    val imageWidth = pair.second
     val imageHeight = pair.first
+    val imageWidth = pair.second
     Picasso.get()
       .load(bookImage)
       .resize(imageWidth, imageHeight)

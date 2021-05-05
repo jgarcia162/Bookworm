@@ -1,7 +1,10 @@
 package jose.com.bookworm.views.library
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
@@ -20,7 +23,7 @@ import javax.inject.Inject
 class LibraryFragment @Inject constructor() : Fragment(), LifecycleOwner, LibraryInterface, AddBookDialogFragment.AddBookInterface {
   private lateinit var adapter: BaseAdapter<Book>
   private lateinit var libraryBinding: FragmentLibraryBinding
-  private val binding get() = libraryBinding!!
+  private val binding get() = libraryBinding
   
   private val libraryViewModel: LibraryViewModel by viewModels()
   

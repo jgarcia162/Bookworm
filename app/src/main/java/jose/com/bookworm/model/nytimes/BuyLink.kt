@@ -1,7 +1,11 @@
 package jose.com.bookworm.model.nytimes
 
-/** A link to purchase a [TimesBook] */
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+/** A link to purchase a book */
+@Parcelize
 data class BuyLink(
-    val name: String,
-    val url: String
-)
+  val name: String,
+  val url: String
+) : Parcelable

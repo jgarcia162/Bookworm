@@ -6,26 +6,25 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import jose.com.bookworm.R
 import jose.com.bookworm.adapter.BaseAdapter
-import jose.com.bookworm.adapter.FeedInterface
 import jose.com.bookworm.databinding.FragmentFeedBinding
 import jose.com.bookworm.extensions.onClick
 import jose.com.bookworm.extensions.toast
-import jose.com.bookworm.model.nytimes.NYTimesBook
+import jose.com.bookworm.model.nytimes.BestSellersOverviewBook
 import jose.com.bookworm.viewmodel.AddBookViewModel
 import jose.com.bookworm.viewmodel.FeedViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class FeedFragment @Inject constructor() : Fragment(), ChipsDialogFragment.ChipsListener, FeedInterface {
-  private lateinit var bestSellersAdapter: BaseAdapter<NYTimesBook>
+class FeedFragment @Inject constructor() : Fragment(), ChipsDialogFragment.ChipsListener {
+  private lateinit var bestSellersAdapter: BaseAdapter<BestSellersOverviewBook>
   private lateinit var categoryTitles: Set<String>
   private var fragmentFeedBinding: FragmentFeedBinding? = null
   private val binding get() = fragmentFeedBinding!!
@@ -142,7 +141,7 @@ class FeedFragment @Inject constructor() : Fragment(), ChipsDialogFragment.Chips
     categoryTitles = listTitles
   }
   
-  private fun onItemLongClick(book: NYTimesBook) {
+  private fun onItemLongClick(book: BestSellersOverviewBook) {
     addBookViewModel.addBook(
       title = book.title,
       author = book.author,
@@ -152,8 +151,12 @@ class FeedFragment @Inject constructor() : Fragment(), ChipsDialogFragment.Chips
     )
   }
   
-  private fun onItemClick(book: NYTimesBook) {
-    context?.toast(book.title)
+  private fun onItemClick(book: BestSellersOverviewBook) {
+    val bundle = Bundle()
+    //TODO create constant for book key
+    bundle.putParcelable("book", book)
+    
+    findNavController().navigate(R.id.action_feedFragment_to_bookDetailsFragment, bundle)
   }
   
   private fun showGetBestSellersSuccess(listName: String) {
@@ -163,7 +166,7 @@ class FeedFragment @Inject constructor() : Fragment(), ChipsDialogFragment.Chips
     activity?.toast(getString(R.string.best_sellers_failed))
   }
   
-  private fun showBestSellersList(books: List<NYTimesBook>) {
+  private fun showBestSellersList(books: List<BestSellersOverviewBook>) {
     bestSellersAdapter.data = books
   }
   
@@ -190,10 +193,6 @@ class FeedFragment @Inject constructor() : Fragment(), ChipsDialogFragment.Chips
   
   fun showBestSellersListFailed(listName: String) {
     activity?.toast("Couldn't load books for list $listName")
-  }
-  
-  override fun clickBook(book: NYTimesBook) {
-    Timber.d("Clicked on ${book.title}")
   }
   
   override fun onDestroyView() {

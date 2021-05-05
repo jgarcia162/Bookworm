@@ -13,7 +13,10 @@ import io.reactivex.rxjava3.kotlin.toObservable
 import jose.com.bookworm.SharedPreferencesHelper
 import jose.com.bookworm.model.nytimes.*
 import jose.com.bookworm.repository.BookRepository
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -25,14 +28,15 @@ class FeedViewModel @Inject constructor(
   @Named("io") private val ioScheduler: Scheduler
 ) : ViewModel() {
   private var compositeDisposable: CompositeDisposable = CompositeDisposable()
-  private val topBooks = mutableListOf<NYTimesBook>()
+  private val topBooks = mutableListOf<BestSellersOverviewBook>()
   private val listNameMap = mutableMapOf<String, String>()
   private val isLoadingLiveData = MutableLiveData<Boolean>()
   private val listTitlesLiveData = MutableLiveData<MutableSet<String>>()
-  private val bestSellersListLiveData = MutableLiveData<List<NYTimesBook>>()
+  private val bestSellersListLiveData = MutableLiveData<List<BestSellersOverviewBook>>()
+  private val bestSellersLiveData = MutableLiveData<List<BestSellersBook>>()
   private val isEmptyLiveData = MutableLiveData(true)
   private val isSuccessfulLiveData = MutableLiveData(Pair(true, ""))
-  private lateinit var job: Job
+  private var job: Job = Job()
   
   suspend fun getBestSellersOverview(onLoadComplete: () -> Unit = {}) {
     isLoadingLiveData.value = true
@@ -120,7 +124,7 @@ class FeedViewModel @Inject constructor(
     if (books.size < 1) {
       isEmptyLiveData.postValue(true)
     } else {
-      bestSellersListLiveData.postValue(books)
+      bestSellersLiveData.postValue(books)
       isSuccessfulLiveData.postValue(Pair(true, listName))
     }
   }
@@ -164,7 +168,7 @@ class FeedViewModel @Inject constructor(
   }
   
   private fun onGetMultipleListsSuccess(books: MutableList<BestSellersBook>) {
-    bestSellersListLiveData.postValue(books)
+    bestSellersLiveData.postValue(books)
   }
   
   private fun onGetMultipleListsFailed() {
@@ -179,7 +183,8 @@ class FeedViewModel @Inject constructor(
   
   fun getListTitlesLiveData(): MutableLiveData<MutableSet<String>> = listTitlesLiveData
   
-  fun getBestSellersListLiveData(): MutableLiveData<List<NYTimesBook>> = bestSellersListLiveData
+  fun getBestSellersListLiveData(): MutableLiveData<List<BestSellersOverviewBook>> =
+    bestSellersListLiveData
   
   fun getIsEmptyLiveData(): MutableLiveData<Boolean> = isEmptyLiveData
   

@@ -1,5 +1,9 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
+// com.otaliastudios:cameraview is not on mavenCentral so we must stick to
+// jcenter for now until the sundown date of Feb 2022. After which we can switch to mavenCentral()
+// If this library has still not been migrated to maven by then we must find a new implementation
+// for the camera bar code scanner in [BaseCameraActivity.kt]
 buildscript {
     apply from: rootProject.file('gradle/dependencies.gradle')
 
@@ -8,7 +12,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.3'
+        classpath 'com.android.tools.build:gradle:7.0.0-alpha05'
         classpath deps.kotlin.gradlePlugin
         classpath deps.hilt.gradlePlugin
 

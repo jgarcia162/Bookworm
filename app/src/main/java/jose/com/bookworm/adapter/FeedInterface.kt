@@ -1,7 +1,7 @@
 package jose.com.bookworm.adapter
 
-import jose.com.bookworm.model.nytimes.NYTimesBook
+import jose.com.bookworm.model.nytimes.BestSellersOverviewBook
 
 interface FeedInterface {
-  fun clickBook(book: NYTimesBook)
+  fun clickBook(book: BestSellersOverviewBook)
 }

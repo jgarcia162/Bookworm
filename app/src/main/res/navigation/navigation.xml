@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/feedFragment">
+
+    <fragment
+        android:id="@+id/feedFragment"
+        android:name="jose.com.bookworm.views.FeedFragment"
+        android:label="FeedFragment"
+        tools:layout="@layout/fragment_feed">
+        <action
+            android:id="@+id/action_feedFragment_to_bookDetailsFragment"
+            app:destination="@id/bookDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/bookDetailsFragment"
+        android:name="jose.com.bookworm.views.BookDetailsFragment"
+        android:label="BookDetailsFragment"
+        tools:layout="@layout/fragment_book_details" />
+
+    <fragment
+        android:id="@+id/libraryFragment"
+        android:name="jose.com.bookworm.views.library.LibraryFragment"
+        android:label="BookDetailsFragment"
+        tools:layout="@layout/fragment_library" />
+</navigation>
