@@ -41,8 +41,7 @@ class BookDetailsFragment : Fragment() {
       Picasso.get().load(it.bookImageUrl).into(binding.ivDetailsBookCover)
       binding.tvDetailsTitle.text = it.title
       binding.tvDetailsAuthor.text = it.author
-      binding.tvDetailsIsbn.text = it.isbn13
-      binding.tvDetailsPublished.text = it.publisher
+      binding.tvDetailsDescription.text = it.description
     }
   }
   
