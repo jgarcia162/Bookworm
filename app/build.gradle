@@ -60,6 +60,7 @@ dependencies {
     implementation deps.android.material
     implementation deps.android.constraintLayout
     implementation deps.android.recyclerView
+    implementation deps.android.recyclerViewSelection
     implementation deps.android.exifinterface
     implementation deps.android.preferenceManager
     implementation deps.android.fragment_ktx

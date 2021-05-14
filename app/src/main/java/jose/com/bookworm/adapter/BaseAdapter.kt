@@ -3,6 +3,7 @@ package jose.com.bookworm.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.widget.RecyclerView
 import jose.com.bookworm.R
 import jose.com.bookworm.views.library.LibraryBookViewHolder
@@ -23,12 +24,18 @@ class BaseAdapter<T>(
   private val onItemClick: (T) -> Unit,
   private val onItemLongClick: (T) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+  private var tracker: SelectionTracker<Long>? = null
+  
   var data: List<T> = emptyList()
     set(value) {
       field = value
       //TODO change this to implement DiffUtils
       notifyDataSetChanged()
     }
+  
+  init {
+    setHasStableIds(true)
+  }
   
   override fun onCreateViewHolder(
     parent: ViewGroup,
@@ -47,7 +54,7 @@ class BaseAdapter<T>(
   private fun getViewHolder(view: View, viewType: Int): RecyclerView.ViewHolder {
     return when (viewType) {
       R.layout.book_list_item -> LibraryBookViewHolder(view)
-      R.layout.best_seller_list_item -> BestSellersViewHolder(view)
+      R.layout.best_seller_list_item -> BestSellersViewHolder(view, tracker)
       else -> CurrentReadingViewHolder(view)
     }
   }
@@ -61,7 +68,16 @@ class BaseAdapter<T>(
     (holder as Binder<T>).bind(data[position], onItemClick, onItemLongClick)
   }
   
+  override fun getItemId(position: Int): Long {
+    return position.toLong()
+  }
+  
   override fun getItemCount() = data.size
+  
+  
+  fun setTracker(tracker: SelectionTracker<Long>?) {
+    this.tracker = tracker
+  }
   
   interface Binder<T> {
     fun bind(data: T, onItemClick: (T) -> Unit = {}, onItemLongClick: (T) -> Unit = {}) {}
