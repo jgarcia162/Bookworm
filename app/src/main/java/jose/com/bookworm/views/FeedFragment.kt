@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -13,12 +14,11 @@ import jose.com.bookworm.R
 import jose.com.bookworm.adapter.BaseAdapter
 import jose.com.bookworm.databinding.FragmentFeedBinding
 import jose.com.bookworm.extensions.onClick
+import jose.com.bookworm.extensions.snackbar
 import jose.com.bookworm.extensions.toast
 import jose.com.bookworm.model.nytimes.BestSellersOverviewBook
 import jose.com.bookworm.viewmodel.AddBookViewModel
 import jose.com.bookworm.viewmodel.FeedViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -32,6 +32,14 @@ class FeedFragment @Inject constructor() : Fragment(), ChipsDialogFragment.Chips
   private val feedViewModel: FeedViewModel by viewModels()
   private val addBookViewModel: AddBookViewModel by viewModels()
   
+  override fun onStart() {
+    super.onStart()
+    viewLifecycleOwner.lifecycleScope.launch {
+      feedViewModel.getBestSellersListNames(onLoadFailed = { showBestSellersListFailed(it) })
+      feedViewModel.getBestSellersOverview(onLoadFailed = { showBestSellersListFailed(it) })
+    }
+  }
+  
   override fun onCreateView(
     inflater: LayoutInflater,
     container: ViewGroup?,
@@ -43,42 +51,37 @@ class FeedFragment @Inject constructor() : Fragment(), ChipsDialogFragment.Chips
   
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
+    
     bestSellersAdapter = BaseAdapter(
       R.layout.best_seller_list_item,
       onItemClick = { onItemClick(it) },
       onItemLongClick = { onItemLongClick(it) }
     )
-  
-    binding.bestSellersRv.layoutManager = GridLayoutManager(
-      context,
-      3,
-      GridLayoutManager.VERTICAL,
-      false
-    )
-  
-    binding.bestSellersRv.adapter = bestSellersAdapter
-  
+    
+    binding.apply {
+      bestSellersRv.apply {
+        layoutManager = GridLayoutManager(
+          context,
+          3,
+          GridLayoutManager.VERTICAL,
+          false
+        )
+        
+        adapter = bestSellersAdapter
+      }
+    }
+    
     setFilterClick()
-  
+    
     observeLiveData()
   }
   
   private fun observeLiveData() {
-    feedViewModel.getIsLoadingLiveData().observe(viewLifecycleOwner, { isLoading ->
-      run {
-        if (isLoading) {
-          showLoading()
-        } else {
-          hideLoading()
-        }
-      }
-    })
+    feedViewModel.getIsLoadingLiveData().observe(viewLifecycleOwner, { toggleLoadIndicator(it) })
   
-    feedViewModel.getListTitlesLiveData()
-      .observe(viewLifecycleOwner, { loadListNamesChips(it) })
+    feedViewModel.listTitles.observe(viewLifecycleOwner, { loadListNamesChips(it) })
   
-    feedViewModel.getBestSellersListLiveData()
-      .observe(viewLifecycleOwner, { showBestSellersList(it) })
+    feedViewModel.bestSellersList.observe(viewLifecycleOwner, { showBestSellersList(it) })
   
     feedViewModel.getIsEmptyLiveData().observe(viewLifecycleOwner, { showEmptyState(it) })
   
@@ -104,13 +107,8 @@ class FeedFragment @Inject constructor() : Fragment(), ChipsDialogFragment.Chips
     }
   }
   
-  override fun onStart() {
-    super.onStart()
-  
-    CoroutineScope(Dispatchers.Main).launch {
-      feedViewModel.getBestSellersListNames()
-      feedViewModel.getBestSellersOverview()
-    }
+  private fun showBestSellersListFailed(throwable: Throwable) {
+    binding.root.snackbar("Slow down there cowboy!")
   }
   
   fun showNotReadingAnyBooksText() {
@@ -127,6 +125,11 @@ class FeedFragment @Inject constructor() : Fragment(), ChipsDialogFragment.Chips
   
   fun hideRefreshing() {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+  }
+  
+  fun toggleLoadIndicator(loading: Boolean) {
+    if (loading) showLoading()
+    else hideLoading()
   }
   
   fun showLoading() {
@@ -163,7 +166,7 @@ class FeedFragment @Inject constructor() : Fragment(), ChipsDialogFragment.Chips
   }
   
   private fun showGetBestSellersFailed() {
-    activity?.toast(getString(R.string.best_sellers_failed))
+//    activity?.toast(getString(R.string.best_sellers_failed))
   }
   
   private fun showBestSellersList(books: List<BestSellersOverviewBook>) {
@@ -189,10 +192,6 @@ class FeedFragment @Inject constructor() : Fragment(), ChipsDialogFragment.Chips
     } else {
       //hide view
     }
-  }
-  
-  fun showBestSellersListFailed(listName: String) {
-    activity?.toast("Couldn't load books for list $listName")
   }
   
   override fun onDestroyView() {

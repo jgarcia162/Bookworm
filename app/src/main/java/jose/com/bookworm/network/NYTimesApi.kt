@@ -32,7 +32,7 @@ interface NYTimesApi {
     ): BestSellersOverviewResponse
     
     /**
-     * Gets list of all best seller list names
+     * Gets list of all best seller list names AKA categories
      */
     @GET("lists/names.json")
     suspend fun getBestSellersListNamesAsync(

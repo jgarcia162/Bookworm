@@ -1,5 +1,6 @@
 package jose.com.bookworm.viewmodel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,10 +12,10 @@ import io.reactivex.rxjava3.kotlin.plusAssign
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.kotlin.toObservable
 import jose.com.bookworm.SharedPreferencesHelper
+import jose.com.bookworm.extensions.logStackTrace
 import jose.com.bookworm.model.nytimes.*
 import jose.com.bookworm.repository.BookRepository
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -29,22 +30,38 @@ class FeedViewModel @Inject constructor(
 ) : ViewModel() {
   private var compositeDisposable: CompositeDisposable = CompositeDisposable()
   private val topBooks = mutableListOf<BestSellersOverviewBook>()
-  private val listNameMap = mutableMapOf<String, String>()
+  private val categoriesMap = mutableMapOf<String, String>()
   private val isLoadingLiveData = MutableLiveData<Boolean>()
-  private val listTitlesLiveData = MutableLiveData<MutableSet<String>>()
-  private val bestSellersListLiveData = MutableLiveData<List<BestSellersOverviewBook>>()
-  private val bestSellersLiveData = MutableLiveData<List<BestSellersBook>>()
-  private val isEmptyLiveData = MutableLiveData(true)
-  private val isSuccessfulLiveData = MutableLiveData(Pair(true, ""))
-  private var job: Job = Job()
   
-  suspend fun getBestSellersOverview(onLoadComplete: () -> Unit = {}) {
+  private val listTitlesLiveData = MutableLiveData<MutableSet<String>>()
+  val listTitles: LiveData<MutableSet<String>> = listTitlesLiveData
+  
+  private val bestSellersListLiveData = MutableLiveData<List<BestSellersOverviewBook>>()
+  val bestSellersList: LiveData<List<BestSellersOverviewBook>> = bestSellersListLiveData
+  
+  private val bestSellersLiveData = MutableLiveData<List<BestSellersBook>>()
+  
+  private val isEmptyLiveData = MutableLiveData(true)
+  
+  //uses a Pair object to return the success status and the name of the list that was loaded/failed
+  private val isSuccessfulLiveData = MutableLiveData(Pair(true, ""))
+  
+  suspend fun getBestSellersOverview(
+    onLoadComplete: () -> Unit = {},
+    onLoadFailed: (Throwable) -> Unit = {}
+  ) {
     isLoadingLiveData.value = true
-    job = viewModelScope.launch {
-      val results = repository.getBestSellersOverviewAsync()
-      isLoadingLiveData.value = false
-      onGetBestSellersOverviewSuccess(results.results.lists)
-      onLoadComplete()
+    viewModelScope.launch {
+      try {
+        val results = repository.getBestSellersOverviewAsync()
+        isLoadingLiveData.value = false
+        onGetBestSellersOverviewSuccess(results.results.lists)
+        onLoadComplete()
+        
+      } catch (error: Throwable) {
+        onGetBestSellersOverviewFailed(error, onLoadFailed)
+        error.logStackTrace()
+      }
     }
   }
   
@@ -53,8 +70,8 @@ class FeedViewModel @Inject constructor(
       withContext(Dispatchers.IO) {
         addBooksToList(lists)
       }
-      
-      bestSellersListLiveData.value = topBooks
+  
+      bestSellersListLiveData.postValue(topBooks)
       isSuccessfulLiveData.value = Pair(true, "")
     }
   }
@@ -65,26 +82,37 @@ class FeedViewModel @Inject constructor(
         val filteredList = topBooks.filter {
           it.title == book.title
         }
-        
+  
         if (filteredList.isEmpty()) {
+          book.category = list.displayName
           topBooks.add(book)
         }
       }
     }
   }
   
-  private fun onGetBestSellersOverviewFailed() {
+  private fun onGetBestSellersOverviewFailed(
+    error: Throwable, onLoadFailed: (Throwable) -> Unit = {}
+  ) {
     isSuccessfulLiveData.value = Pair(false, "")
+    onLoadFailed(error)
   }
   
-  fun getBestSellersListNames(onLoadComplete: () -> Unit = {}) {
+  suspend fun getBestSellersListNames(
+    onLoadComplete: () -> Unit = {},
+    onLoadFailed: (Throwable) -> Unit = {}
+  ) {
     isLoadingLiveData.postValue(true)
-    job = viewModelScope.launch {
+    viewModelScope.launch {
       val list = repository.getBestSellersListNamesAsync()
-      withContext(Dispatchers.Main) {
+      try {
         isLoadingLiveData.postValue(false)
         onGetBestSellersListNamesSuccess(list.results)
         onLoadComplete()
+        
+      } catch (error: Throwable) {
+        onGetBestSellersListNamesFailed(error, onLoadFailed)
+        error.logStackTrace()
       }
     }
   }
@@ -93,24 +121,29 @@ class FeedViewModel @Inject constructor(
     val listTitles = mutableSetOf<String>()
     for (name in listNames) {
       listTitles.add(name.displayName)
-      listNameMap[name.displayName] = name.listName
+      categoriesMap[name.displayName] = name.listName
     }
     prefHelper.saveCategories(listTitles)
     listTitlesLiveData.postValue(listTitles)
   }
   
-  private fun onGetBestSellersListNamesFailed() {
+  private fun onGetBestSellersListNamesFailed(
+    error: Throwable,
+    onLoadFailed: (Throwable) -> Unit = {}
+  ) {
     isSuccessfulLiveData.value = Pair(false, "")
+    onLoadFailed(error)
   }
   
   fun getBestSellersList(listName: String = "", onLoadComplete: () -> Unit = {}) {
     isLoadingLiveData.postValue(true)
     val books = mutableListOf<BestSellersBook>()
-    job = viewModelScope.launch {
-      val list = repository.getBestSellersList(listNameMap[listName].toString())
-    
+    viewModelScope.launch {
+      val list = repository.getBestSellersList(categoriesMap[listName].toString())
+      
       list.results.forEach {
-        books.add(it.bookDetails[0])
+        val element = it.listOfBooks[0].copy(category = it.listName)
+        books.add(element)
       }
       withContext(Dispatchers.Main) {
         isLoadingLiveData.postValue(false)
@@ -133,6 +166,12 @@ class FeedViewModel @Inject constructor(
     isSuccessfulLiveData.postValue(Pair(false, listName))
   }
   
+  /**
+   * Gets a list of books of the given list of types. This is used to filter books by types
+   *
+   * @param listNames - a Set of Strings. The types of books to filter for.
+   * @param onLoadComplete - callback function invoked when the network call succeeds or fails
+   * */
   fun getMultipleLists(listNames: Set<String>, onLoadComplete: () -> Unit = {}) {
     val books = mutableListOf<BestSellersBook>()
     val observable: Observable<String> = Observable.fromIterable(listNames)
@@ -146,19 +185,23 @@ class FeedViewModel @Inject constructor(
         isLoadingLiveData.postValue(false)
         onLoadComplete()
       }
-      .map {
-        var listItems: List<BestSellersListItem> = listOf()
+      //map over the list of categories
+      .map { category ->
+        var categories: List<BestSellersListItem> = listOf()
         viewModelScope.launch {
-          val list = repository.getBestSellersList(listNameMap[it]!!)
-          listItems = list.results
+          //for each category make a network call to get the list of books of that type
+          val list = repository.getBestSellersList(categoriesMap[category]!!)
+          //assign categories to list
+          categories = list.results
         }
-        listItems.toObservable()
+        categories.toObservable()
       }
       .map {
-        it.blockingIterable().forEach { item ->
-          books.add(item.bookDetails[0])
+        //add only the first book from each category
+        it.blockingIterable().forEach { category ->
+          books.add(category.listOfBooks[0])
         }
-    
+        
         Observable.just(books)
       }
       .subscribeBy(
@@ -179,12 +222,9 @@ class FeedViewModel @Inject constructor(
   
   }
   
+  /**
+   * Returns a reference to the [LiveData] object to observe for loading state.*/
   fun getIsLoadingLiveData(): MutableLiveData<Boolean> = isLoadingLiveData
-  
-  fun getListTitlesLiveData(): MutableLiveData<MutableSet<String>> = listTitlesLiveData
-  
-  fun getBestSellersListLiveData(): MutableLiveData<List<BestSellersOverviewBook>> =
-    bestSellersListLiveData
   
   fun getIsEmptyLiveData(): MutableLiveData<Boolean> = isEmptyLiveData
   
@@ -192,7 +232,6 @@ class FeedViewModel @Inject constructor(
   
   override fun onCleared() {
     super.onCleared()
-    job.cancel()
     compositeDisposable.clear()
   }
 }

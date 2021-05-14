@@ -18,5 +18,5 @@ data class BestSellersListItem(
     @SerializedName("amazon_product_url")
     val amazonUrl: String,
     @SerializedName("book_details")
-    val bookDetails: List<BestSellersBook>
+    val listOfBooks: List<BestSellersBook>
 )

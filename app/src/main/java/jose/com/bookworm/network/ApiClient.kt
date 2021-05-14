@@ -3,6 +3,7 @@ package jose.com.bookworm.network
 import jose.com.bookworm.BuildConfig
 import jose.com.bookworm.model.googlebooks.Volume
 import jose.com.bookworm.model.nytimes.BestSellersOverviewResponse
+import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -17,7 +18,10 @@ import retrofit2.converter.gson.GsonConverterFactory
  * cleaner integration with a Dependency Injection framework.*/
 
 class ApiClient(
-  var loggingInterceptor: HttpLoggingInterceptor?
+  var loggingInterceptor: HttpLoggingInterceptor?,
+  var cacheInterceptor: CacheInterceptor,
+  var forceCacheInterceptor: ForceCacheInterceptor,
+  val cache: Cache
 ) {
   var booksBaseUrl: String = BOOKS_BASE_URL
     set(value) {
@@ -43,13 +47,17 @@ class ApiClient(
   
   private inline fun <reified T : Any> createApi(baseUrl: String): T {
     val builder = OkHttpClient.Builder()
-    
+  
+    builder.cache(cache)
+    builder.addNetworkInterceptor(cacheInterceptor)
+    builder.addInterceptor(forceCacheInterceptor)
+  
     loggingInterceptor?.let {
       builder.addInterceptor(it)
     }
-    
+  
     val client = builder.build()
-    
+  
     val retrofit = Retrofit.Builder()
       .baseUrl(baseUrl)
       .addConverterFactory(GsonConverterFactory.create())

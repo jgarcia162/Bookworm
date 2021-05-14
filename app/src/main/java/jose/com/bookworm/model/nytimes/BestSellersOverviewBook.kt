@@ -28,5 +28,6 @@ data class BestSellersOverviewBook(
   val rank: Int,
   val title: String,
   @SerializedName("buy_links")
-  val buyLinks: List<BuyLink>
+  val buyLinks: List<BuyLink>,
+  var category: String
 ) : Parcelable

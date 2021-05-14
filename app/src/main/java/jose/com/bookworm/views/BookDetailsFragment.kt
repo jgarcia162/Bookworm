@@ -38,49 +38,52 @@ class BookDetailsFragment : Fragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     book?.let {
-      Picasso.get().load(it.bookImageUrl).into(binding.ivDetailsBookCover)
-      binding.tvDetailsTitle.text = it.title
-      binding.tvDetailsAuthor.text = it.author
-      binding.tvDetailsDescription.text = it.description
+      binding.apply {
+        Picasso.get().load(it.bookImageUrl).into(ivDetailsBookCover)
+        tvDetailsTitle.text = it.title
+        tvDetailsAuthor.text = it.author
+        tvDetailsCategory.text = it.category
+        tvDetailsDescription.text = it.description
+      }
     }
   }
   
   fun showBookDeleted() {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
   }
-
+  
   fun showBookCheckedOut() {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
   }
-
+  
   fun showBookCheckedIn() {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
   }
-
+  
   fun showEditBookLayout() {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
   }
-
+  
   fun hideEditBookLayout() {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
   }
-
+  
   fun showBookDetails() {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
   }
-
+  
   fun updateBookData(book: Book) {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
   }
-
+  
   fun updateProgressSeekBar() {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
   }
-
+  
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     inflater.inflate(R.menu.details_menu, menu)
   }
-
+  
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     when (item.itemId) {
       R.id.details_edit_book_menu_option -> showEditBookLayout()
