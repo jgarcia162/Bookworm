@@ -12,6 +12,7 @@ import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import jose.com.bookworm.R
+import jose.com.bookworm.extensions.onClick
 import jose.com.bookworm.model.nytimes.BestSellersOverviewBook
 
 
@@ -31,10 +32,10 @@ class BestSellersViewHolder(
     this.book = data
   
     loadImageIntoImageView(data.bookImageWidth, data.bookImageHeight, data.bookImageUrl)
-//
-//    itemView.onClick {
-//      onItemClick(data)
-//    }
+  
+    itemView.onClick {
+      onItemClick(data)
+    }
 //
 //    itemView.onLongClick {
 //      onItemLongClick(data)

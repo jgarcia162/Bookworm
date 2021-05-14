@@ -7,16 +7,20 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
+import jose.com.bookworm.DoubleClickListener
 import jose.com.bookworm.R
 import jose.com.bookworm.databinding.FragmentBookDetailsBinding
+import jose.com.bookworm.extensions.toast
 import jose.com.bookworm.model.nytimes.BestSellersOverviewBook
 import jose.com.bookworm.model.roommodel.Book
+import jose.com.bookworm.viewmodel.AddBookViewModel
 import jose.com.bookworm.viewmodel.BookDetailsViewModel
 
 @AndroidEntryPoint
 class BookDetailsFragment : Fragment() {
   
   private val bookDetailsViewModel: BookDetailsViewModel by viewModels()
+  private val addBookViewModel: AddBookViewModel by viewModels()
   private var fragmentBookDetailsBinding: FragmentBookDetailsBinding? = null
   private val binding get() = fragmentBookDetailsBinding!!
   private var book: BestSellersOverviewBook? = null
@@ -40,12 +44,28 @@ class BookDetailsFragment : Fragment() {
     book?.let {
       binding.apply {
         Picasso.get().load(it.bookImageUrl).into(ivDetailsBookCover)
+        //register a double click listener
+        ivDetailsBookCover.setOnClickListener(object : DoubleClickListener() {
+          override fun onDoubleClick(v: View?) {
+            addBookToLibrary(it)
+          }
+        })
         tvDetailsTitle.text = it.title
         tvDetailsAuthor.text = it.author
         tvDetailsCategory.text = it.category
         tvDetailsDescription.text = it.description
       }
     }
+  }
+  
+  private fun addBookToLibrary(it: BestSellersOverviewBook) {
+    addBookViewModel.addBook(
+      title = it.title,
+      author = it.author,
+      imageUrl = it.bookImageUrl,
+      onAddBookComplete = { context?.toast("Book Added") },
+      onAddBookError = { context?.toast("Error") }
+    )
   }
   
   fun showBookDeleted() {
