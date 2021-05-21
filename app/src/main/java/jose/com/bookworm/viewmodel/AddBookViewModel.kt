@@ -27,6 +27,7 @@ class AddBookViewModel @Inject constructor(
     addBook(
       book.title,
       book.author,
+      book.description,
       book.isbn,
       book.pages.toString(),
       book.yearPublished.toString(),
@@ -40,6 +41,7 @@ class AddBookViewModel @Inject constructor(
   fun addBook(
     title: String,
     author: String,
+    description: String = "",
     isbn: String = "",
     pages: String = "",
     year: String = "",
@@ -63,6 +65,7 @@ class AddBookViewModel @Inject constructor(
     val book = Book(
       title = title,
       author = author,
+      description = description,
       isbn = isbn,
       pages = defPages,
       yearPublished = defYear,

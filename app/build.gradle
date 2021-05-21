@@ -15,7 +15,7 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "jose.com.bookworm.CustomTestRunner"
 
         javaCompileOptions {
             annotationProcessorOptions {
@@ -36,6 +36,9 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
         useIR = true
+
+        freeCompilerArgs += "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
+
     }
 
     buildTypes {
@@ -48,6 +51,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField 'String', "ApiKey", GOOGLE_BOOKS_API_KEY
             buildConfigField 'String', "TimesApiKey", NYTIMES_BOOKS_API_KEY
+        }
+    }
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
         }
     }
 }
@@ -67,6 +76,8 @@ dependencies {
 
     implementation deps.android.arch.room.runtime
     implementation deps.android.arch.room.rxJava
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation 'org.junit.jupiter:junit-jupiter'
     kapt deps.android.arch.room.compiler
 
     implementation deps.firebaseMLKit
@@ -105,12 +116,20 @@ dependencies {
 
     implementation deps.timber
 
+    // Testing dependencies
+    kaptAndroidTest deps.testing.hiltCompiler
+
     testImplementation deps.testing.mockito.core
     testImplementation deps.testing.mockito.kotlin
-//    testImplementation deps.testing.junit
+    testImplementation deps.testing.robolectric
     testImplementation deps.testing.awaitility
-//    androidTestImplementation deps.testing.runner
+    testImplementation "org.amshove.kluent:kluent:1.30"
+
+    androidTestImplementation deps.testing.runner
     androidTestImplementation deps.testing.espresso
+    androidTestImplementation deps.testing.core
+    androidTestImplementation deps.testing.coroutines
+    androidTestImplementation deps.testing.hilt
 }
 
 repositories {

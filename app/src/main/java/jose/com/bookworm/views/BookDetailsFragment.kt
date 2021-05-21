@@ -14,16 +14,13 @@ import jose.com.bookworm.extensions.toast
 import jose.com.bookworm.model.nytimes.BestSellersOverviewBook
 import jose.com.bookworm.model.roommodel.Book
 import jose.com.bookworm.viewmodel.AddBookViewModel
-import jose.com.bookworm.viewmodel.BookDetailsViewModel
 
 @AndroidEntryPoint
 class BookDetailsFragment : Fragment() {
-  
-  private val bookDetailsViewModel: BookDetailsViewModel by viewModels()
   private val addBookViewModel: AddBookViewModel by viewModels()
   private var fragmentBookDetailsBinding: FragmentBookDetailsBinding? = null
   private val binding get() = fragmentBookDetailsBinding!!
-  private var book: BestSellersOverviewBook? = null
+  private var bookDetails: BookDetails? = null
   
   override fun onCreateView(
     inflater: LayoutInflater,
@@ -36,15 +33,31 @@ class BookDetailsFragment : Fragment() {
   
   override fun onAttach(context: Context) {
     super.onAttach(context)
-    book = arguments?.getParcelable("book")
+    val book: Any? = arguments?.getParcelable("book")
+    bookDetails = when (book) {
+      is BestSellersOverviewBook -> BookDetails(
+        book.title,
+        book.author,
+        book.bookImageUrl,
+        book.description,
+        book.category
+      )
+      is Book -> BookDetails(
+        book.title,
+        book.author,
+        book.coverUrl,
+        book.description,
+        book.categories
+      )
+      else -> null
+    }
   }
   
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    book?.let {
+    bookDetails?.let {
       binding.apply {
         Picasso.get().load(it.bookImageUrl).into(ivDetailsBookCover)
-        //register a double click listener
         ivDetailsBookCover.setOnClickListener(object : DoubleClickListener() {
           override fun onDoubleClick(v: View?) {
             addBookToLibrary(it)
@@ -58,10 +71,11 @@ class BookDetailsFragment : Fragment() {
     }
   }
   
-  private fun addBookToLibrary(it: BestSellersOverviewBook) {
+  private fun addBookToLibrary(it: BookDetails) {
     addBookViewModel.addBook(
       title = it.title,
       author = it.author,
+      description = it.description,
       imageUrl = it.bookImageUrl,
       onAddBookComplete = { context?.toast("Book Added") },
       onAddBookError = { context?.toast("Error") }
@@ -84,22 +98,6 @@ class BookDetailsFragment : Fragment() {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
   }
   
-  fun hideEditBookLayout() {
-    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-  }
-  
-  fun showBookDetails() {
-    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-  }
-  
-  fun updateBookData(book: Book) {
-    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-  }
-  
-  fun updateProgressSeekBar() {
-    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-  }
-  
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     inflater.inflate(R.menu.details_menu, menu)
   }
@@ -110,4 +108,12 @@ class BookDetailsFragment : Fragment() {
     }
     return true
   }
+  
+  internal data class BookDetails(
+    val title: String,
+    val author: String,
+    val bookImageUrl: String?,
+    val description: String,
+    val category: String,
+  )
 }

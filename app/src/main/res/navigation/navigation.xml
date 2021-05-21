@@ -25,5 +25,9 @@
         android:id="@+id/libraryFragment"
         android:name="jose.com.bookworm.views.library.LibraryFragment"
         android:label="BookDetailsFragment"
-        tools:layout="@layout/fragment_library" />
+        tools:layout="@layout/fragment_library">
+        <action
+            android:id="@+id/action_libraryFragment_to_bookDetailsFragment"
+            app:destination="@id/bookDetailsFragment" />
+    </fragment>
 </navigation>

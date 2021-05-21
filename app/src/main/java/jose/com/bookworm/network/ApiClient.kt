@@ -18,10 +18,10 @@ import retrofit2.converter.gson.GsonConverterFactory
  * cleaner integration with a Dependency Injection framework.*/
 
 class ApiClient(
-  var loggingInterceptor: HttpLoggingInterceptor?,
-  var cacheInterceptor: CacheInterceptor,
-  var forceCacheInterceptor: ForceCacheInterceptor,
-  val cache: Cache
+  private var loggingInterceptor: HttpLoggingInterceptor?,
+  private var cacheInterceptor: CacheInterceptor,
+  private var forceCacheInterceptor: ForceCacheInterceptor,
+  private val cache: Cache
 ) {
   var booksBaseUrl: String = BOOKS_BASE_URL
     set(value) {

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import jose.com.bookworm.R
 import jose.com.bookworm.adapter.BaseAdapter
@@ -107,7 +108,11 @@ class LibraryFragment @Inject constructor() : Fragment(), LifecycleOwner, Librar
   }
   
   override fun showBookDetails(book: Book) {
-    //TODO navigate to details screen
+    val bundle = Bundle()
+    //TODO create constant for book key
+    bundle.putParcelable("book", book)
+  
+    findNavController().navigate(R.id.action_libraryFragment_to_bookDetailsFragment, bundle)
   }
   
   override fun saveToLibrary(book: Book) {

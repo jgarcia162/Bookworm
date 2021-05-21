@@ -1,11 +1,14 @@
 package jose.com.bookworm.model.roommodel
 
+import android.os.Parcelable
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import jose.com.bookworm.room.User
+import kotlinx.parcelize.Parcelize
 
 @Entity(tableName = "books")
+@Parcelize
 data class Book(
   @PrimaryKey(autoGenerate = true) val bookId: Long = 0,
   val title: String,
@@ -22,4 +25,4 @@ data class Book(
   @Embedded(prefix = "usr_")
   val borrowedBy: User? = null,
   val progressPercentage: Double = 0.0,
-)
+) : Parcelable

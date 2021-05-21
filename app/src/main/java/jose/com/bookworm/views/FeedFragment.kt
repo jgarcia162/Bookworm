@@ -1,17 +1,13 @@
 package jose.com.bookworm.views
 
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat.getColor
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import jose.com.bookworm.R
@@ -19,7 +15,6 @@ import jose.com.bookworm.adapter.BaseAdapter
 import jose.com.bookworm.databinding.FragmentFeedBinding
 import jose.com.bookworm.extensions.*
 import jose.com.bookworm.model.nytimes.BestSellersOverviewBook
-import jose.com.bookworm.utils.helpers.SelectionTrackerHelper
 import jose.com.bookworm.viewmodel.AddBookViewModel
 import jose.com.bookworm.viewmodel.FeedViewModel
 import kotlinx.coroutines.launch
@@ -34,20 +29,6 @@ class FeedFragment @Inject constructor() : Fragment(), ChipsDialogFragment.Chips
   
   private val feedViewModel: FeedViewModel by viewModels()
   private val addBookViewModel: AddBookViewModel by viewModels()
-  
-  private var tracker: SelectionTracker<Long>? = null
-  
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    if (savedInstanceState != null)
-      tracker?.onRestoreInstanceState(savedInstanceState)
-  }
-  
-  override fun onSaveInstanceState(outState: Bundle) {
-    super.onSaveInstanceState(outState)
-    
-    tracker?.onSaveInstanceState(outState)
-  }
   
   override fun onStart() {
     super.onStart()
@@ -84,36 +65,10 @@ class FeedFragment @Inject constructor() : Fragment(), ChipsDialogFragment.Chips
           false
         )
         adapter = bestSellersAdapter
-  
-        tracker = SelectionTrackerHelper.getLongTracker("selection-1", bestSellersRv)
-  
-        bestSellersAdapter.setTracker(tracker)
       }
+      bestSellersRv.setHasFixedSize(true)
+      bestSellersRv.setItemViewCacheSize(6)
     }
-  
-    tracker?.addObserver(
-      object : SelectionTracker.SelectionObserver<Long>() {
-        override fun onSelectionChanged() {
-          val nItems: Int? = tracker?.selection?.size()
-          if (nItems != null && nItems > 0) {
-          
-            context?.toast("$nItems")
-            // Change title and color of action bar
-            activity?.title = "$nItems items selected"
-            activity?.actionBar?.setBackgroundDrawable(
-              ColorDrawable(Color.parseColor("#ef6c00"))
-            )
-          } else {
-          
-            // Reset color and title to default values
-          
-            activity?.title = "RVSelection"
-            activity?.actionBar?.setBackgroundDrawable(
-              ColorDrawable(getColor(context!!, R.color.colorAccent))
-            )
-          }
-        }
-      })
   
     setFilterClick()
   
